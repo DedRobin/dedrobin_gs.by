@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dedrobin_gs.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.dedrobin_gs.settings")
 
 application = get_asgi_application()
