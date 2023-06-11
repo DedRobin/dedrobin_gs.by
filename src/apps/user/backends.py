@@ -3,22 +3,22 @@ from __future__ import annotations
 from django.contrib.auth.backends import BaseBackend
 from django.http import HttpRequest
 
-from src.apps.user.models import User
+from src.apps.user.models import CustomUser
 
 
 class EmailAuthBackend(BaseBackend):
     def authenticate(
             self, request: HttpRequest, email: str = None, password: str = None
-    ) -> User | None:
+    ) -> CustomUser | None:
         try:
-            user = User.objects.get(email=email)
+            user = CustomUser.objects.get(email=email)
             if user.check_password(password):
                 return user
-        except User.DoesNotExist:
+        except CustomUser.DoesNotExist:
             return
 
-    def get_user(self, user_id: int) -> User | None:
+    def get_user(self, user_id: int) -> CustomUser | None:
         try:
-            return User.objects.get(pk=user_id)
-        except User.DoesNotExist:
+            return CustomUser.objects.get(pk=user_id)
+        except CustomUser.DoesNotExist:
             return

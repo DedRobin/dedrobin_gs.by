@@ -27,7 +27,7 @@ DEBUG = bool(os.environ.get("DEBUG", False))
 ALLOWED_HOSTS = []
 
 # Application definition
-AUTH_USER_MODEL = "user.User"
+AUTH_USER_MODEL = "user.CustomUser"
 
 AUTHENTICATION_BACKENDS = (
     "src.apps.user.backends.EmailAuthBackend",

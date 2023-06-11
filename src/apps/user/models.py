@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
             password: str = None,
             is_staff: bool = False,
             is_superuser: bool = False,
-    ) -> User | None:
+    ) -> CustomUser | None:
         if email is None:
             raise ValueError("Users must have an email")
         if username is None:
@@ -41,9 +41,13 @@ class UserManager(BaseUserManager):
         )
 
 
-class User(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+
     username = models.CharField(max_length=150, unique=True, db_index=True)
-    email = models.CharField(max_length=150, unique=True, db_index=True)
+    email = models.EmailField(max_length=150, unique=True, db_index=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)
