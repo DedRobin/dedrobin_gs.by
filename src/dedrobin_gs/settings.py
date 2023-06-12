@@ -38,13 +38,17 @@ INSTALLED_APPS = [
     # Apps
     "src.apps.user.apps.UsersConfig",
 
-    # Others
+    # Django
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles"
+    "django.contrib.staticfiles",
+
+    # Other
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
