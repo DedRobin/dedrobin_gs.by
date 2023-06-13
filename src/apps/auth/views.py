@@ -1,9 +1,26 @@
 from django.shortcuts import render, redirect
 from django.core.handlers.wsgi import WSGIRequest
-from django.contrib.auth import logout, login, authenticate
-from django.http import HttpResponse
+from django.contrib.auth import logout
 
-from src.apps.auth.forms import LoginForm
+from apps.auth.services import check_passwords_and_create_user, user_authentication_and_login
+from src.apps.auth.forms import LoginForm, RegistrationForm
+
+
+def register_user(request: WSGIRequest):
+    contex = {}
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            error, user_created = check_passwords_and_create_user(form.cleaned_data)
+            if user_created and not error:
+                return redirect("login")
+            else:
+                contex["error"] = error
+        else:
+            contex["error"] = form.errors
+    form = RegistrationForm()
+    contex["form"] = form
+    return render(request, "registration.html", contex)
 
 
 def login_user(request: WSGIRequest):
@@ -11,12 +28,11 @@ def login_user(request: WSGIRequest):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(request=request, **form.cleaned_data)
-            if user is None:
-                contex["error"] = "The user does not exist"
-            else:
-                login(request, user)
+            error, user_is_auth_and_login = user_authentication_and_login(request=request, data=form.cleaned_data)
+            if not error and user_is_auth_and_login:
                 return redirect("index")
+            else:
+                contex["error"] = error
         else:
             contex["error"] = form.errors
 

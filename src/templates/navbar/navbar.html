@@ -2,9 +2,9 @@
     <div class="container-fluid">
 
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">\
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            {% include 'navbar/navbar-brand.html' %}
+            {% include 'navbar/navbar_parts/navbar-brand.html' %}
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -40,6 +40,13 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                {% if not request.user.is_authenticated %}
+                    {% include 'navbar/navbar_parts/login_and_registration.html' %}
+                {% else %}
+                    {% include 'navbar/navbar_parts/user_menu.html' %}
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>
