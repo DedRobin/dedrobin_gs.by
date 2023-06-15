@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AuthConfig(AppConfig):
+class NewsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "src.apps.auth"
+    name = "src.apps.news"

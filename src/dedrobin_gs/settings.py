@@ -35,9 +35,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 INSTALLED_APPS = [
-    # Apps
-    "src.apps.user.apps.UsersConfig",
-
     # Django
     "django.contrib.admin",
     "django.contrib.auth",
@@ -45,7 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
+    # Apps
+    "src.apps.user.apps.UsersConfig",
+    "src.apps.news.apps.NewsConfig",
     # Other
     "crispy_forms",
     "crispy_bootstrap5",
@@ -68,7 +67,6 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
             "src/templates",
-            "src/apps/auth/templates",
             "src/apps/user/templates",
         ],
         "APP_DIRS": True,
