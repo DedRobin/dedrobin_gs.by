@@ -1,5 +1,6 @@
 from django.db import models
 from src.apps.user.models import CustomUser
+from src.apps.profile.validators import check_phone_number
 
 GENDER = (
     ("male", "Male"),
@@ -16,7 +17,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150, blank=True, null=True)
     gender = models.CharField(choices=GENDER, blank=True, null=True)
-    phone_number = models.CharField(max_length=150, blank=True, null=True)
+    phone_number = models.CharField(max_length=150, blank=True, null=True, validators=[check_phone_number])
     age = models.IntegerField(blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
 

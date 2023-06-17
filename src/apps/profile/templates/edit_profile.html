@@ -12,6 +12,11 @@
                 {{ message }}
             {% endif %}
         </div>
+        <div class="mb-3 text-danger">
+            {% if error %}
+                {{ error }}
+            {% endif %}
+        </div>
         <form method="post">
             {% csrf_token %}
             {{ user_form|crispy }}

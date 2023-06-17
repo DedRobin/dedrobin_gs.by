@@ -24,8 +24,8 @@ def edit_profile(request: WSGIRequest):
             profile = update_profile(profile=profile, data=profile_data)
             user = update_user(user=user, data=user_data)
             contex["message"] = "Your data has been updated"
-            # return render(request, "edit_profile.html", contex)
-
+        else:
+            contex["error"] = user_form.errors or profile_form.errors
     profile_data = convert_to_dict(model=profile)
     user_data = convert_to_dict(model=user)
     user_form = UserForm(data=user_data)
