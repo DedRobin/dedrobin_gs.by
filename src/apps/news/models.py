@@ -22,10 +22,12 @@ class News(models.Model):
     image_src = models.URLField()
     text = models.TextField()
     is_published = models.BooleanField(default=False)
-    company_id = models.ForeignKey(
-        to=Company, on_delete=models.CASCADE, related_name="company"
-    )
     created_at = models.DateTimeField(db_index=True)
+
+    # Foreign key
+    company = models.ForeignKey(
+        to=Company, on_delete=models.CASCADE, related_name="news"
+    )
 
     def __str__(self):
         return f"News from '{self.topic}' (Date: {self.created_at})"

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block title %}Edit profile{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="fs-1 mb-3">Edit profile</div>
+        <div class="mb-3 text-success">
+            {% if message %}
+                {{ message }}
+            {% endif %}
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ user_form|crispy }}
+            {{ profile_form|crispy }}
+
+            {{ test }}
+            <button type="submit" class="btn btn-primary">Apply changes</button>
+        </form>
+    </div>
+{% endblock %}

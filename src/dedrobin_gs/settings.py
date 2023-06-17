@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Apps
     "src.apps.user.apps.UsersConfig",
+    "src.apps.profile.apps.ProfileConfig",
     "src.apps.news.apps.NewsConfig",
     # Other
     "crispy_forms",
