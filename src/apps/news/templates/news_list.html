@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}DedRobin Game Service{% endblock %}
+
+{% block content %}
+    {{ query }}
+    {% for article in news %}
+        {% if article.is_published %}
+            {% include 'article.html' %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
