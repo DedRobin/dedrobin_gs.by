@@ -25,7 +25,9 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 DEBUG = bool(os.environ.get("DEBUG", False))
 
 ALLOWED_HOSTS = []
-
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 # Application definition
 AUTH_USER_MODEL = "user.CustomUser"
 
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     "src.apps.profile.apps.ProfileConfig",
     "src.apps.news.apps.NewsConfig",
     # Other
+    "debug_toolbar",
     "crispy_forms",
     "crispy_bootstrap5",
 ]
@@ -59,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "src.dedrobin_gs.urls"
