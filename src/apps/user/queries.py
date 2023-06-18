@@ -7,7 +7,7 @@ def update_user(user: CustomUser, data: dict) -> CustomUser | str:
     user.username = data.get("username")
     user.email = data.get("email")
     if (password1 and not password2) or (not password1 and password2):
-        raise ValueError(f"Password field is empty")
+        raise ValueError("Password field is empty")
     elif password1 and password2:
         assert password1 == password2
         user.set_password(password1)

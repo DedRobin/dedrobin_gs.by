@@ -19,11 +19,11 @@ def edit_profile(request: WSGIRequest):
         profile_form = ProfileForm(data=request.POST)
         user_form = UserForm(data=request.POST)
         if profile_form.is_valid() and user_form.is_valid():
-            profile_data = profile_form.cleaned_data
-            user_data = user_form.cleaned_data
-            profile = update_profile(profile=profile, data=profile_data)
+            profile_updated_data = profile_form.cleaned_data
+            user_updated_data = user_form.cleaned_data
+            profile = update_profile(profile=profile, data=profile_updated_data)
             try:
-                user = update_user(user=user, data=user_data)
+                user = update_user(user=user, data=user_updated_data)
             except AssertionError:
                 contex["error"] = "The two passwords doesn't match"
             except ValueError as ex:
@@ -32,10 +32,10 @@ def edit_profile(request: WSGIRequest):
                 contex["message"] = "Your data has been updated"
         else:
             contex["error"] = user_form.errors or profile_form.errors
-    profile_data = convert_to_dict(model=profile)
-    user_data = convert_to_dict(model=user)
-    user_form = UserForm(data=user_data)
-    profile_form = ProfileForm(data=profile_data)
+    profile_updated_data = convert_to_dict(model=profile)
+    user_updated_data = convert_to_dict(model=user)
+    user_form = UserForm(data=user_updated_data)
+    profile_form = ProfileForm(data=profile_updated_data)
     contex["user_form"] = user_form
     contex["profile_form"] = profile_form
     return render(request, "edit_profile.html", contex)
