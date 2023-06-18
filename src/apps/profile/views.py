@@ -12,8 +12,8 @@ def edit_profile(request: WSGIRequest):
     """Edit a specific user profile"""
 
     contex = {}
+    user = request.user
     profile = select_profile_for_user(user=request.user)
-    user = profile.user
 
     if request.method == "POST":
         profile_form = ProfileForm(data=request.POST)

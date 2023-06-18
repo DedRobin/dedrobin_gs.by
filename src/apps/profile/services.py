@@ -3,8 +3,10 @@ from src.apps.profile.models import Profile
 
 
 def convert_to_dict(model: CustomUser | Profile) -> dict:
+    data = {}
+    if isinstance(model, CustomUser):
+        data["email"] = model.email
+        data["username"] = model.username
+        return data
     data = model.__dict__
-    if isinstance(model, CustomUser) and data.get("password"):
-        # Clear passwords fields
-        del data["password"]
     return data
