@@ -22,8 +22,14 @@ def edit_profile(request: WSGIRequest):
             profile_data = profile_form.cleaned_data
             user_data = user_form.cleaned_data
             profile = update_profile(profile=profile, data=profile_data)
-            user = update_user(user=user, data=user_data)
-            contex["message"] = "Your data has been updated"
+            try:
+                user = update_user(user=user, data=user_data)
+            except AssertionError:
+                contex["error"] = "The two passwords doesn't match"
+            except ValueError as ex:
+                contex["error"] = ex
+            else:
+                contex["message"] = "Your data has been updated"
         else:
             contex["error"] = user_form.errors or profile_form.errors
     profile_data = convert_to_dict(model=profile)
