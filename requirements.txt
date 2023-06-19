@@ -3,5 +3,10 @@ psycopg2-binary==2.9.6
 crispy-bootstrap5==0.7
 django-debug-toolbar==4.1.0
 
+selenium>=4.10.0
+Faker>=18.10.1
 pytest-selenium>=4.0.1
+pytest-django>=4.5.2
+factory-boy>=3.2.1
+
 

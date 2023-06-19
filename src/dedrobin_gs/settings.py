@@ -70,10 +70,7 @@ ROOT_URLCONF = "src.dedrobin_gs.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            "src/templates",
-            "src/apps/user/templates",
-        ],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
