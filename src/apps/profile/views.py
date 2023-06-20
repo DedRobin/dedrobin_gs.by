@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, HttpResponse
 from django.core.handlers.wsgi import WSGIRequest
+from django.contrib.auth import logout
 
 from src.apps.profile.queries import select_profile_for_user, update_profile
 from src.apps.profile.services import convert_to_dict
 from src.apps.profile.forms import ProfileForm
-from src.apps.user.queries import update_user
+from src.apps.user.queries import update_user, delete_user
 from src.apps.user.forms import UserForm
 
 
@@ -39,3 +40,13 @@ def edit_profile(request: WSGIRequest):
     contex["user_form"] = user_form
     contex["profile_form"] = profile_form
     return render(request, "edit_profile.html", contex)
+
+
+def delete_profile(request: WSGIRequest):
+    """Delete a specific user at all"""
+
+    if request.method == "POST":
+        delete_user(user=request.user)
+        logout(request)
+        return redirect("login")
+    return HttpResponse(status=405)

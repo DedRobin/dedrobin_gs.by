@@ -13,3 +13,8 @@ def update_user(user: CustomUser, data: dict) -> CustomUser | str:
         user.set_password(password1)
     user.save()
     return user
+
+
+def delete_user(user: CustomUser) -> None:
+    # CustomUser.objects.get(user=user).delete()
+    user.delete()
