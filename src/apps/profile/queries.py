@@ -3,7 +3,7 @@ from src.apps.user.models import CustomUser
 
 
 def select_profile_for_user(user: CustomUser) -> Profile:
-    profile = Profile.objects.get(user=user.id)
+    profile = Profile.objects.get_or_create(user=user)[0]
     return profile
 
 
