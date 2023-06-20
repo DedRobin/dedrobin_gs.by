@@ -1,5 +1,4 @@
-# from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.webdriver import WebDriver
 from faker import Faker
@@ -8,7 +7,7 @@ from src.apps.user.factories import UserFactory
 from src.apps.user.models import CustomUser
 
 
-class AuthTests(LiveServerTestCase):
+class AuthTests(StaticLiveServerTestCase):
     # fixtures = ["user-data.json"]
 
     @classmethod
@@ -65,3 +64,4 @@ class AuthTests(LiveServerTestCase):
         href_logout = self.browser.find_element(By.XPATH, xpath).get_attribute("href")
         self.browser.get(href_logout)
         assert self.browser.title == "Login"
+
