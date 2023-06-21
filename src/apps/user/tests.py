@@ -52,7 +52,7 @@ class AuthTests(StaticLiveServerTestCase):
         email = self.user.email
         password = self.user_password
 
-        self.browser.get(f"{self.live_server_url}")
+        self.browser.get(self.live_server_url)
         username_input = self.browser.find_element(By.NAME, "email")
         username_input.send_keys(email)
         password_input = self.browser.find_element(By.NAME, "password")
