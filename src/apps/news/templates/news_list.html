@@ -3,10 +3,15 @@
 {% block title %}DedRobin Game Service{% endblock %}
 
 {% block content %}
-    {{ query }}
-    {% for article in news %}
-        {% if article.is_published %}
-            {% include 'article.html' %}
-        {% endif %}
-    {% endfor %}
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+            {% for article in news %}
+                {% if article.is_published %}
+                    <div class="col">
+                        {% include 'article.html' %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

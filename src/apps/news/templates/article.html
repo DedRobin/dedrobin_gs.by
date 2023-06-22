@@ -1,10 +1,10 @@
 <div class="card mt-3">
-    <img src="{{ article.image_src }}{{ article.topic }}" class="card-img-top" alt="{{ article.topic }}">
+    <div class="card-header">{{ article.company__name }}</div>
+    <img src="{{ article.image_src }}" class="card-img-top" alt="{{ article.topic }}">
     <div class="card-body">
         <h5 class="card-title">{{ article.topic }}</h5>
         <p class="card-text">{{ article.text }}</p>
-        <p class="card-text">{{ article.company__name }}</p>
         <p class="card-text"><small class="text-body-secondary">{{ article.created_at }}</small></p>
-        <a href="{{ article.link }}" class="btn btn-primary">Read</a>
+        <a href="{{ article.link }}" class="btn btn-primary">Follow the link</a>
     </div>
 </div>

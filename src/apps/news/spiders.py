@@ -10,27 +10,41 @@ class CapcomSpider(scrapy.Spider):
     start_urls = ["https://news.capcomusa.com/"]
 
     def parse(self, response: HtmlResponse, **kwargs) -> None:
-        data = {}
+        item = {}
         for article in response.css(".news_section article"):
-            data["publish_data"] = self._get_publish_date(article)
-            different = datetime.now() - data["publish_data"]
-            print(different)
+            item["created_at"] = self._get_publish_date(article)
+            different = datetime.now() - item["created_at"]
             if different.days > 366:
                 return None
-            data["topic"] = self._get_topic(article)
-            data["link"] = self._get_link(article)
-            data["image_src"] = self._get_image_src(article)
-            data["text"] = self._get_text(article)
-            yield data
+            item["topic"] = self._get_topic(article)
+            item["external_id"] = self._get_external_id(article)
+            item["link"] = self._get_link(article)
+            item["image_src"] = self._get_image_src(article)
+            item["text"] = self._get_text(article)
+            yield item
 
         next_page = response.xpath('//*[@id="pagination-next"]').attrib.get("href")
         if next_page is not None:
             yield response.follow(next_page, callback=self.parse)
 
     @staticmethod
+    def _get_publish_date(article: Selector) -> datetime:
+        publish_date = article.css("article .text_col .attribution::text").get()
+        publish_date = publish_date.replace(",", " ").split()[:3]
+        str_date = " ".join(publish_date)
+        publish_date = datetime.strptime(str_date, '%b %d %Y')
+        return publish_date
+
+    @staticmethod
     def _get_topic(article: Selector) -> str:
         text = article.css(".major.mod-lt::text").get()
         return text
+
+    @staticmethod
+    def _get_external_id(article: Selector) -> int:
+        external_id = article.css("article").attrib.get("data")
+        external_id = int(external_id)
+        return external_id
 
     @staticmethod
     def _get_link(article: Selector) -> str:
@@ -57,12 +71,4 @@ class CapcomSpider(scrapy.Spider):
         tag = article.css("article .image_col.view.zoom.overlay.z-depth-2")
         css_style = tag.get()
         image_src = re.search(r"cdn\.capcom-unity\.com\/\S+(\.jpg|\.png)", css_style).group()
-        return image_src
-
-    @staticmethod
-    def _get_publish_date(article: Selector) -> datetime:
-        publish_date = article.css("article .text_col .attribution::text").get()
-        publish_date = publish_date.replace(",", " ").split()[:3]
-        str_date = " ".join(publish_date)
-        publish_date = datetime.strptime(str_date, '%b %d %Y')
-        return publish_date
+        return "https://" + image_src

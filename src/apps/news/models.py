@@ -17,6 +17,7 @@ class News(models.Model):
         verbose_name = "News"
         verbose_name_plural = "News"
 
+    external_id = models.IntegerField(unique=True, db_index=True, blank=True, null=True)
     topic = models.CharField(max_length=150)
     link = models.URLField()
     image_src = models.URLField()
