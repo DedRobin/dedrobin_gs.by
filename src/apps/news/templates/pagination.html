@@ -1,11 +1,27 @@
 {% load pagination_tags %}
 
 <nav aria-label="Page navigation example">
+    Page {{ news.number }} from {{ num_pages|last }}
     <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="{% url_replace page=news.next_page_number %}">Next</a></li>
+        {% if  news.has_previous %}
+            <li class="page-item"><a class="page-link"
+                                     href="{% url_replace page=news.previous_page_number %}">Previous</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+        {% endif %}
+        {% for num in num_pages %}
+            {% if news.number == num %}
+                <li class="page-item active"><a class="page-link"
+                                                href="{% url 'news_list' %}?page={{ num }}">{{ num }}</a></li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="{% url 'news_list' %}?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if  news.has_next %}
+            <li class="page-item"><a class="page-link" href="{% url_replace page=news.next_page_number %}">Next</a></li>
+        {% else %}
+            <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+        {% endif %}
     </ul>
 </nav>
