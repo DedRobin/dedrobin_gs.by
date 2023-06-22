@@ -10,7 +10,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "--clear",
             action="store_true",
-            help="Test clear",
+            help="Make all news published",
         )
 
     def handle(self, *args, **options):
