@@ -43,19 +43,19 @@ def get_page_from_request(request: WSGIRequest, queryset: QuerySet, obj_per_page
     return page_obj
 
 
-def display_elements(page: Page, page_numbers: int) -> range:
+def get_displayed_pages(page: Page, page_numbers: int) -> range:
     page_number = page.number
     page_range = page.paginator.page_range
     last_page = page.paginator.num_pages
-    elements = page_range
+    displayed_pages = page_range
     if len(page_range) > page_numbers:
         if page_number - 3 <= 0:
-            elements = page_range[:page_numbers]
+            displayed_pages = page_range[:page_numbers]
         elif page_number - 3 > 0 and page_number + 2 > last_page:
             if page_number == last_page:
-                elements = page_range[page_number - 5:last_page + 1]
+                displayed_pages = page_range[page_number - 5:last_page + 1]
             else:
-                elements = page_range[page_number - 4:last_page + 1]
+                displayed_pages = page_range[page_number - 4:last_page + 1]
         else:
-            elements = page_range[page_number - 3:page_number + 2]
-    return elements
+            displayed_pages = page_range[page_number - 3:page_number + 2]
+    return displayed_pages

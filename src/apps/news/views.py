@@ -4,7 +4,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
 from src.apps.news.models import News, Company
-from src.apps.news.services import get_page_from_request, display_elements
+from src.apps.news.services import get_page_from_request, get_displayed_pages
 
 
 @login_required(redirect_field_name="", login_url="login")
@@ -21,8 +21,8 @@ def news_list(request: WSGIRequest):
         .order_by("-created_at")
 
     page = get_page_from_request(request=request, queryset=news, obj_per_page=1)
-    elements = display_elements(page=page, page_numbers=5)
+    displayed_pages = get_displayed_pages(page=page, page_numbers=5)
     contex["news"] = page
-    contex["elements"] = elements
+    contex["displayed_pages"] = displayed_pages
 
     return render(request, "news_list.html", contex)
