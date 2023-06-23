@@ -36,9 +36,26 @@ def run_parser(clear):
     process.start()
 
 
-def get_page_from_request(request: WSGIRequest, queryset: QuerySet, obj_per_page: int) -> tuple[Page, int]:
+def get_page_from_request(request: WSGIRequest, queryset: QuerySet, obj_per_page: int) -> Page:
     paginator = Paginator(object_list=queryset, per_page=obj_per_page)
-    num_pages = paginator.num_pages
     page_number = request.GET.get("page", 1)
     page_obj = paginator.get_page(page_number)
-    return page_obj, num_pages
+    return page_obj
+
+
+def display_elements(page: Page, page_numbers: int) -> range:
+    page_number = page.number
+    page_range = page.paginator.page_range
+    last_page = page.paginator.num_pages
+    elements = page_range
+    if len(page_range) > page_numbers:
+        if page_number - 3 <= 0:
+            elements = page_range[:page_numbers]
+        elif page_number - 3 > 0 and page_number + 2 > last_page:
+            if page_number == last_page:
+                elements = page_range[page_number - 5:last_page + 1]
+            else:
+                elements = page_range[page_number - 4:last_page + 1]
+        else:
+            elements = page_range[page_number - 3:page_number + 2]
+    return elements
