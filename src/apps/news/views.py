@@ -22,6 +22,5 @@ def news_list(request: WSGIRequest):
 
     page, num_pages = get_page_from_request(request=request, queryset=news, obj_per_page=24)
     contex["news"] = page
-    contex["num_pages"] = range(1, num_pages + 1)
 
     return render(request, "news_list.html", contex)
