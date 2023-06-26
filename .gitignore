@@ -1,5 +1,6 @@
 .idea
 .venv
 .env
-.pytest_cache
+*.pytest_cache
+*.sass-cache
 geckodriver.log
