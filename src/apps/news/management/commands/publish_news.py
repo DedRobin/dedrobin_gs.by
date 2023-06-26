@@ -14,5 +14,5 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        News.objects.update(is_published=True)
-        print("All news have been published")
+        number = News.objects.update(is_published=True)
+        print("{0} news have been published".format(number))

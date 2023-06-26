@@ -24,7 +24,7 @@ class News(models.Model):
     image_src = models.URLField()
     text = models.TextField()
     is_published = models.BooleanField(default=False)
-    created_at = models.DateTimeField(db_index=True)
+    created_at = models.DateField(db_index=True)
 
     # Foreign key
     company = models.ForeignKey(

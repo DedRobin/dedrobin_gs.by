@@ -17,10 +17,10 @@ def news_list(request: WSGIRequest):
     contex = {}
     news = News.objects.select_related("company") \
         .filter(is_published=True) \
-        .values("topic", "link", "image_src", "text", "is_published", "created_at", "company__name") \
+        .values("topic", "link", "image_src", "text", "is_published", "created_at", "company__name", "company__url") \
         .order_by("-created_at")
 
-    page = get_page_from_request(request=request, queryset=news, obj_per_page=4)
+    page = get_page_from_request(request=request, queryset=news, obj_per_page=24)
     displayed_pages = get_displayed_pages(page=page, show_pages=5)
     contex["news"] = page
     contex["displayed_pages"] = displayed_pages

@@ -23,7 +23,6 @@ def run_parser(clear):
         company = Company.objects.get_or_create(name="Capcom", url="https://www.capcom.com/")  # -> ("Company" obj, bool)
         item["company"] = company[0]  # ("Company" obj, bool) -> "Company" obj
         News.objects.update_or_create(external_id=item["external_id"], defaults=item)
-        # print("Item =", item)
 
     dispatcher.connect(crawler_results, signal=signals.item_scraped)
     settings = get_project_settings()
