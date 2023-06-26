@@ -43,19 +43,25 @@ def get_page_from_request(request: WSGIRequest, queryset: QuerySet, obj_per_page
     return page_obj
 
 
-def get_displayed_pages(page: Page, page_numbers: int) -> range:
+def get_displayed_pages(page: Page, show_pages: int) -> range:
+    def is_odd(num: int) -> bool:
+        return True if num % 2 else False
+
     page_number = page.number
     page_range = page.paginator.page_range
     last_page = page.paginator.num_pages
     displayed_pages = page_range
-    if len(page_range) > page_numbers:
-        if page_number - 3 <= 0:
-            displayed_pages = page_range[:page_numbers]
-        elif page_number - 3 > 0 and page_number + 2 > last_page:
-            if page_number == last_page:
-                displayed_pages = page_range[page_number - 5:last_page + 1]
-            else:
-                displayed_pages = page_range[page_number - 4:last_page + 1]
+    if last_page > show_pages:
+        if page_number - (show_pages // 2 + 1) <= 0:
+            start = 0
+            end = show_pages
+        elif page_number - (show_pages // 2 + 1) > 0 and page_number + (show_pages // 2) > last_page:
+            start = last_page - show_pages
+            end = last_page + 1
         else:
-            displayed_pages = page_range[page_number - 3:page_number + 2]
+            start = page_number - (show_pages // 2) - 1
+            end = page_number + (show_pages // 2) - 1
+            if is_odd(show_pages):
+                end += 1
+        displayed_pages = page_range[start:end]
     return displayed_pages
