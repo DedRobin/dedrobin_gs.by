@@ -38,10 +38,7 @@ def run_parser(clear):
 
 def get_page_from_request(request: WSGIRequest, queryset: QuerySet, obj_per_page: int) -> Page:
     paginator = Paginator(object_list=queryset, per_page=obj_per_page)
-    if request.GET.get("follow_page"):
-        page_number = request.GET.get("follow_page")
-    else:
-        page_number = request.GET.get("page", 1)
+    page_number = request.GET.get("page", 1)
     page_obj = paginator.get_page(page_number)
     return page_obj
 

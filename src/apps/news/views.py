@@ -20,7 +20,7 @@ def news_list(request: WSGIRequest):
         .values("topic", "link", "image_src", "text", "is_published", "created_at", "company__name") \
         .order_by("-created_at")
 
-    page = get_page_from_request(request=request, queryset=news, obj_per_page=24)
+    page = get_page_from_request(request=request, queryset=news, obj_per_page=4)
     displayed_pages = get_displayed_pages(page=page, show_pages=5)
     contex["news"] = page
     contex["displayed_pages"] = displayed_pages
