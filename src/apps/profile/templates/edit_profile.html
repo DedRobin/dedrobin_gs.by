@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% load crispy_forms_filters %}
 
 {% block title %}Edit profile{% endblock %}
+
+{% block styles %}
+        <link rel="stylesheet" href="{% static 'profiles/css/edit_profile.css' %}">
+{% endblock %}
 
 {% block content %}
     <div class="container">
