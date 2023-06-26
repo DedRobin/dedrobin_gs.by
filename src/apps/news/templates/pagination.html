@@ -37,8 +37,8 @@
         <li class="page-item">
             <form method="get" class="input-group mb-3">
                 <input type="number" class="form-control ms-2" placeholder="Page" aria-label="Page"
-                       aria-describedby="button-addon2">
-                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Follow the page</button>
+                       aria-describedby="follow-page" min="1" max="{{ news.paginator.num_pages }}" name="follow_page">
+                <button class="btn btn-outline-primary" type="submit" id="follow-page">Follow the page</button>
             </form>
         </li>
     </ul>
