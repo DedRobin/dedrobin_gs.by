@@ -20,7 +20,7 @@ def run_parser(clear):
         News.objects.all().delete()
 
     def crawler_results(signal, sender, item, response, spider):
-        company = Company.objects.get_or_create(name="Capcom")  # -> ("Company" obj, bool)
+        company = Company.objects.get_or_create(name="Capcom", url="https://www.capcom.com/")  # -> ("Company" obj, bool)
         item["company"] = company[0]  # ("Company" obj, bool) -> "Company" obj
         News.objects.update_or_create(external_id=item["external_id"], defaults=item)
         # print("Item =", item)

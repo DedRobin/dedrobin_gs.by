@@ -6,7 +6,8 @@ class Company(models.Model):
         verbose_name = "Company"
         verbose_name_plural = "Companies"
 
-    name = models.CharField()
+    name = models.CharField(db_index=True, unique=True)
+    url = models.URLField(unique=True, blank=True, null=True)
 
     def __str__(self):
         return f"Company '{self.name}'"

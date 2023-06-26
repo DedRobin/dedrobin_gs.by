@@ -10,5 +10,5 @@ class NewsAdmin(admin.ModelAdmin):
 
 @admin.register(Company)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ("name",)
-    fields = ("name",)
+    list_display = ("name", "url")
+    fields = ("name", "url")

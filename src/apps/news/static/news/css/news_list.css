@@ -1,0 +1,12 @@
+.article__company_url {
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.article__company_url:hover {
+    background: #E0E0E0;
+}
+
+.article__company_url:not:hover {
+    transition: 0.5s;
+}
