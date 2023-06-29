@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
+
 from src.apps.user.models import CustomUser
 
 
-def update_user(user: CustomUser, data: dict) -> CustomUser | str:
+def update_user(user: CustomUser | User, data: dict) -> CustomUser | str:
     """Update the data of specific user"""
 
     password1 = data.get("password1")
@@ -17,7 +19,7 @@ def update_user(user: CustomUser, data: dict) -> CustomUser | str:
     return user
 
 
-def delete_user(user: CustomUser) -> None:
+def delete_user(user: CustomUser | User) -> None:
     """Delete an authenticated user"""
 
     user.delete()

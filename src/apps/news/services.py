@@ -3,6 +3,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.signalmanager import dispatcher
 from scrapy.utils.project import get_project_settings
 from django.db.models.query import QuerySet
+from django.http.request import QueryDict
 from src.apps.news.spiders import CapcomSpider, BungieSpider
 
 from django.core.paginator import Paginator, Page
@@ -72,3 +73,14 @@ def get_displayed_pages(page: Page, show_pages: int) -> range:
                 end += 1
         displayed_pages = page_range[start:end]
     return displayed_pages
+
+
+def get_news(params: dict = None) -> QuerySet:
+    news = News.objects.select_related("company") \
+        .filter(is_published=True) \
+        .values("topic", "link", "image_src", "text", "is_published", "created_at", "company__name", "company__url") \
+        .order_by("-created_at")
+    # params =
+    if params:
+        news = news.filter(**params)
+    return news
