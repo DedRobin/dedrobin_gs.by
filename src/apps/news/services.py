@@ -29,10 +29,7 @@ def run_parser(clear):
                 url="https://www.bungie.net/"
             )
         item["company"] = company[0]  # ("Company" obj, bool) -> "Company" obj
-        try:
-            await News.objects.aupdate_or_create(link=item["link"], defaults=item)
-        except Exception as ex:
-            print(item["text"], item["link"], ex)
+        await News.objects.aupdate_or_create(link=item["link"], defaults=item)
 
     dispatcher.connect(crawler_results, signal=signals.item_scraped)
     settings = get_project_settings()

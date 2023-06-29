@@ -21,7 +21,7 @@ class News(models.Model):
     topic = models.CharField(max_length=150)
     link = models.URLField(unique=True, db_index=True)
     image_src = models.URLField()
-    text = models.TextField(null=True, default="No text")
+    text = models.TextField(blank=True, null=True)
     is_published = models.BooleanField(default=False)
     created_at = models.DateField(db_index=True)
 

@@ -44,10 +44,6 @@ class CapcomSpider(CustomSpider):
     start_urls = ["https://news.capcomusa.com/"]
 
     custom_settings = {
-        # "DOWNLOAD_HANDLERS": {
-        #     "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-        #     "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
-        # },
         "TWISTED_REACTOR": "twisted.internet.asyncioreactor.AsyncioSelectorReactor",
     }
 
@@ -115,25 +111,30 @@ class BungieSpider(CustomSpider):
         },
         "TWISTED_REACTOR": "twisted.internet.asyncioreactor.AsyncioSelectorReactor",
     }
+    meta = {
+        "playwright": True,
+        "playwright_include_page": True,
+        "playwright_page_methods": [
+            PageMethod("wait_for_selector", ".NewsPreview_previewContainer__3wvXq")
+        ],
+    }
+    page = 1
 
     def start_requests(self):
         for url in self.start_urls:
-            yield scrapy.Request(
-                url,
-                self.parse,
-                meta={
-                    "playwright": True,
-                    "playwright_include_page": True,
-                    "playwright_page_methods": [
-                        PageMethod("wait_for_selector", ".NewsPreview_previewContainer__3wvXq")
-                    ],
-                })
+            yield scrapy.Request(url, self.parse, meta=self.meta)
 
     async def parse(self, response: HtmlResponse, **kwargs) -> None:
         articles = response.css(".NewsByCategory_articleList__1luur a.NewsPreview_previewContainer__3wvXq")
         for article in articles:
             item = self.get_item(article)
+            different = datetime.now() - item["created_at"]
+            if different.days > 366:
+                return
             yield item
+        self.page += 1
+        next_page = f"https://www.bungie.net/7/en/News?page={self.page}"
+        yield response.follow(next_page, callback=self.parse, meta=self.meta)
 
     @staticmethod
     def get_publish_date(article: Selector) -> datetime:
@@ -163,7 +164,7 @@ class BungieSpider(CustomSpider):
     @staticmethod
     def get_text(article: Selector) -> str:
         text = article.css("h4.NewsPreview_subtitle__12s33::text").get()
-        return text
+        return text if text else ""
 
     @staticmethod
     def get_image_src(article: Selector) -> str:

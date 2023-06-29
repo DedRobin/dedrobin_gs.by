@@ -3,6 +3,8 @@ psycopg2-binary==2.9.6
 crispy-bootstrap5==0.7
 django-debug-toolbar==4.1.0
 Scrapy==2.9.0
+scrapy-playwright==0.0.26
+
 
 selenium>=4.10.0
 Faker>=18.10.1
