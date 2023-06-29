@@ -16,11 +16,11 @@
         {% for num_page in displayed_pages %}
             {% if news.number == num_page %}
                 <li class="page-item active">
-                    <a class="page-link" href="{% url 'news_list' %}?page={{ num_page }}">{{ num_page }}</a>
+                    <a class="page-link" href="{% url_replace page=num_page %}">{{ num_page }}</a>
                 </li>
             {% else %}
-                <li class="page-item"><a class="page-link"
-                                         href="{% url 'news_list' %}?page={{ num_page }}">{{ num_page }}</a>
+                <li class="page-item">
+                    <a class="page-link" href="{% url_replace page=num_page %}">{{ num_page }}</a>
                 </li>
             {% endif %}
         {% endfor %}
