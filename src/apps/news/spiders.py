@@ -1,6 +1,6 @@
 import scrapy
 import re
-from abc import ABC, abstractstaticmethod
+from abc import ABC
 from datetime import datetime
 from scrapy.http import HtmlResponse
 from scrapy import Selector
@@ -18,23 +18,23 @@ class CustomSpider(scrapy.Spider, ABC):
         item["text"] = self.get_text(article)
         return item
 
-    @abstractstaticmethod
+    @staticmethod
     def get_publish_date(article: Selector) -> datetime:
         raise NotImplementedError
 
-    @abstractstaticmethod
+    @staticmethod
     def get_topic(article: Selector) -> str:
         raise NotImplementedError
 
-    @abstractstaticmethod
+    @staticmethod
     def get_link(article: Selector) -> str:
         raise NotImplementedError
 
-    @abstractstaticmethod
+    @staticmethod
     def get_text(article: Selector) -> str:
         raise NotImplementedError
 
-    @abstractstaticmethod
+    @staticmethod
     def get_image_src(article: Selector) -> str:
         raise NotImplementedError
 
@@ -96,7 +96,7 @@ class CapcomSpider(CustomSpider):
     def get_image_src(article: Selector) -> str:
         tag = article.css("article .image_col.view.zoom.overlay.z-depth-2")
         css_style = tag.get()
-        image_src = re.search(r"cdn\.capcom-unity\.com\/\S+(\.jpg|\.png)", css_style).group()
+        image_src = re.search(r"cdn\.capcom-unity\.com/\S+(\.jpg|\.png)", css_style).group()
         return "https://" + image_src
 
 
@@ -157,7 +157,7 @@ class BungieSpider(CustomSpider):
     @staticmethod
     def get_link(article: Selector) -> str:
         swagger = article.attrib.get("href")
-        base_url = article.root.base_url[:-10]
+        base_url = article.root.base_url[:22]
         link = base_url + swagger
         return link
 
@@ -169,5 +169,5 @@ class BungieSpider(CustomSpider):
     @staticmethod
     def get_image_src(article: Selector) -> str:
         tag = article.css("div.NewsPreview_thumbnail__DSUsw").get()
-        image_src = re.search(r"https:\/\/images.contentstack.io\/\S+(\.jpg|\.png)", tag).group()
+        image_src = re.search(r"https://images.contentstack.io/\S+(\.jpg|\.png)", tag).group()
         return image_src
