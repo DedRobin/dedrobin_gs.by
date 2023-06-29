@@ -3,14 +3,10 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.signalmanager import dispatcher
 from scrapy.utils.project import get_project_settings
 from django.db.models.query import QuerySet
-from src.apps.news.spiders import CapcomSpider
-from src.apps.news.models import News, Company
-from django.core.handlers.wsgi import WSGIRequest
+from src.apps.news.spiders import CapcomSpider, BungieSpider
 
 from django.core.paginator import Paginator, Page
-from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
-from django.contrib.auth.decorators import login_required
 
 from src.apps.news.models import News, Company
 
@@ -19,16 +15,31 @@ def run_parser(clear):
     if clear:
         News.objects.all().delete()
 
-    def crawler_results(signal, sender, item, response, spider):
-        company = Company.objects.get_or_create(name="Capcom", url="https://www.capcom.com/")  # -> ("Company" obj, bool)
+    async def crawler_results(signal, sender, item, response, spider):
+
+        company = []
+        if spider.name == "Capcom":
+            company = await Company.objects.aget_or_create(
+                name="Capcom",
+                url="https://www.capcom.com/"
+            )  # -> ("Company" obj, bool)
+        elif spider.name == "Bungie":
+            company = await Company.objects.aget_or_create(
+                name="Bungie",
+                url="https://www.bungie.net/"
+            )
         item["company"] = company[0]  # ("Company" obj, bool) -> "Company" obj
-        News.objects.update_or_create(external_id=item["external_id"], defaults=item)
+        try:
+            await News.objects.aupdate_or_create(link=item["link"], defaults=item)
+        except Exception as ex:
+            print(item["text"], item["link"], ex)
 
     dispatcher.connect(crawler_results, signal=signals.item_scraped)
     settings = get_project_settings()
     process = CrawlerProcess(settings=settings)
     crawlers = [
         CapcomSpider,
+        BungieSpider,
     ]
     for crawler in crawlers:
         process.crawl(crawler)

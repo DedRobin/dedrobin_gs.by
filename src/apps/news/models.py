@@ -18,11 +18,10 @@ class News(models.Model):
         verbose_name = "News"
         verbose_name_plural = "News"
 
-    external_id = models.IntegerField(unique=True, db_index=True, blank=True, null=True)
     topic = models.CharField(max_length=150)
-    link = models.URLField()
+    link = models.URLField(unique=True, db_index=True)
     image_src = models.URLField()
-    text = models.TextField()
+    text = models.TextField(null=True, default="No text")
     is_published = models.BooleanField(default=False)
     created_at = models.DateField(db_index=True)
 
