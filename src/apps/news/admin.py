@@ -6,6 +6,8 @@ from src.apps.news.models import News, Company
 class NewsAdmin(admin.ModelAdmin):
     list_display = ("topic", "link", "image_src", "is_published", "created_at", "company")
     fields = ("topic", "link", "image_src", "text", "is_published", "created_at", "company")
+    list_filter = ("is_published", "company__name",)
+    search_fields = ("topic", "link")
 
 
 @admin.register(Company)
