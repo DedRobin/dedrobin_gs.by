@@ -80,7 +80,21 @@ def get_news(params: dict = None) -> QuerySet:
         .filter(is_published=True) \
         .values("topic", "link", "image_src", "text", "is_published", "created_at", "company__name", "company__url") \
         .order_by("-created_at")
-    # params =
+
     if params:
+        if params.get("sort_by_date"):
+            sort_by_date = params.pop("sort_by_date")
+            if sort_by_date == "desc":
+                news = news.order_by("-created_at")
+            elif sort_by_date == "asc":
+                news = news.order_by("created_at")
+        if params.get("date_from") or params.get("date_to"):
+            date_from = params.pop("date_from", None)
+            date_to = params.pop("date_to", None)
+            if date_from:
+                news = news.filter(created_at__gte=date_from)
+            if date_to:
+                news = news.filter(created_at__lte=date_to)
+
         news = news.filter(**params)
     return news
