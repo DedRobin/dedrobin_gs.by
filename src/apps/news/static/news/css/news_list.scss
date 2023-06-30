@@ -1,7 +1,13 @@
 .article__company_url {
-	text-decoration: none;
-	transition: 0.2s;
-	&:hover {
-		background: #E0E0E0;
-	}
+  text-decoration: none;
+  transition: 0.2s;
+
+  &:hover {
+    background: #E0E0E0;
+  }
+}
+
+a._navbar_menu:hover {
+  transition: 0.2s;
+  background-color: green;
 }
