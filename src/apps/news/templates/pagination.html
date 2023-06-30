@@ -1,41 +1,45 @@
 {% load pagination_tags %}
 
-<nav aria-label="Page news navigation" class="d-flex justify-content-between">
-    <ul class="pagination">
-        {% if  news.has_previous %}
-            <li class="page-item">
-                <a class="page-link" href="{% url_replace page=1 %}">&#171;</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="{% url_replace page=news.previous_page_number %}">&#8249;</a>
-            </li>
-        {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#">&#171;</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">&#8249;</a></li>
-        {% endif %}
-        {% for num_page in displayed_pages %}
-            {% if news.number == num_page %}
-                <li class="page-item active">
-                    <a class="page-link" href="{% url_replace page=num_page %}">{{ num_page }}</a>
+<nav aria-label="Page news navigation" class="row row-cols-1 row-cols-xl-3 row-cols-md-2 justify-content-between">
+    <div class="col">
+        <ul class="pagination">
+            {% if  news.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url_replace page=1 %}">&#171;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="{% url_replace page=news.previous_page_number %}">&#8249;</a>
                 </li>
             {% else %}
-                <li class="page-item">
-                    <a class="page-link" href="{% url_replace page=num_page %}">{{ num_page }}</a>
-                </li>
+                <li class="page-item disabled"><a class="page-link" href="#">&#171;</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#">&#8249;</a></li>
             {% endif %}
-        {% endfor %}
-        {% if  news.has_next %}
-            <li class="page-item"><a class="page-link" href="{% url_replace page=news.next_page_number %}">&#8250;</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="{% url_replace page=news.paginator.num_pages %}">&#187;</a>
-            </li>
-        {% else %}
-            <li class="page-item disabled"><a class="page-link" href="#">&#8250;</a></li>
-            <li class="page-item disabled"><a class="page-link" href="#">&#187;</a></li>
-        {% endif %}
-    </ul>
-    <div>Page {{ news.number }} of {{ news.paginator.num_pages }}</div>
-    <div>
+            {% for num_page in displayed_pages %}
+                {% if news.number == num_page %}
+                    <li class="page-item active">
+                        <a class="page-link" href="{% url_replace page=num_page %}">{{ num_page }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url_replace page=num_page %}">{{ num_page }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if  news.has_next %}
+                <li class="page-item"><a class="page-link"
+                                         href="{% url_replace page=news.next_page_number %}">&#8250;</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="{% url_replace page=news.paginator.num_pages %}">&#187;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><a class="page-link" href="#">&#8250;</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#">&#187;</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="col text-center">Page {{ news.number }} of {{ news.paginator.num_pages }}</div>
+    <div class="col">
         <form method="get" class="input-group mb-3">
             <input type="number" class="form-control ms-2" placeholder="Page" aria-label="Page"
                    aria-describedby="follow-page" min="1" max="{{ news.paginator.num_pages }}" name="page">
