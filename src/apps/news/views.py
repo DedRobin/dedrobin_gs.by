@@ -12,7 +12,7 @@ def index(request: WSGIRequest):
     return render(request, "index.html")
 
 
-@login_required(redirect_field_name="", login_url="login")
+# @login_required(redirect_field_name="", login_url="login")
 def news_list(request: WSGIRequest):
     contex = {}
     params = {}
