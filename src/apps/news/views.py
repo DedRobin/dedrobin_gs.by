@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
-from src.apps.news.models import News
 from src.apps.news.forms import NewsFilterForm
 from src.apps.news.services import get_page_from_request, get_displayed_pages, get_news
 
@@ -27,7 +26,7 @@ def news_list(request: WSGIRequest):
     news = get_news(params=params)
 
     # Pagination
-    page = get_page_from_request(request=request, queryset=news, obj_per_page=24)
+    page = get_page_from_request(request=request, queryset=news, obj_per_page=10)
     displayed_pages = get_displayed_pages(page=page, show_pages=5)
 
     # Output data

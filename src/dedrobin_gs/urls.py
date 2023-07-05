@@ -23,4 +23,5 @@ urlpatterns = [
     path("", include("src.apps.news.urls")),
     path("authentication/", include("src.apps.user.urls")),
     path("profile/", include("src.apps.profile.urls")),
+    path("rent/", include("src.apps.rent.urls")),
 ]
