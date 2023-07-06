@@ -2,8 +2,8 @@ from django.db import models
 
 
 class ClubAddress(models.Model):
-    city = models.CharField()
-    street = models.CharField()
+    city = models.CharField(max_length=150)
+    street = models.CharField(max_length=150)
     building = models.IntegerField()
 
 
