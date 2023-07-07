@@ -11,3 +11,4 @@ class Club(models.Model):
     name = models.CharField()
     description = models.TextField()
     address = models.ForeignKey(ClubAddress, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="src/apps/club/static/images/club", blank=True, null=True)

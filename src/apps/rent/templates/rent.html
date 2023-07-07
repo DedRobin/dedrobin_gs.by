@@ -4,7 +4,7 @@
 {% load crispy_forms_filters %}
 
 {% block styles %}
-    {#    <link rel="stylesheet" href="{% static 'news/css/news_list.css' %}">#}
+    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">
 {% endblock %}
 
 {% block title %}Rent{% endblock %}
@@ -16,7 +16,8 @@
     <div class="row row-cols-1 row-cols-md-2 g-4 py-2">
         <div class="col">
             <a href="#" class="card">
-                <img src="https://source.unsplash.com/random/1000x500?sig=1" class="card-img-top" alt="no-image">
+                <img src="{% static 'rent/static/images/rent/console.jpg' %}" class="card-img-top  rent_image_settings"
+                     alt="no-image">
                 <div class="card-body">
                     <h5 class="card-title">Consoles</h5>
                     {#                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to#}
@@ -26,7 +27,8 @@
         </div>
         <div class="col">
             <a href="#" class="card">
-                <img src="https://source.unsplash.com/random/1000x500?sig=2" class="card-img-top" alt="no-image">
+                <img src="{% static 'rent/static/images/rent/room.jpg' %}" class="card-img-top  rent_image_settings"
+                     alt="no-image">
                 <div class="card-body">
                     <h5 class="card-title">Rooms</h5>
                     {#                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to#}
@@ -36,7 +38,8 @@
         </div>
         <div class="col">
             <a href="#" class="card">
-                <img src="https://source.unsplash.com/random/1000x500?sig=3" class="card-img-top" alt="no-image">
+                <img src="{% static 'rent/static/images/rent/club.jpg' %}" class="card-img-top rent_image_settings"
+                     alt="no-image">
                 <div class="card-body">
                     <h5 class="card-title">Clubs</h5>
                     {#                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to#}
