@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block styles %}
+    {#    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">#}
+{% endblock %}
+
+{% block title %}Rent Consoles{% endblock %}
+
+{% block leftsidebar %}
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        {% for console in consoles %}
+            {% include 'console.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block rightsidebar %}
+{% endblock %}
+>
