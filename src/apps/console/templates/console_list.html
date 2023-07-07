@@ -13,9 +13,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class="d-flex justify-content-center">
+    <div class="row row-cols-3">
         {% for console in consoles %}
-            {% include 'console.html' %}
+            <div class="col d-flex justify-content-center pt-3">
+                {% include 'console.html' %}
+            </div>
         {% endfor %}
     </div>
 {% endblock %}

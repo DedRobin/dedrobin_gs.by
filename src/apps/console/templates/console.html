@@ -1,22 +1,22 @@
-<div class="card" style="width: 56rem">
-    <img src="{{ console.image.url }}" class="card-img-top" alt="{{ console.name }}">
-    <div class="card-body">
-        <h5 class="card-title text-center">{{ console.name }}</h5>
+{% load static %}
+<div class="card justify-content-between" style="width: 20rem; align-content: space-between; flex-flow: row wrap;">
+    <div>
+        {% if console.image %}
+            <img src="{{ console.image.url }}" class="card-img-top" alt="{{ console.name }}">
+        {% else %}
+            <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="{{ console.name }}">
+        {% endif %}
+    </div>
+    <div class="card-body text-center">
+        <h5 class="card-title">{{ console.name }}</h5>
         {#        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's#}
         {#            content.</p>#}
+        <div class="d-grid">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Rent
+            </button>
+        </div>
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex justify-content-between">
-            <span>{{ console.price_per_hour }} BYN/hour</span>
-            <a href="#" class="btn btn-success">Rent/month</a>
-        </li>
-        <li class="list-group-item d-flex justify-content-between">
-            <span>{{ console.price_per_month }} BYN</span>
-            <a href="#" class="btn btn-success">Rent</a>
-        </li>
-    </ul>
-{#    <div class="card-body">#}
-    {#        <a href="#" class="card-link">Card link</a>#}
-    {#        <a href="#" class="card-link">Another link</a>#}
-    {#    </div>#}
 </div>
+
+{% include 'rent_console_modal.html' %}
