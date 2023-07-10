@@ -34,11 +34,11 @@ class Room(models.Model):
 
 class ConsoleOrder(models.Model):
     comment = models.TextField(blank=True, null=True)
-    console = models.ForeignKey(Console, on_delete=models.PROTECT, related_name="orders")
     days = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    console = models.ForeignKey(Console, on_delete=models.PROTECT, related_name="console_orders")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="console_orders")
 
     def __str__(self):
         return f"ConsoleOrder for the {self.console.name} ({self.user.username})"
@@ -48,8 +48,8 @@ class RoomOrder(models.Model):
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
-    room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name="orders")
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name="room_orders")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="room_orders")
 
     def __str__(self):
         return f"RoomOrder for the {self.room.name} ({self.user.username})"
@@ -59,8 +59,8 @@ class ClubOrder(models.Model):
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True, blank=True, null=True)
 
-    club = models.ForeignKey(Club, on_delete=models.PROTECT, related_name="orders")
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
+    club = models.ForeignKey(Club, on_delete=models.PROTECT, related_name="club_orders")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="club_orders")
 
     def __str__(self):
         return f"ClubOrder for the {self.club.name} ({self.user.username})"
