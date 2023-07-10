@@ -1,7 +1,7 @@
 import factory.fuzzy
 from factory.django import DjangoModelFactory
 
-from src.apps.console.models import Console
+from src.apps.rent.models import Console
 
 
 class ConsoleFactory(DjangoModelFactory):

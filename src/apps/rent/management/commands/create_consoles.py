@@ -1,8 +1,7 @@
 from django.core.management.base import BaseCommand
-from django.db.utils import IntegrityError
 
-from src.apps.console.models import Console
-from src.apps.console.factories import ConsoleFactory
+from src.apps.rent.models import Console
+from src.apps.rent.factories import ConsoleFactory
 
 
 class Command(BaseCommand):

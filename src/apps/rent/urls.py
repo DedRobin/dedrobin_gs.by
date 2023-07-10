@@ -1,8 +1,8 @@
 from django.urls import path, include
 
-from src.apps.rent.views import rent_list
+from src.apps.rent.views import rent_list, console_list
 
 urlpatterns = [
     path("", rent_list, name="rent_list"),
-    path("consoles/", include("src.apps.console.urls")),
+    path("consoles/", console_list, name="console_list"),
 ]

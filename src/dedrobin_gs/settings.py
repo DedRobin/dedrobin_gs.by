@@ -49,9 +49,6 @@ INSTALLED_APPS = [
     "src.apps.profile.apps.ProfileConfig",
     "src.apps.news.apps.NewsConfig",
     "src.apps.rent.apps.RentConfig",
-    "src.apps.club.apps.ClubConfig",
-    "src.apps.room.apps.RoomConfig",
-    "src.apps.console.apps.ConsoleConfig",
     # Other
     "debug_toolbar",
     "crispy_forms",

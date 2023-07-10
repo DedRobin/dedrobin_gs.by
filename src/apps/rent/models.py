@@ -1,9 +1,35 @@
 from django.db import models
 
-from src.apps.console.models import Console
-from src.apps.room.models import Room
-from src.apps.club.models import Club
 from src.apps.user.models import CustomUser
+
+
+class ClubAddress(models.Model):
+    city = models.CharField(max_length=150)
+    street = models.CharField(max_length=150)
+    building = models.IntegerField()
+
+
+class Club(models.Model):
+    name = models.CharField(max_length=150, unique=True, db_index=True)
+    description = models.TextField()
+    address = models.ForeignKey(ClubAddress, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="src/apps/rent/media/images/club", blank=True, null=True)
+
+
+class Console(models.Model):
+    name = models.CharField(max_length=150, unique=True, db_index=True)
+    price_per_day = models.DecimalField(max_digits=5, decimal_places=2)
+    image = models.ImageField(upload_to="src/apps/rent/media/images/console", blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Room(models.Model):
+    name = models.CharField(max_length=150, unique=True, db_index=True)
+    number = models.IntegerField()
+    seats = models.IntegerField()
+    image = models.ImageField(upload_to="src/apps/rent/media/images/room", blank=True, null=True)
 
 
 class Order:
