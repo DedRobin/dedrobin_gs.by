@@ -7,7 +7,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">{{ console.name }}</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post">
+            <form method="post" action="{% url 'rent_console' %}">
                 <div class="modal-body">
                     {% csrf_token %}
                     <input type="hidden" name="console" value="{{ console.name }}">

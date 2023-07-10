@@ -29,17 +29,20 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(ConsoleOrder)
 class ConsoleOrderAdmin(admin.ModelAdmin):
-    list_display = ("console", "comment", "user", "created_at")
-    fields = ("console", "description", "user")
+    list_display = ("console", "days", "comment", "user", "created_at")
+    fields = ("console", "days", "comment", "user", "created_at")
+    readonly_fields = ("created_at",)
 
 
 @admin.register(RoomOrder)
 class RoomOrderAdmin(admin.ModelAdmin):
     list_display = ("room", "comment", "user", "created_at")
-    fields = ("room", "description", "user")
+    fields = ("room", "comment", "user", "created_at")
+    readonly_fields = ("created_at",)
 
 
 @admin.register(ClubOrder)
 class ClubOrderAdmin(admin.ModelAdmin):
     list_display = ("club", "comment", "user", "created_at")
-    fields = ("club", "description", "user")
+    fields = ("club", "comment", "user", "created_at")
+    readonly_fields = ("created_at",)

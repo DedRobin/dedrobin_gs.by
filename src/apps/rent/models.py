@@ -32,30 +32,35 @@ class Room(models.Model):
     image = models.ImageField(upload_to="src/apps/rent/media/images/room", blank=True, null=True)
 
 
-class Order:
+class ConsoleOrder(models.Model):
     comment = models.TextField(blank=True, null=True)
+    console = models.ForeignKey(Console, on_delete=models.PROTECT, related_name="orders")
+    days = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
-
-
-class ConsoleOrder(Order, models.Model):
-    console = models.ForeignKey(Console, on_delete=models.PROTECT, related_name="orders")
-    days = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return f"ConsoleOrder for the {self.console.name} ({self.user.username})"
 
 
-class RoomOrder(Order, models.Model):
+class RoomOrder(models.Model):
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(db_index=True, auto_now_add=True)
+
     room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name="orders")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
 
     def __str__(self):
         return f"RoomOrder for the {self.room.name} ({self.user.username})"
 
 
-class ClubOrder(Order, models.Model):
+class ClubOrder(models.Model):
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(db_index=True, auto_now_add=True, blank=True, null=True)
+
     club = models.ForeignKey(Club, on_delete=models.PROTECT, related_name="orders")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
 
     def __str__(self):
         return f"ClubOrder for the {self.club.name} ({self.user.username})"
