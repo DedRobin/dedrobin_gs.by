@@ -64,6 +64,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "src.dedrobin_gs.middlewares.OrderCountMiddleware",
 ]
 
 ROOT_URLCONF = "src.dedrobin_gs.urls"

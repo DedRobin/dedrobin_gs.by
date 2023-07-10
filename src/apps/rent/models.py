@@ -15,6 +15,9 @@ class Club(models.Model):
     address = models.ForeignKey(ClubAddress, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="src/apps/rent/media/images/club", blank=True, null=True)
 
+    def __str__(self):
+        return f"Club '{self.name}'"
+
 
 class Console(models.Model):
     name = models.CharField(max_length=150, unique=True, db_index=True)
@@ -22,7 +25,7 @@ class Console(models.Model):
     image = models.ImageField(upload_to="src/apps/rent/media/images/console", blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return f"Console '{self.name}'"
 
 
 class Room(models.Model):
@@ -30,6 +33,9 @@ class Room(models.Model):
     number = models.IntegerField()
     seats = models.IntegerField()
     image = models.ImageField(upload_to="src/apps/rent/media/images/room", blank=True, null=True)
+
+    def __str__(self):
+        return f"Room '{self.name}'"
 
 
 class ConsoleOrder(models.Model):
