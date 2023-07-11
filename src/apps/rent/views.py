@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.handlers.wsgi import WSGIRequest
 
-from src.apps.rent.models import Console, ConsoleOrder
+from src.apps.rent.models import Console, ConsoleRent
 from src.apps.rent.forms import RentConsoleForm
 
 
@@ -24,5 +24,5 @@ def rent_console(request: WSGIRequest):
     console = Console.objects.get(name=console_name)
     days = int(request.POST.get("days"))
     comment = request.POST.get("comment")
-    ConsoleOrder.objects.create(user=request.user, console=console, days=days, comment=comment)
+    ConsoleRent.objects.create(user=request.user, console=console, days=days, comment=comment)
     return redirect("console_list")

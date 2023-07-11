@@ -38,35 +38,35 @@ class Room(models.Model):
         return f"Room '{self.name}'"
 
 
-class ConsoleOrder(models.Model):
+class ConsoleRent(models.Model):
     comment = models.TextField(blank=True, null=True)
     days = models.IntegerField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
-    console = models.ForeignKey(Console, on_delete=models.PROTECT, related_name="console_orders")
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="console_orders")
+    console = models.ForeignKey(Console, on_delete=models.PROTECT, related_name="rented_consoles")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="rented_consoles")
 
     def __str__(self):
         return f"ConsoleOrder for the {self.console.name} ({self.user.username})"
 
 
-class RoomOrder(models.Model):
+class RoomRent(models.Model):
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
-    room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name="room_orders")
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="room_orders")
+    room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name="rented_rooms")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="rented_rooms")
 
     def __str__(self):
         return f"RoomOrder for the {self.room.name} ({self.user.username})"
 
 
-class ClubOrder(models.Model):
+class ClubRent(models.Model):
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True, blank=True, null=True)
 
-    club = models.ForeignKey(Club, on_delete=models.PROTECT, related_name="club_orders")
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="club_orders")
+    club = models.ForeignKey(Club, on_delete=models.PROTECT, related_name="rented_clubs")
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="rented_clubs")
 
     def __str__(self):
         return f"ClubOrder for the {self.club.name} ({self.user.username})"
