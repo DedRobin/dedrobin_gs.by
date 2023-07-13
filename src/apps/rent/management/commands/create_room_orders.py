@@ -3,7 +3,6 @@ from django.core.management.base import BaseCommand
 
 from src.apps.rent.models import RoomRent, Room
 from src.apps.user.models import CustomUser
-from src.apps.rent.factories import ClubRentFactory
 from src.apps.user.factories import UserFactory
 from src.apps.rent.factories import RoomFactory, RoomRentFactory
 

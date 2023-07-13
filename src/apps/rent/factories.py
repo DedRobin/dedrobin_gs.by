@@ -55,3 +55,12 @@ class RoomRentFactory(DjangoModelFactory):
     comment = factory.Faker("text")
     room = factory.SubFactory(RoomFactory)
     user = factory.SubFactory(CustomUser)
+
+
+class ConsoleRentFactory(DjangoModelFactory):
+    class Meta:
+        model = ConsoleRent
+
+    comment = factory.Faker("text")
+    console = factory.SubFactory(ConsoleFactory)
+    user = factory.SubFactory(CustomUser)

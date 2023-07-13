@@ -4,6 +4,9 @@ from src.apps.user.models import CustomUser
 
 
 class ClubAddress(models.Model):
+    class Meta:
+        verbose_name_plural = "Club addresses"
+
     city = models.CharField(max_length=150)
     street = models.CharField(max_length=150)
     building = models.IntegerField()
