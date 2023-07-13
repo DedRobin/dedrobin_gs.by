@@ -54,8 +54,8 @@ class RoomRent(models.Model):
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
-    room = models.ForeignKey(Room, on_delete=models.PROTECT, related_name="rented_rooms")
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="rented_rooms")
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="rented_rooms")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="rented_rooms")
 
     def __str__(self):
         return f"RoomOrder for the {self.room.name} ({self.user.username})"

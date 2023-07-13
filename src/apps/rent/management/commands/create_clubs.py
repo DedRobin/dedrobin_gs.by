@@ -12,7 +12,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "--clear",
             action="store_true",
-            help="Create consoles",
+            help="Create clubs",
         )
 
     def handle(self, *args, **options):

@@ -1,7 +1,7 @@
 import factory.fuzzy
 from factory.django import DjangoModelFactory
 
-from src.apps.rent.models import Club, ClubAddress, Console
+from src.apps.rent.models import Club, ClubAddress, Console, Room
 
 
 class ConsoleFactory(DjangoModelFactory):
@@ -27,3 +27,12 @@ class ClubFactory(DjangoModelFactory):
     name = factory.Faker("color_name")
     description = factory.Faker("text")
     address = factory.SubFactory(ClubAddressFactory)
+
+
+class RoomFactory(DjangoModelFactory):
+    class Meta:
+        model = Room
+
+    name = factory.Faker("color_name")
+    number = factory.Faker("pyint")
+    seats = factory.Faker("pyint")
