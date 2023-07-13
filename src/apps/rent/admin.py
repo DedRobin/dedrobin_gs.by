@@ -29,20 +29,20 @@ class RoomAdmin(admin.ModelAdmin):
 
 @admin.register(ConsoleRent)
 class ConsoleOrderAdmin(admin.ModelAdmin):
-    list_display = ("console", "days", "comment", "user", "created_at")
-    fields = ("console", "days", "comment", "user", "created_at")
-    readonly_fields = ("created_at",)
+    list_display = ("console", "days", "comment", "user", "created_at", "is_completed", "completed_date")
+    fields = ("console", "days", "comment", "user", "created_at", "is_completed", "completed_date")
+    readonly_fields = ("created_at", "completed_date")
 
 
 @admin.register(RoomRent)
 class RoomOrderAdmin(admin.ModelAdmin):
-    list_display = ("room", "comment", "user", "created_at")
-    fields = ("room", "comment", "user", "created_at")
-    readonly_fields = ("created_at",)
+    list_display = ("room", "comment", "user", "created_at", "is_completed", "completed_date")
+    fields = ("room", "comment", "user", "created_at", "is_completed", "completed_date")
+    readonly_fields = ("created_at", "completed_date")
 
 
 @admin.register(ClubRent)
 class ClubOrderAdmin(admin.ModelAdmin):
-    list_display = ("club", "comment", "user", "created_at")
-    fields = ("club", "comment", "user", "created_at")
-    readonly_fields = ("created_at",)
+    list_display = ("club", "comment", "user", "created_at", "is_completed", "completed_date")
+    fields = ("club", "comment", "user", "created_at", "is_completed", "completed_date")
+    readonly_fields = ("created_at", "completed_date")

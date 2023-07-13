@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 from src.apps.user.models import CustomUser
 
@@ -41,10 +42,23 @@ class Room(models.Model):
         return f"Room '{self.name}'"
 
 
-class ConsoleRent(models.Model):
+class Rent(models.Model):
     comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(db_index=True, auto_now_add=True, blank=True, null=True)
+    is_completed = models.BooleanField(default=False, blank=True, null=True)
+    completed_date = models.DateTimeField(db_index=True, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+    def save(self, **kwargs):
+        if self.is_completed:
+            self.completed_date = datetime.now()
+        super().save(**kwargs)
+
+
+class ConsoleRent(Rent):
     days = models.IntegerField(blank=True, null=True)
-    created_at = models.DateTimeField(db_index=True, auto_now_add=True)
 
     console = models.ForeignKey(Console, on_delete=models.PROTECT, related_name="rented_consoles")
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="rented_consoles")
@@ -53,10 +67,7 @@ class ConsoleRent(models.Model):
         return f"ConsoleOrder for the {self.console.name} ({self.user.username})"
 
 
-class RoomRent(models.Model):
-    comment = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(db_index=True, auto_now_add=True)
-
+class RoomRent(Rent):
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="rented_rooms")
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="rented_rooms")
 
@@ -64,10 +75,7 @@ class RoomRent(models.Model):
         return f"RoomOrder for the {self.room.name} ({self.user.username})"
 
 
-class ClubRent(models.Model):
-    comment = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(db_index=True, auto_now_add=True, blank=True, null=True)
-
+class ClubRent(Rent):
     club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="rented_clubs", null=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="rented_clubs", null=True)
 
