@@ -65,8 +65,8 @@ class ClubRent(models.Model):
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(db_index=True, auto_now_add=True, blank=True, null=True)
 
-    club = models.ForeignKey(Club, on_delete=models.PROTECT, related_name="rented_clubs")
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="rented_clubs")
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="rented_clubs", null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="rented_clubs", null=True)
 
     def __str__(self):
         return f"ClubOrder for the {self.club.name} ({self.user.username})"
