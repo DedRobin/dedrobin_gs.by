@@ -46,3 +46,12 @@ class ClubRentFactory(DjangoModelFactory):
     comment = factory.Faker("text")
     club = factory.SubFactory(ClubFactory)
     user = factory.SubFactory(CustomUser)
+
+
+class RoomRentFactory(DjangoModelFactory):
+    class Meta:
+        model = RoomRent
+
+    comment = factory.Faker("text")
+    room = factory.SubFactory(RoomFactory)
+    user = factory.SubFactory(CustomUser)
