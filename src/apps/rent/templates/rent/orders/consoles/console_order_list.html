@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">
+{% endblock %}
+
+{% block title %}Rent-Orders{% endblock %}
+
+{% block leftsidebar %}
+{% endblock %}
+
+{% block content %}
+{#    <h1>Rooms</h1>#}
+{#    {% include 'rent/orders/navigation.html' %}#}
+{#    <div class="container">#}
+{#        <div class="row row-cols-1">#}
+{#            {% for room_order in room_orders %}#}
+{#                {% include 'rent/orders/room_rent.html' %}#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+{#    <h1>Clubs</h1>#}
+{#    <div class="container">#}
+{#        <div class="row row-cols-1">#}
+{#            {% for club_order in club_orders %}#}
+{#                {% include 'rent/orders/club_rent.html' %}#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+    <h1>Console orders</h1>
+    <div class="container">
+        <div class="row row-cols-1">
+            {% for console_order in console_orders %}
+                {% include 'rent/orders/consoles/console_rent.html' %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block rightsidebar %}
+{% endblock %}
+}

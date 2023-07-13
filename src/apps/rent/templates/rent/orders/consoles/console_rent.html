@@ -4,9 +4,10 @@
     <div class="row g-0">
         <div class="col-md-4">
             {% if console_order.console.image %}
-                <img src="{{ console_order.console.image.url }}" class="img-fluid rounded-start" alt="...">
+                <img src="{{ console_order.console.image.url }}" class="img-fluid rounded-start"
+                     alt="{{ console_order.console.name }}">
             {% else %}
-                <img src="{% static 'images/no-image.png' %}" class="img-fluid rounded-start" alt="...">
+                <img src="{% static 'images/no-image.png' %}" class="img-fluid rounded-start" alt="No image">
             {% endif %}
         </div>
         <div class="col-md-8">
@@ -14,7 +15,8 @@
                 <h5 class="card-title">{{ console_order.console.name }}</h5>
                 <p class="card-text">Days: {{ console_order.days }}</p>
                 <p class="card-text">Comment: {{ console_order.comment }}</p>
-                <p class="card-text"><small class="text-body-secondary">Was created at {{ console_order.created_at }}</small></p>
+                <p class="card-text"><small class="text-body-secondary">Was created
+                    at {{ console_order.created_at }}</small></p>
             </div>
         </div>
     </div>
