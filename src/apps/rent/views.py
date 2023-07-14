@@ -4,7 +4,7 @@ from django.db.models import Prefetch
 
 from src.apps.user.models import CustomUser
 from src.apps.rent.models import Console, ConsoleRent, Club, ClubRent, Room, RoomRent
-from src.apps.rent.forms import RentConsoleForm, RentRoomForm
+from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm
 
 
 def rent_list(request: WSGIRequest):
@@ -44,6 +44,23 @@ def rent_room(request: WSGIRequest):
     comment = request.POST.get("comment")
     RoomRent.objects.create(user=request.user, room=room, comment=comment)
     return redirect("room_list")
+
+
+def club_list(request: WSGIRequest):
+    contex = {}
+    clubs = Club.objects.all()
+    form = RentClubForm()
+    contex["clubs"] = clubs
+    contex["form"] = form
+    return render(request, "rent/clubs/club_list.html", contex)
+
+
+def rent_club(request: WSGIRequest):
+    club_name = request.POST.get("club")
+    club = Club.objects.get(name=club_name)
+    comment = request.POST.get("comment")
+    ClubRent.objects.create(user=request.user, club=club, comment=comment)
+    return redirect("club_list")
 
 
 def console_order_list(request: WSGIRequest):

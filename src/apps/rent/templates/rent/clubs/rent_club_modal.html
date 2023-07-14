@@ -1,0 +1,23 @@
+{% load crispy_forms_filters %}
+
+<div class="modal fade" id="{{ club.id }}-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{{ club.name }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'rent_club' %}">
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <input type="hidden" name="club" value="{{ club.name }}">
+                    {{ form|crispy }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Send the order</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

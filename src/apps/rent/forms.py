@@ -8,3 +8,7 @@ class RentConsoleForm(forms.Form):
 
 class RentRoomForm(forms.Form):
     comment = forms.CharField(required=False)
+
+
+class RentClubForm(forms.Form):
+    comment = forms.CharField(required=False)

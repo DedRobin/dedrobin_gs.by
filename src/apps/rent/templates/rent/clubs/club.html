@@ -1,0 +1,22 @@
+{% load static %}
+
+<div class="card justify-content-between" style="width: 20rem; align-content: space-between; flex-flow: row wrap;">
+    <div>
+        {% if club.image %}
+            <img src="{{ club.image.url }}" class="card-img-top" alt="{{ club.name }}">
+        {% else %}
+            <img src="{% static 'images/no-image.png' %}" class="card-img-top" alt="{{ club.name }}">
+        {% endif %}
+    </div>
+    <div class="card-body text-center">
+        <h5 class="card-title">{{ club.name }}</h5>
+        <div class="d-grid">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                    data-bs-target="#{{ club.id }}-modal">
+                Rent
+            </button>
+        </div>
+    </div>
+</div>
+
+{% include 'rent/clubs/rent_club_modal.html' %}
