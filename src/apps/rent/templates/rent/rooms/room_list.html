@@ -13,11 +13,11 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Consoles</h1>
+    <h1>Rooms</h1>
     <div class="row row-cols-3">
-        {% for console in consoles %}
+        {% for room in rooms %}
             <div class="col d-flex justify-content-center pt-3">
-                {% include 'rent/console/console.html' %}
+                {% include 'rent/rooms/room.html' %}
             </div>
         {% endfor %}
     </div>

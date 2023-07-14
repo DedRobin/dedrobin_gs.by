@@ -4,11 +4,46 @@ from django.db.models import Prefetch
 
 from src.apps.user.models import CustomUser
 from src.apps.rent.models import Console, ConsoleRent, Club, ClubRent, Room, RoomRent
-from src.apps.rent.forms import RentConsoleForm
+from src.apps.rent.forms import RentConsoleForm, RentRoomForm
 
 
 def rent_list(request: WSGIRequest):
     return render(request, "rent/rent_list.html")
+
+
+def console_list(request: WSGIRequest):
+    contex = {}
+    consoles = Console.objects.all()
+    form = RentConsoleForm()
+    contex["consoles"] = consoles
+    contex["form"] = form
+    return render(request, "rent/console/console_list.html", contex)
+
+
+def rent_console(request: WSGIRequest):
+    console_name = request.POST.get("console")
+    console = Console.objects.get(name=console_name)
+    days = int(request.POST.get("days"))
+    comment = request.POST.get("comment")
+    ConsoleRent.objects.create(user=request.user, console=console, days=days, comment=comment)
+    return redirect("console_list")
+
+
+def room_list(request: WSGIRequest):
+    contex = {}
+    rooms = Room.objects.all()
+    form = RentRoomForm()
+    contex["rooms"] = rooms
+    contex["form"] = form
+    return render(request, "rent/rooms/room_list.html", contex)
+
+
+def rent_room(request: WSGIRequest):
+    room_name = request.POST.get("room")
+    room = Room.objects.get(name=room_name)
+    comment = request.POST.get("comment")
+    RoomRent.objects.create(user=request.user, room=room, comment=comment)
+    return redirect("room_list")
 
 
 def console_order_list(request: WSGIRequest):
@@ -45,22 +80,3 @@ def room_order_list(request: WSGIRequest):
     ).filter(pk=request.user.id)[0]
     contex["room_orders"] = user.room_orders
     return render(request, "rent/orders/rooms/room_order_list.html", contex)
-
-
-def console_list(request: WSGIRequest):
-    contex = {}
-    consoles = Console.objects.all()
-    form = RentConsoleForm()
-    contex["consoles"] = consoles
-    contex["form"] = form
-    return render(request, "rent/console/console_list.html", contex)
-
-
-def rent_console(request: WSGIRequest):
-    contex = {}
-    console_name = request.POST.get("console")
-    console = Console.objects.get(name=console_name)
-    days = int(request.POST.get("days"))
-    comment = request.POST.get("comment")
-    ConsoleRent.objects.create(user=request.user, console=console, days=days, comment=comment)
-    return redirect("console_list")
