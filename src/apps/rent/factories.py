@@ -62,5 +62,6 @@ class ConsoleRentFactory(DjangoModelFactory):
         model = ConsoleRent
 
     comment = factory.Faker("text")
+    days = factory.Faker("pyint", min_value=1, max_value=31)
     console = factory.SubFactory(ConsoleFactory)
     user = factory.SubFactory(CustomUser)

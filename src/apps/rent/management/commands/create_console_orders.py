@@ -32,4 +32,4 @@ class Command(BaseCommand):
             ConsoleRentFactory.create_batch(size=3, console=console, user=random.choice(users))
             count += 1
 
-        print(f"{count} club orders have been created")
+        print(f"{count} console orders have been created")
