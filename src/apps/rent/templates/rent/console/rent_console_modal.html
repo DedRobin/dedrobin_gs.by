@@ -1,6 +1,7 @@
 {% load crispy_forms_filters %}
 
-<div class="modal fade" id="{{ console.id }}-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="{{ console.id }}-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,7 +16,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Send the order</button>
+                    {% if request.user.is_authenticated %}
+                        <button type="submit" class="btn btn-success">Send the order</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-success disabled">Send the order</button>
+                    {% endif %}
                 </div>
             </form>
         </div>

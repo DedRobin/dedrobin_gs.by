@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.core.handlers.wsgi import WSGIRequest
-from django.db.models import Prefetch
+from django.contrib.auth.decorators import login_required
 
-from src.apps.user.models import CustomUser
-from src.apps.rent.models import Console, ConsoleRent, Club, ClubRent, Room, RoomRent
+from src.apps.rent.services import create_console_order, create_room_order, create_club_order, get_console_order_list, \
+    get_club_order_list, get_room_order_list
+from src.apps.rent.models import Console, Club, Room
 from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm
 
 
@@ -16,12 +17,9 @@ def console_list(request: WSGIRequest):
     return render(request, "rent/console/console_list.html", contex)
 
 
+@login_required(redirect_field_name="", login_url="login")
 def rent_console(request: WSGIRequest):
-    console_name = request.POST.get("console")
-    console = Console.objects.get(name=console_name)
-    days = int(request.POST.get("days"))
-    comment = request.POST.get("comment")
-    ConsoleRent.objects.create(user=request.user, console=console, days=days, comment=comment)
+    create_console_order(request)
     return redirect("console_list")
 
 
@@ -34,11 +32,9 @@ def room_list(request: WSGIRequest):
     return render(request, "rent/rooms/room_list.html", contex)
 
 
+@login_required(redirect_field_name="", login_url="login")
 def rent_room(request: WSGIRequest):
-    room_name = request.POST.get("room")
-    room = Room.objects.get(name=room_name)
-    comment = request.POST.get("comment")
-    RoomRent.objects.create(user=request.user, room=room, comment=comment)
+    create_room_order(request)
     return redirect("room_list")
 
 
@@ -51,45 +47,31 @@ def club_list(request: WSGIRequest):
     return render(request, "rent/clubs/club_list.html", contex)
 
 
+@login_required(redirect_field_name="", login_url="login")
 def rent_club(request: WSGIRequest):
-    club_name = request.POST.get("club")
-    club = Club.objects.get(name=club_name)
-    comment = request.POST.get("comment")
-    ClubRent.objects.create(user=request.user, club=club, comment=comment)
+    create_club_order(request)
     return redirect("club_list")
 
 
+@login_required(redirect_field_name="", login_url="login")
 def console_order_list(request: WSGIRequest):
     contex = {}
-    console_rent_qs = ConsoleRent.objects.select_related("console")
-    user = CustomUser.objects.prefetch_related(
-        Prefetch(
-            "rented_consoles", queryset=console_rent_qs, to_attr="console_orders"
-        )
-    ).filter(pk=request.user.id)[0]
-    contex["console_orders"] = user.console_orders
+    console_orders = get_console_order_list(request)
+    contex["console_orders"] = console_orders
     return render(request, "rent/orders/consoles/console_order_list.html", contex)
 
 
+@login_required(redirect_field_name="", login_url="login")
 def club_order_list(request: WSGIRequest):
     contex = {}
-    club_rent_qs = ClubRent.objects.select_related("club")
-    user = CustomUser.objects.prefetch_related(
-        Prefetch(
-            "rented_clubs", queryset=club_rent_qs, to_attr="club_orders"
-        )
-    ).filter(pk=request.user.id)[0]
-    contex["club_orders"] = user.club_orders
+    club_orders = get_club_order_list(request)
+    contex["club_orders"] = club_orders
     return render(request, "rent/orders/clubs/club_order_list.html", contex)
 
 
+@login_required(redirect_field_name="", login_url="login")
 def room_order_list(request: WSGIRequest):
     contex = {}
-    club_rent_qs = RoomRent.objects.select_related("room")
-    user = CustomUser.objects.prefetch_related(
-        Prefetch(
-            "rented_rooms", queryset=club_rent_qs, to_attr="room_orders"
-        )
-    ).filter(pk=request.user.id)[0]
-    contex["room_orders"] = user.room_orders
+    room_orders = get_room_order_list(request)
+    contex["room_orders"] = room_orders
     return render(request, "rent/orders/rooms/room_order_list.html", contex)

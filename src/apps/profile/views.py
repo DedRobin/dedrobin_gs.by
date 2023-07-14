@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 from src.apps.profile.queries import select_profile_for_user, update_profile
 from src.apps.profile.services import convert_to_dict
@@ -9,6 +10,7 @@ from src.apps.user.queries import update_user, delete_user
 from src.apps.user.forms import UserForm
 
 
+@login_required(redirect_field_name="", login_url="login")
 def edit_profile(request: WSGIRequest):
     """Edit a specific user profile"""
 
@@ -42,6 +44,7 @@ def edit_profile(request: WSGIRequest):
     return render(request, "edit_profile.html", contex)
 
 
+@login_required(redirect_field_name="", login_url="login")
 def delete_profile(request: WSGIRequest):
     """Delete a specific user at all"""
 
