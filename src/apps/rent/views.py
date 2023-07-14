@@ -7,10 +7,6 @@ from src.apps.rent.models import Console, ConsoleRent, Club, ClubRent, Room, Roo
 from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm
 
 
-def rent_list(request: WSGIRequest):
-    return render(request, "rent/rent_list.html")
-
-
 def console_list(request: WSGIRequest):
     contex = {}
     consoles = Console.objects.all()
