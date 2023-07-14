@@ -7,20 +7,13 @@
     {#    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">#}
 {% endblock %}
 
-{% block title %}Rent Clubs{% endblock %}
+{% block title %}Shop{% endblock %}
 
 {% block leftsidebar %}
 {% endblock %}
 
 {% block content %}
-    <h1>Clubs</h1>
-    <div class="row row-cols-3">
-        {% for club in clubs %}
-            <div class="col d-flex justify-content-center pt-3">
-                {% include 'rent/clubs/club.html' %}
-            </div>
-        {% endfor %}
-    </div>
+    <h1>Shop</h1>
 {% endblock %}
 
 {% block rightsidebar %}
