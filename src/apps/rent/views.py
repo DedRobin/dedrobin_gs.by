@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from src.apps.rent.services import create_console_order, create_room_order, create_club_order, get_console_order_list, \
     get_club_order_list, get_room_order_list
 from src.apps.rent.models import Console, Club, Room
-from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm
+from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm, ConsoleFilterForm
 
 
 def console_list(request: WSGIRequest):
@@ -56,8 +56,10 @@ def rent_club(request: WSGIRequest):
 @login_required(redirect_field_name="", login_url="login")
 def console_order_list(request: WSGIRequest):
     contex = {}
+    console_filter_form = ConsoleFilterForm(request.GET)
     console_orders = get_console_order_list(request)
     contex["console_orders"] = console_orders
+    contex["console_filter_form"] = console_filter_form
     return render(request, "rent/orders/consoles/console_order_list.html", contex)
 
 

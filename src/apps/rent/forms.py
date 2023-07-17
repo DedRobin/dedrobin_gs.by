@@ -6,6 +6,10 @@ class RentConsoleForm(forms.Form):
     comment = forms.CharField(required=False)
 
 
+class ConsoleFilterForm(forms.Form):
+    is_completed = forms.BooleanField(required=False)
+
+
 class RentRoomForm(forms.Form):
     comment = forms.CharField(required=False)
 

@@ -10,26 +10,10 @@
 {% block title %}Rent-Orders{% endblock %}
 
 {% block leftsidebar %}
+    {% include 'rent/orders/consoles/filter.html' %}
 {% endblock %}
 
 {% block content %}
-{#    <h1>Rooms</h1>#}
-{#    {% include 'rent/orders/navigation.html' %}#}
-{#    <div class="container">#}
-{#        <div class="row row-cols-1">#}
-{#            {% for room_order in room_orders %}#}
-{#                {% include 'rent/orders/room_rent.html' %}#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </div>#}
-{#    <h1>Clubs</h1>#}
-{#    <div class="container">#}
-{#        <div class="row row-cols-1">#}
-{#            {% for club_order in club_orders %}#}
-{#                {% include 'rent/orders/club_rent.html' %}#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </div>#}
     <h1>Console orders</h1>
     <div class="container">
         <div class="row row-cols-1">
