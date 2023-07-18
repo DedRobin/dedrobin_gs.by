@@ -39,7 +39,9 @@ def create_room_order(request: WSGIRequest) -> None:
     room_name = request.POST.get("room")
     room = Room.objects.get(name=room_name)
     comment = request.POST.get("comment")
-    RoomRent.objects.create(user=request.user, room=room, comment=comment)
+    hours = request.POST.get("hours")
+    people = request.POST.get("people")
+    RoomRent.objects.create(user=request.user, room=room, comment=comment, hours=hours, people=people)
 
 
 def create_club_order(request: WSGIRequest) -> None:

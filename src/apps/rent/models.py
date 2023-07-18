@@ -1,6 +1,8 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 from datetime import datetime
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from src.apps.user.models import CustomUser
 
@@ -70,10 +72,15 @@ class ConsoleRent(Rent):
 
 class RoomRent(Rent):
     hours = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(limit_value=1)])
-    people = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(limit_value=1)])
-
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="rented_rooms")
+
+    people = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(limit_value=1)])
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="rented_rooms")
+
+    def clean(self):
+        if self.room.seats < self.people:
+            error = f"You must put the people number less than the seat number ({self.room.seats} < {self.people})"
+            raise ValidationError(error)
 
     def __str__(self):
         return f"RoomOrder for the {self.room.name} ({self.user.username})"

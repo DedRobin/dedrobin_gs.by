@@ -36,7 +36,7 @@ class RoomFactory(DjangoModelFactory):
 
     name = factory.Faker("color_name")
     number = factory.Faker("pyint")
-    seats = factory.Faker("pyint")
+    seats = factory.Faker("pyint", min_value=5, max_value=10)
 
 
 class ClubRentFactory(DjangoModelFactory):
