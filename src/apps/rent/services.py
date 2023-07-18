@@ -1,8 +1,26 @@
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
+from django.db.models.query import QuerySet
+from django.http.request import QueryDict
 
 from src.apps.user.models import CustomUser
 from src.apps.rent.models import Console, ConsoleRent, Club, ClubRent, Room, RoomRent
+
+
+def _add_filter(queryset: QuerySet, filter_query_dict: QueryDict) -> QuerySet:
+    if filter_query_dict.get("is_completed") == "yes":
+        queryset = queryset.filter(is_completed=True)
+    elif filter_query_dict.get("is_completed") == "no":
+        queryset = queryset.filter(is_completed=False)
+    if filter_query_dict.get("order_by_creation_date") == "asc":
+        queryset = queryset.order_by("created_at")
+    elif filter_query_dict.get("order_by_creation_date") == "desc":
+        queryset = queryset.order_by("-created_at")
+    if filter_query_dict.get("order_by_completed_date") == "asc":
+        queryset = queryset.order_by("completed_date")
+    elif filter_query_dict.get("order_by_completed_date") == "desc":
+        queryset = queryset.order_by("-completed_date")
+    return queryset
 
 
 def create_console_order(request: WSGIRequest) -> None:
@@ -37,6 +55,8 @@ def get_console_order_list(request: WSGIRequest) -> list[ConsoleRent]:
     """Receive console orders"""
 
     console_rent_qs = ConsoleRent.objects.select_related("console")
+    console_rent_qs = _add_filter(queryset=console_rent_qs, filter_query_dict=request.GET)
+
     user = CustomUser.objects.prefetch_related(
         Prefetch(
             "rented_consoles", queryset=console_rent_qs, to_attr="console_orders"

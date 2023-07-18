@@ -1,4 +1,4 @@
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
 {% load crispy_forms_filters %}
@@ -10,13 +10,7 @@
 {% block title %}DedRobin Game Service{% endblock %}
 
 {% block leftsidebar %}
-    <form class="" method="get">
-        {{ filter_form | crispy }}
-        <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-            <a class="btn btn-outline-danger" type="reset" href="{% url 'news_list' %}">Reset</a>
-        </div>
-    </form>
+    {% include 'filter.html' %}
 {% endblock %}
 
 {% block content %}
@@ -36,11 +30,4 @@
 {% endblock %}
 
 {% block rightsidebar %}
-    <form class="" method="get">
-        {{ filter_form | crispy }}
-        <div class="d-flex justify-content-between">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-            <a class="btn btn-outline-danger" type="reset" href="{% url 'news_list' %}">Reset</a>
-        </div>
-    </form>
 {% endblock %}

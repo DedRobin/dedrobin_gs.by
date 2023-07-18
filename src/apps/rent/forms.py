@@ -1,5 +1,14 @@
 from django import forms
 
+SORT_BY = (
+    ("asc", "Ascending"),
+    ("desc", "Descending"),
+)
+IS_COMPLETED = (
+    ("yes", "Yes"),
+    ("no", "No"),
+)
+
 
 class RentConsoleForm(forms.Form):
     days = forms.IntegerField(min_value=1, label="How many days would you like to rent the console?")
@@ -7,7 +16,9 @@ class RentConsoleForm(forms.Form):
 
 
 class ConsoleFilterForm(forms.Form):
-    is_completed = forms.BooleanField(required=False)
+    order_by_creation_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
+    order_by_completed_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
+    is_completed = forms.ChoiceField(choices=IS_COMPLETED, widget=forms.RadioSelect, required=False)
 
 
 class RentRoomForm(forms.Form):

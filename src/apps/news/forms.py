@@ -2,8 +2,10 @@ from django import forms
 
 from src.apps.news.models import Company
 
-SORT_BY = (("desc", "Desc"),
-           ("asc", "Asc"))
+SORT_BY = (
+    ("desc", "Desc"),
+    ("asc", "Asc"),
+)
 
 
 class NewsFilterForm(forms.Form):
