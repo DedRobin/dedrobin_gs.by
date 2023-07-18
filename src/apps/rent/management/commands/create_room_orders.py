@@ -30,6 +30,6 @@ class Command(BaseCommand):
             rooms = RoomFactory.create_batch(size=5)
         for room in rooms:
             RoomRentFactory.create_batch(size=3, room=room, user=random.choice(users))
-            count += 1
+            count += 3
 
         print(f"{count} room orders have been created")

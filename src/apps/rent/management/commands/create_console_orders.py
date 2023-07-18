@@ -30,6 +30,6 @@ class Command(BaseCommand):
             consoles = ConsoleFactory.create_batch(size=5)
         for console in consoles:
             ConsoleRentFactory.create_batch(size=3, console=console, user=random.choice(users))
-            count += 1
+            count += 3
 
         print(f"{count} console orders have been created")

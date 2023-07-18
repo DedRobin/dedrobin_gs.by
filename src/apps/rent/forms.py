@@ -23,6 +23,8 @@ class ConsoleFilterForm(forms.Form):
 
 class RentRoomForm(forms.Form):
     comment = forms.CharField(required=False)
+    hours = forms.IntegerField()
+    people = forms.IntegerField()
 
 
 class RentClubForm(forms.Form):

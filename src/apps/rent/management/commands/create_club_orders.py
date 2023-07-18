@@ -30,6 +30,6 @@ class Command(BaseCommand):
             clubs = ClubFactory.create_batch(size=5)
         for club in clubs:
             ClubRentFactory.create_batch(size=3, club=club, user=random.choice(users))
-            count += 1
+            count += 3
 
         print(f"{count} club orders have been created")

@@ -53,6 +53,8 @@ class RoomRentFactory(DjangoModelFactory):
         model = RoomRent
 
     comment = factory.Faker("text")
+    hours = factory.Faker("pyint", min_value=1, max_value=24)
+    people = factory.Faker("pyint", min_value=1, max_value=10)
     room = factory.SubFactory(RoomFactory)
     user = factory.SubFactory(CustomUser)
 

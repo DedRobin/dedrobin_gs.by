@@ -1,3 +1,4 @@
+from django.core.validators import MinValueValidator
 from django.db import models
 from datetime import datetime
 
@@ -68,6 +69,9 @@ class ConsoleRent(Rent):
 
 
 class RoomRent(Rent):
+    hours = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(limit_value=1)])
+    people = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(limit_value=1)])
+
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="rented_rooms")
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="rented_rooms")
 

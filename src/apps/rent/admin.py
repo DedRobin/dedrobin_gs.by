@@ -36,8 +36,8 @@ class ConsoleOrderAdmin(admin.ModelAdmin):
 
 @admin.register(RoomRent)
 class RoomOrderAdmin(admin.ModelAdmin):
-    list_display = ("room", "comment", "user", "created_at", "is_completed", "completed_date")
-    fields = ("room", "comment", "user", "created_at", "is_completed", "completed_date")
+    list_display = ("room", "comment", "hours", "people", "user", "created_at", "is_completed", "completed_date")
+    fields = ("room", "comment", "hours", "people", "user", "created_at", "is_completed", "completed_date")
     readonly_fields = ("created_at", "completed_date")
 
 
