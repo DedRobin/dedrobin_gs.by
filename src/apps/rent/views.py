@@ -34,8 +34,17 @@ def room_list(request: WSGIRequest):
 
 @login_required(redirect_field_name="", login_url="login")
 def rent_room(request: WSGIRequest):
-    create_room_order(request)
-    return redirect("room_list")
+    errors = create_room_order(request)
+    if errors:  # !!!!
+        contex = {}
+        rooms = Room.objects.all()
+        form = RentRoomForm()
+        contex["rooms"] = rooms
+        contex["form"] = form
+        contex["errors"] = errors
+        return render(request, "rent/rooms/room_list.html", contex)
+    else:
+        return redirect("room_list", )
 
 
 def club_list(request: WSGIRequest):

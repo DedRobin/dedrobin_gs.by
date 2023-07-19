@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 SORT_BY = (
     ("asc", "Ascending"),
@@ -25,6 +26,12 @@ class RentRoomForm(forms.Form):
     comment = forms.CharField(required=False)
     hours = forms.IntegerField()
     people = forms.IntegerField()
+
+    def __init__(self, **kwargs):
+        max_seats = kwargs.pop("max_seats", None)
+        super(RentRoomForm, self).__init__(**kwargs)
+        if max_seats:
+            self.fields["people"] = forms.IntegerField(max_value=max_seats)
 
 
 class RentClubForm(forms.Form):
