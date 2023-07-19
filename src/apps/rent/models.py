@@ -79,7 +79,7 @@ class RoomRent(Rent):
 
     def clean(self):
         if self.room.seats < self.people:
-            error_text = "You must put the people number less than the seat number \n(Seats={0} < People={1})"
+            error_text = "The number of people is more than the number of seats \n(Seats={0} < People={1})"
             raise ValidationError(error_text.format(self.room.seats, self.people))
 
     def __str__(self):
