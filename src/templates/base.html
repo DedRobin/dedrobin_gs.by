@@ -14,8 +14,9 @@
 <body>
 
 {% include 'navbar/navbar.html' %}
-{% include 'notification.html' %}
-
+{% if notification %}
+    {% include 'notification.html' %}
+{% endif %}
 <div class="container-fluid">
     <div class="row row-cols-1 row-cols-lg-3">
         <div class="col col-lg-2">{% block leftsidebar %}{% endblock %}</div>

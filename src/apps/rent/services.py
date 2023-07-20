@@ -34,20 +34,22 @@ def create_console_order(request: WSGIRequest) -> None:
     ConsoleRent.objects.create(user=request.user, console=console, days=days, comment=comment)
 
 
-def create_room_order(request: WSGIRequest) -> None | dict:
+def create_room_order(request: WSGIRequest) -> tuple[RoomRent | None, dict | None]:
     """Create an order to rent one club"""
 
     room_name = request.POST.get("room")
     room = Room.objects.get(name=room_name)
     form = RentRoomForm(data=request.POST, max_seats=room.seats)
     if form.is_valid():
-        comment = request.POST.get("comment")
-        hours = request.POST.get("hours")
-        people = request.POST.get("people")
-        RoomRent.objects.create(user=request.user, room=room, comment=comment, hours=hours, people=people)
-        return None
+        comment = form.cleaned_data["comment"]
+        hours = form.cleaned_data["hours"]
+        people = form.cleaned_data["people"]
+        room_rent_obj = RoomRent.objects.create(
+            user=request.user, room=room, comment=comment, hours=hours, people=people
+        )
+        return room_rent_obj, None
     else:
-        return form.errors
+        return None, form.errors
 
 
 def create_club_order(request: WSGIRequest) -> None:

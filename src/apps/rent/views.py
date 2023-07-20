@@ -23,8 +23,9 @@ def rent_console(request: WSGIRequest):
     return redirect("console_list")
 
 
-def room_list(request: WSGIRequest):
-    contex = {}
+def room_list(request: WSGIRequest, contex: dict = None):
+    if contex is None:
+        contex = {}
     rooms = Room.objects.all()
     form = RentRoomForm()
     contex["rooms"] = rooms
@@ -34,17 +35,14 @@ def room_list(request: WSGIRequest):
 
 @login_required(redirect_field_name="", login_url="login")
 def rent_room(request: WSGIRequest):
-    errors = create_room_order(request)
-    if errors:  # !!!!
-        contex = {}
-        rooms = Room.objects.all()
-        form = RentRoomForm()
-        contex["rooms"] = rooms
-        contex["form"] = form
-        contex["errors"] = errors
-        return render(request, "rent/rooms/room_list.html", contex)
+    room_rent_obj, errors = create_room_order(request)
+    if errors:
+        contex = dict(errors=errors)
     else:
-        return redirect("room_list", )
+        notification = "The room order №{0} was created successfully".format(room_rent_obj.id)
+        contex = dict(notification=notification)
+    render_obj = room_list(request, contex)
+    return render_obj
 
 
 def club_list(request: WSGIRequest):
