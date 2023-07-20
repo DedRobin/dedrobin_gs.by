@@ -52,8 +52,9 @@ def rent_room(request: WSGIRequest):
     return render_obj
 
 
-def club_list(request: WSGIRequest):
-    contex = {}
+def club_list(request: WSGIRequest, contex: dict = None):
+    if contex is None:
+        contex = {}
     clubs = Club.objects.all()
     form = RentClubForm()
     contex["clubs"] = clubs
@@ -63,8 +64,14 @@ def club_list(request: WSGIRequest):
 
 @login_required(redirect_field_name="", login_url="login")
 def rent_club(request: WSGIRequest):
-    create_club_order(request)
-    return redirect("club_list")
+    club_order, errors = create_club_order(request)
+    if errors:
+        contex = dict(errors=errors)
+    else:
+        notification = "The club order №{0} was created successfully".format(club_order.id)
+        contex = dict(notification=notification)
+    render_obj = room_list(request, contex)
+    return render_obj
 
 
 @login_required(redirect_field_name="", login_url="login")

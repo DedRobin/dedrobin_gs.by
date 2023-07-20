@@ -3,7 +3,7 @@ from django.db.models import Prefetch
 from django.db.models.query import QuerySet
 from django.http.request import QueryDict
 
-from src.apps.rent.forms import RentRoomForm, RentConsoleForm
+from src.apps.rent.forms import RentRoomForm, RentConsoleForm, RentClubForm
 from src.apps.user.models import CustomUser
 from src.apps.rent.models import Console, ConsoleRent, Club, ClubRent, Room, RoomRent
 
@@ -57,13 +57,18 @@ def create_room_order(request: WSGIRequest) -> tuple[RoomRent | None, dict | Non
         return None, form.errors
 
 
-def create_club_order(request: WSGIRequest) -> None:
+def create_club_order(request: WSGIRequest) -> tuple[ClubRent | None, dict | None]:
     """Create an order to rent one room"""
 
     club_name = request.POST.get("club")
     club = Club.objects.get(name=club_name)
-    comment = request.POST.get("comment")
-    ClubRent.objects.create(user=request.user, club=club, comment=comment)
+    form = RentClubForm(request.POST)
+    if form.is_valid():
+        comment = form.cleaned_data["comment"]
+        club_order = ClubRent.objects.create(user=request.user, club=club, comment=comment)
+        return club_order, None
+    else:
+        return None, form.errors
 
 
 def get_console_order_list(request: WSGIRequest) -> list[ConsoleRent]:

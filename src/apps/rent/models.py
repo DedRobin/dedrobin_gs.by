@@ -15,6 +15,9 @@ class ClubAddress(models.Model):
     street = models.CharField(max_length=150)
     building = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.city}, {self.street}, {self.building}"
+
 
 class Club(models.Model):
     name = models.CharField(max_length=150, unique=True, db_index=True)
