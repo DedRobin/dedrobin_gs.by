@@ -8,8 +8,9 @@ from src.apps.rent.models import Console, Club, Room
 from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm, ConsoleFilterForm
 
 
-def console_list(request: WSGIRequest):
-    contex = {}
+def console_list(request: WSGIRequest, contex: dict = None):
+    if contex is None:
+        contex = {}
     consoles = Console.objects.all()
     form = RentConsoleForm()
     contex["consoles"] = consoles
@@ -19,8 +20,14 @@ def console_list(request: WSGIRequest):
 
 @login_required(redirect_field_name="", login_url="login")
 def rent_console(request: WSGIRequest):
-    create_console_order(request)
-    return redirect("console_list")
+    console_order, errors = create_console_order(request)
+    if errors:
+        contex = dict(errors=errors)
+    else:
+        notification = "The console order №{0} was created successfully".format(console_order.id)
+        contex = dict(notification=notification)
+    render_obj = console_list(request, contex)
+    return render_obj
 
 
 def room_list(request: WSGIRequest, contex: dict = None):
@@ -35,11 +42,11 @@ def room_list(request: WSGIRequest, contex: dict = None):
 
 @login_required(redirect_field_name="", login_url="login")
 def rent_room(request: WSGIRequest):
-    room_rent_obj, errors = create_room_order(request)
+    room_order, errors = create_room_order(request)
     if errors:
         contex = dict(errors=errors)
     else:
-        notification = "The room order №{0} was created successfully".format(room_rent_obj.id)
+        notification = "The room order №{0} was created successfully".format(room_order.id)
         contex = dict(notification=notification)
     render_obj = room_list(request, contex)
     return render_obj

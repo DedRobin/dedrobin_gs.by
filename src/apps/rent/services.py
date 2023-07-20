@@ -3,7 +3,7 @@ from django.db.models import Prefetch
 from django.db.models.query import QuerySet
 from django.http.request import QueryDict
 
-from src.apps.rent.forms import RentRoomForm
+from src.apps.rent.forms import RentRoomForm, RentConsoleForm
 from src.apps.user.models import CustomUser
 from src.apps.rent.models import Console, ConsoleRent, Club, ClubRent, Room, RoomRent
 
@@ -24,14 +24,19 @@ def _add_filter(queryset: QuerySet, filter_query_dict: QueryDict) -> QuerySet:
     return queryset
 
 
-def create_console_order(request: WSGIRequest) -> None:
+def create_console_order(request: WSGIRequest) -> tuple[ConsoleRent | None, dict | None]:
     """Create an order to rent one console"""
 
     console_name = request.POST.get("console")
     console = Console.objects.get(name=console_name)
-    days = int(request.POST.get("days"))
-    comment = request.POST.get("comment")
-    ConsoleRent.objects.create(user=request.user, console=console, days=days, comment=comment)
+    form = RentConsoleForm(request.POST)
+    if form.is_valid():
+        days = int(form.cleaned_data["days"])
+        comment = form.cleaned_data["comment"]
+        console_rent = ConsoleRent.objects.create(user=request.user, console=console, days=days, comment=comment)
+        return console_rent, None
+    else:
+        return None, form.errors
 
 
 def create_room_order(request: WSGIRequest) -> tuple[RoomRent | None, dict | None]:
@@ -44,10 +49,10 @@ def create_room_order(request: WSGIRequest) -> tuple[RoomRent | None, dict | Non
         comment = form.cleaned_data["comment"]
         hours = form.cleaned_data["hours"]
         people = form.cleaned_data["people"]
-        room_rent_obj = RoomRent.objects.create(
+        room_rent = RoomRent.objects.create(
             user=request.user, room=room, comment=comment, hours=hours, people=people
         )
-        return room_rent_obj, None
+        return room_rent, None
     else:
         return None, form.errors
 
