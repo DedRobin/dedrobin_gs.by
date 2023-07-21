@@ -4,7 +4,7 @@ from scrapy.signalmanager import dispatcher
 from scrapy.utils.project import get_project_settings
 from django.db.models.query import QuerySet
 from django.http.request import QueryDict
-from src.apps.shop.spiders import OnlinerSpider
+from src.apps.shop.spiders import MouseSpider
 
 from django.core.paginator import Paginator, Page
 from django.core.handlers.wsgi import WSGIRequest
@@ -25,5 +25,9 @@ def run_parser(clear):
     dispatcher.connect(crawler_results, signal=signals.item_scraped)
     settings = get_project_settings()
     process = CrawlerProcess(settings=settings)
-    process.crawl(OnlinerSpider)
+    crawlers = [
+        MouseSpider,
+    ]
+    for crawler in crawlers:
+        process.crawl(crawler)
     process.start()
