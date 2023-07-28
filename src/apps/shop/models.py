@@ -12,10 +12,10 @@ class Product(models.Model):
 
 
 class Mouse(Product):
-    connection_interface = models.CharField(max_length=150)
-    sensor_type = models.CharField(max_length=150)
-    sensor_resolution = models.IntegerField()
-    color = models.CharField(max_length=150)
+    interface = models.CharField(max_length=100)
+    sensor_type = models.CharField(max_length=100)
+    max_sensor_resolution = models.CharField(max_length=100)
+    length_radius = models.CharField(max_length=100)
 
     def __str__(self):
         return f"Mouse '{self.name}'"

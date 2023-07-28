@@ -50,6 +50,21 @@ class MouseSpider(scrapy.Spider):
             # yield response.follow(url, callback=self.parse, meta=self.meta2)
 
     async def parse(self, response: HtmlResponse, **kwargs):
-        # price = response.css(".offers-description__price.offers-description__price_secondary")
-        price = response.css(".offers-description__price.offers-description__price_secondary").get()
+        # price = response.css(
+        #     ".offers-description__link.offers-description__link_nodecor.js-description-price-link::text").get()
+        # table_body = response.css("table.product-specs__table tbody:nth-child(n+2):nth-child(-n+3)")
+        # main = table_body[0].css("tr:nth-child(n+2):nth-child(-n+10)")
+        # interface = main[0].css("td:nth-child(2) span::text").get()  # Интерфейс подключения мыши
+        # sensor_type = main[4].css("td:nth-child(2) span::text").get()  # Тип сенсора
+        # max_sensor_resolution = main[6].css("td:nth-child(2) span::text").get()  # Максимальное разрешение сенсора
+        # tech_spec = table_body[0].css("tr:nth-child(n+2):nth-child(-n+10)")
+        tbodies = response.css("table tbody")[0:3]
+        tr1 = tbodies[0].css("tr")
+        date = tr1[1].css("td:nth-child(2) span::text").get()
+        tr2 = tbodies[1].css("tr")
+        interface = tr2[1].css("td:nth-child(2) span::text").get()  # Интерфейс подключения мыши
+        sensor_type = tr2[5].css("td:nth-child(2) span::text").get()  # Тип сенсора
+        max_sensor_resolution = tr2[7].css("td:nth-child(2) span::text").get()  # Максимальное разрешение сенсора
+        tr3 = tbodies[2].css("tr")
+        length = tr3[1].css("tr:nth-child(2) span::text").get()
         print()
