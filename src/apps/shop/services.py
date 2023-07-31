@@ -2,24 +2,27 @@ from scrapy import signals
 from scrapy.crawler import CrawlerProcess
 from scrapy.signalmanager import dispatcher
 from scrapy.utils.project import get_project_settings
-from django.db.models.query import QuerySet
-from django.http.request import QueryDict
-from src.apps.shop.spiders import MouseSpider
+from src.apps.shop.spiders import MouseSpider, KeyboardSpider, HeadphoneSpider
 
-from django.core.paginator import Paginator, Page
-from django.core.handlers.wsgi import WSGIRequest
-
-from src.apps.news.models import News, Company
+from src.apps.shop.models import Product
 
 
 #
 def run_parser(clear):
-    #     if clear:
-    #         Shop.objects.all().delete()
-    #
-    def crawler_results(signal, sender, item, response, spider):
-        # Shop.objects.update_or_create(link=item["link"], defaults=item)
-        print("crawler_results")
+    if clear:
+        Product.objects.all().delete()
+
+    async def crawler_results(signal, sender, item, response, spider):
+        if spider.name == "Mouse":
+            item["product_type"] = "mouse"
+        elif spider.name == "Keyboard":
+            item["product_type"] = "keyboard"
+        elif spider.name == "Headphone":
+            item["product_type"] = "headphone"
+        else:
+            item["product_type"] = "unknown"
+
+        await Product.objects.aupdate_or_create(image=item["image"], defaults=item)
 
     #
     dispatcher.connect(crawler_results, signal=signals.item_scraped)
@@ -27,6 +30,8 @@ def run_parser(clear):
     process = CrawlerProcess(settings=settings)
     crawlers = [
         MouseSpider,
+        KeyboardSpider,
+        HeadphoneSpider,
     ]
     for crawler in crawlers:
         process.crawl(crawler)
