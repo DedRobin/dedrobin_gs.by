@@ -2,7 +2,6 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from datetime import datetime
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
 
 from src.apps.user.models import CustomUser
 

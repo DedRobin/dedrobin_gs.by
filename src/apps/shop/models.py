@@ -1,4 +1,7 @@
 from django.db import models
+from django.core.validators import MinValueValidator
+
+from src.apps.user.models import CustomUser
 
 PRODUCT_TYPES = (
     ("mouse", "Mouse"),
@@ -17,3 +20,14 @@ class Product(models.Model):
 
     def __str__(self):
         return f"Product {self.product_type} '{self.name}'"
+
+
+class Purchase(models.Model):
+    quantity = models.IntegerField(validators=[MinValueValidator(limit_value=1)])
+    comment = models.TextField(blank=True, null=True)
+
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="purchases")
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="purchases")
+
+    def __str__(self):
+        return f"Purchase '{self.product.name}' for {self.user.username}'"

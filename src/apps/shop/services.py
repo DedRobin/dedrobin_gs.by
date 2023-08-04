@@ -2,9 +2,11 @@ from scrapy import signals
 from scrapy.crawler import CrawlerProcess
 from scrapy.signalmanager import dispatcher
 from scrapy.utils.project import get_project_settings
-from src.apps.shop.spiders import MouseSpider, KeyboardSpider, HeadphoneSpider
+from django.core.handlers.wsgi import WSGIRequest
 
-from src.apps.shop.models import Product
+from src.apps.shop.forms import PurchaseForm
+from src.apps.shop.spiders import MouseSpider, KeyboardSpider, HeadphoneSpider
+from src.apps.shop.models import Product, Purchase
 
 
 #
@@ -36,3 +38,19 @@ def run_parser(clear):
     for crawler in crawlers:
         process.crawl(crawler)
     process.start()
+
+
+def create_purchase(request: WSGIRequest, product_id: int) -> tuple[Purchase | None, dict | None]:
+    """Create a purchase"""
+
+    form = PurchaseForm(request.POST)
+    if form.is_valid():
+        purchase = Purchase.objects.create(
+            quantity=form.cleaned_data["quantity"],
+            comment=form.cleaned_data["comment"],
+            user=request.user,
+            product_id=product_id
+        )
+        return purchase, None
+    else:
+        return None, form.errors

@@ -1,5 +1,5 @@
 <div class="col">
-    <a href="#" class="card" style="text-decoration: none">
+    <div class="card">
         <img src="{{ product.image }}" class="card-img-top bg-white" alt="{{ product.name }}"
              style="height: 250px; object-fit: contain">
         <div class="card-header">
@@ -8,6 +8,14 @@
         <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
+            <div class="d-grid gap-2 mx-auto">
+                <a href="#" class="btn btn-warning">About</a>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#product-{{ product.id }}">Buy
+                </button>
+                <a href="#" class="btn btn-secondary">Into the basket</a>
+                {% include "product_modal.html" %}
+            </div>
         </div>
-    </a>
+    </div>
 </div>
+
