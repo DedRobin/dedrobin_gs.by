@@ -9,7 +9,7 @@
             <h5 class="card-title">{{ product.name }}</h5>
             <p class="card-text">{{ product.description }}</p>
             <div class="d-grid gap-2 mx-auto">
-                <a href="#" class="btn btn-warning">About</a>
+                <a href="{% url 'about_product' product_id=product.id %}" class="btn btn-warning">About</a>
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#product-{{ product.id }}">Buy
                 </button>
                 <a href="#" class="btn btn-secondary">Into the basket</a>

@@ -18,6 +18,13 @@ def product_list(request: WSGIRequest, contex: dict = None):
     return render(request, "product_list.html", contex, status=status)
 
 
+def about_product(request: WSGIRequest, product_id: int):
+    contex = {}
+    product = Product.objects.get(id=product_id)
+    contex["product"] = product
+    return render(request, "about_product.html", contex)
+
+
 @login_required(redirect_field_name="", login_url="login")
 def make_purchase(request: WSGIRequest, product_id: int):
     contex = {}
