@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
-from src.apps.shop.models import Product
+from src.apps.shop.models import Product, Purchase
 from src.apps.shop.forms import PurchaseForm
 from src.apps.shop.services import create_purchase
 
@@ -31,3 +31,11 @@ def make_purchase(request: WSGIRequest, product_id: int):
             contex["status"] = 201
     render_obj = product_list(request, contex)
     return render_obj
+
+
+@login_required(redirect_field_name="", login_url="login")
+def purchase_list(request: WSGIRequest):
+    contex = {}
+    purchases = Purchase.objects.filter(user=request.user).select_related("product", "user")
+    contex["purchases"] = purchases
+    return render(request, "purchase_list.html", contex)

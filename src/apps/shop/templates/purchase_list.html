@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block styles %}
+    {#    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">#}
+{% endblock %}
+
+{% block title %}Shop{% endblock %}
+
+{% block leftsidebar %}
+{% endblock %}
+
+{% block content %}
+    <h1>Purchases</h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        {% for purchase in purchases %}
+            {% include 'purchase.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block rightsidebar %}
+{% endblock %}
