@@ -15,7 +15,8 @@ def console_list(request: WSGIRequest, contex: dict = None):
     form = RentConsoleForm()
     contex["consoles"] = consoles
     contex["form"] = form
-    return render(request, "rent/console/console_list.html", contex)
+    status = contex.get("status")
+    return render(request, "rent/console/console_list.html", contex, status=status)
 
 
 @login_required(redirect_field_name="", login_url="login")
@@ -26,6 +27,7 @@ def rent_console(request: WSGIRequest):
     else:
         notification = "The console order №{0} was created successfully".format(console_order.id)
         contex = dict(notification=notification)
+        contex["status"] = 201
     render_obj = console_list(request, contex)
     return render_obj
 
@@ -48,6 +50,7 @@ def rent_room(request: WSGIRequest):
     else:
         notification = "The room order №{0} was created successfully".format(room_order.id)
         contex = dict(notification=notification)
+        contex["status"] = 201
     render_obj = room_list(request, contex)
     return render_obj
 
@@ -70,6 +73,7 @@ def rent_club(request: WSGIRequest):
     else:
         notification = "The club order №{0} was created successfully".format(club_order.id)
         contex = dict(notification=notification)
+        contex["status"] = 201
     render_obj = room_list(request, contex)
     return render_obj
 
