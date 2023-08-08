@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
@@ -21,7 +21,9 @@ def product_list(request: WSGIRequest, contex: dict = None):
 def about_product(request: WSGIRequest, product_id: int):
     contex = {}
     product = Product.objects.get(id=product_id)
+    form = PurchaseForm()
     contex["product"] = product
+    contex["form"] = form
     return render(request, "about_product.html", contex)
 
 
