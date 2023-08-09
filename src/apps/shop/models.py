@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.shortcuts import reverse
 
 from src.apps.user.models import CustomUser
 
@@ -20,6 +21,9 @@ class Product(models.Model):
 
     def __str__(self):
         return f"Product {self.product_type} '{self.name}'"
+
+    def get_absolute_url(self):
+        return reverse(viewname="shop:about_product", kwargs={"product_id": self.id})
 
 
 class Purchase(models.Model):

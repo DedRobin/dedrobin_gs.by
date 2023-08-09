@@ -6,7 +6,9 @@
             {{ purchase.product.price }} BYN
         </div>
         <div class="card-body">
-            <h5 class="card-title">{{ purchase.product.name }}</h5>
+            <h5 class="card-title">
+                <a href="{{ purchase.product.get_absolute_url }}">{{ purchase.product.name }}</a>
+            </h5>
             <p class="card-text">{{ purchase.product.description }}</p>
             <hr>
             <p class="card-text">Comment: {{ purchase.comment }}</p>
