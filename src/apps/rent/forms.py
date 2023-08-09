@@ -1,5 +1,4 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
 SORT_BY = (
     ("asc", "Ascending"),
@@ -16,12 +15,6 @@ class RentConsoleForm(forms.Form):
     comment = forms.CharField(required=False)
 
 
-class ConsoleFilterForm(forms.Form):
-    order_by_creation_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
-    order_by_completed_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
-    is_completed = forms.ChoiceField(choices=IS_COMPLETED, widget=forms.RadioSelect, required=False)
-
-
 class RentRoomForm(forms.Form):
     comment = forms.CharField(required=False)
     hours = forms.IntegerField()
@@ -36,3 +29,9 @@ class RentRoomForm(forms.Form):
 
 class RentClubForm(forms.Form):
     comment = forms.CharField(required=False)
+
+
+class RentFilterForm(forms.Form):
+    order_by_creation_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
+    order_by_completed_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
+    is_completed = forms.ChoiceField(choices=IS_COMPLETED, widget=forms.RadioSelect, required=False)

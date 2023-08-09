@@ -4,16 +4,17 @@
 {% load crispy_forms_filters %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">
+    <link rel="stylesheet" href="{% static 'rent/static/rent/css/rent.css' %}">
 {% endblock %}
 
-{% block title %}Rent-Orders{% endblock %}
+{% block title %}Club-Orders{% endblock %}
 
 {% block leftsidebar %}
+    {% include 'filter.html' %}
 {% endblock %}
 
 {% block content %}
-    <h1>Clubs orders</h1>
+    <h1>Club orders</h1>
     <div class="container">
         <div class="row row-cols-1">
             {% for club_order in club_orders %}

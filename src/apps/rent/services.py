@@ -1,3 +1,5 @@
+from typing import Type
+
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models import Prefetch
 from django.db.models.query import QuerySet
@@ -71,18 +73,33 @@ def create_club_order(request: WSGIRequest) -> tuple[ClubRent | None, dict | Non
         return None, form.errors
 
 
-def get_console_order_list(request: WSGIRequest) -> list[ConsoleRent]:
+def get_order_list(
+        request: WSGIRequest, model: Type[ConsoleRent] | Type[ClubRent] | Type[RoomRent] = None
+) -> list[ConsoleRent]:
     """Receive console orders"""
 
-    console_rent_qs = ConsoleRent.objects.select_related("console")
-    console_rent_qs = _add_filter(queryset=console_rent_qs, filter_query_dict=request.GET)
+    if request.GET:
+        if model is ConsoleRent:
+            console_rent_qs = ConsoleRent.objects.select_related("console")
+            prefetch_attr = "rented_consoles"
+        elif model is ClubRent:
+            console_rent_qs = ClubRent.objects.select_related("club")
+            prefetch_attr = "rented_clubs"
+        elif model is RoomRent:
+            console_rent_qs = RoomRent.objects.select_related("room")
+            prefetch_attr = "rented_rooms"
+        else:
+            raise Exception("You forgot to add 'model'")
+        console_rent_qs = _add_filter(queryset=console_rent_qs, filter_query_dict=request.GET)
 
-    user = CustomUser.objects.prefetch_related(
-        Prefetch(
-            "rented_consoles", queryset=console_rent_qs, to_attr="console_orders"
-        )
-    ).filter(pk=request.user.id)[0]
-    return user.console_orders
+        user = CustomUser.objects.prefetch_related(
+            Prefetch(
+                prefetch_attr, queryset=console_rent_qs, to_attr="orders"
+            )
+        ).filter(pk=request.user.id)[0]
+        return user.orders
+    else:
+        return model.objects.all()
 
 
 def get_club_order_list(request: WSGIRequest) -> list[ClubRent]:

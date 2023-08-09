@@ -15,7 +15,7 @@
                 <div class="d-flex justify-content-between">
                     <h5 class="card-title">{{ console_order.console.name }}</h5>
                     {% if console_order.is_completed %}
-                        <h5 class="card-title text-success">Completed</h5>
+                        <h5 class="card-title text-success">Completed on {{ console_order.completed_date }}</h5>
                     {% endif %}
                 </div>
                 <p class="card-text">Days: {{ console_order.days }}</p>

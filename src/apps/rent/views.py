@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
-from src.apps.rent.services import create_console_order, create_room_order, create_club_order, get_console_order_list, \
+from src.apps.rent.services import create_console_order, create_room_order, create_club_order, get_order_list, \
     get_club_order_list, get_room_order_list
-from src.apps.rent.models import Console, Club, Room
-from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm, ConsoleFilterForm
+from src.apps.rent.models import Console, Club, Room, ConsoleRent, ClubRent, RoomRent
+from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm, RentFilterForm
 
 
 def console_list(request: WSGIRequest, contex: dict = None):
@@ -81,24 +81,28 @@ def rent_club(request: WSGIRequest):
 @login_required(redirect_field_name="", login_url="login")
 def console_order_list(request: WSGIRequest):
     contex = {}
-    console_filter_form = ConsoleFilterForm(request.GET)
-    console_orders = get_console_order_list(request)
+    console_filter_form = RentFilterForm(request.GET)
+    console_orders = get_order_list(request=request, model=ConsoleRent)
     contex["console_orders"] = console_orders
-    contex["console_filter_form"] = console_filter_form
+    contex["filter_form"] = console_filter_form
     return render(request, "rent/orders/consoles/console_order_list.html", contex)
 
 
 @login_required(redirect_field_name="", login_url="login")
 def club_order_list(request: WSGIRequest):
     contex = {}
-    club_orders = get_club_order_list(request)
+    console_filter_form = RentFilterForm(request.GET)
+    club_orders = get_order_list(request=request, model=ClubRent)
     contex["club_orders"] = club_orders
+    contex["filter_form"] = console_filter_form
     return render(request, "rent/orders/clubs/club_order_list.html", contex)
 
 
 @login_required(redirect_field_name="", login_url="login")
 def room_order_list(request: WSGIRequest):
     contex = {}
-    room_orders = get_room_order_list(request)
+    console_filter_form = RentFilterForm(request.GET)
+    room_orders = get_order_list(request=request, model=RoomRent)
     contex["room_orders"] = room_orders
+    contex["filter_form"] = console_filter_form
     return render(request, "rent/orders/rooms/room_order_list.html", contex)
