@@ -10,10 +10,9 @@
             <p class="card-text">{{ purchase.product.description }}</p>
             <hr>
             <p class="card-text">Comment: {{ purchase.comment }}</p>
+            <p class="card-text text-success">Completed</p>
         </div>
-        <div class="card-footer text-success">
-            Completed
-        </div>
+        <div class="card-footer">{{ purchase.created_at }}</div>
     </div>
 </div>
 

@@ -25,6 +25,7 @@ class Product(models.Model):
 class Purchase(models.Model):
     quantity = models.IntegerField(validators=[MinValueValidator(limit_value=1)])
     comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="purchases")
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="purchases")

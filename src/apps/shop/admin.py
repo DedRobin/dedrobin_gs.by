@@ -20,5 +20,5 @@ class PurchaseAdmin(admin.ModelAdmin):
         verbose_name = "Purchase"
         verbose_name_plural = "Purchases"
 
-    list_display = ("quantity", "comment", "user", "product")
-    fields = ("quantity", "comment", "user", "product")
+    list_display = ("quantity", "comment", "user", "product", "created_at")
+    fields = ("quantity", "comment", "user", "product", "created_at")
