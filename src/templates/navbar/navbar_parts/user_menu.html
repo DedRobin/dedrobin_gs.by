@@ -24,6 +24,11 @@
                 <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit profile</a></li>
                 <hr class="dropdown-divider">
                 <li><a class="dropdown-item" href="{% url 'shop:purchase_list' %}">Purchases</a></li>
+                <li>
+                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Orders
+                    </button>
+                </li>
                 <hr class="dropdown-divider">
                 <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
             </ul>

@@ -142,7 +142,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "collectstatic"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, ""),
     os.path.join(BASE_DIR, "apps"),
 ]
 

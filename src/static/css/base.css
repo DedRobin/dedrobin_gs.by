@@ -1,0 +1,8 @@
+a.list-group-item:hover {
+    transition: 0.15s;
+}
+
+a.list-group-item:hover {
+    background: #198754;
+}
+

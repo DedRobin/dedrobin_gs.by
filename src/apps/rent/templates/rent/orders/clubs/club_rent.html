@@ -6,7 +6,7 @@
             {% if club_order.club.image %}
                 <img src="{{ club_order.club.image.url }}" class="img-fluid rounded-start" alt="{{ club_order.club.name }}">
             {% else %}
-                <img src="{% static 'images/no-image.png' %}" class="img-fluid rounded-start" alt="No image">
+                <img src="{% static 'static/images/no-image.png' %}" class="img-fluid rounded-start" alt="No image">
             {% endif %}
         </div>
         <div class="col-md-8">

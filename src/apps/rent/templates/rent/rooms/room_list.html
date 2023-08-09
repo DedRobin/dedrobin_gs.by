@@ -4,7 +4,7 @@
 {% load crispy_forms_filters %}
 
 {% block styles %}
-    {#    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">#}
+    <link rel="stylesheet" href="{% static 'rent/static/rent/css/rent.css' %}">
 {% endblock %}
 
 {% block title %}Rent Consoles{% endblock %}
@@ -19,7 +19,7 @@
             {{ errors }}
         </div>
     {% endif %}
-    <div class="row row-cols-3">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         {% for room in rooms %}
             <div class="col d-flex justify-content-center pt-3">
                 {% include 'rent/rooms/room.html' %}
