@@ -1,37 +1,21 @@
 <li class="nav-item dropdown w-25">
-    <div class="btn-group" role="group" aria-label="Vertical button group">
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                Orders <span class="badge text-bg-secondary">
-                {% if request.rented_thing_count %}
-                    {{ request.rented_thing_count }}
-                {% endif %}
-            </span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'console_order_list' %}">Console</a></li>
-                <li><a class="dropdown-item" href="{% url 'room_order_list' %}">Room</a></li>
-                <li><a class="dropdown-item" href="{% url 'club_order_list' %}">Club</a></li>
-            </ul>
-        </div>
-        <div class="btn-group" role="group">
-            <button type="button" class="btn btn-success dropdown-toggle px-5" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                Menu
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit profile</a></li>
-                <hr class="dropdown-divider">
-                <li><a class="dropdown-item" href="{% url 'shop:purchase_list' %}">Purchases</a></li>
-                <li>
-                    <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Orders
-                    </button>
-                </li>
-                <hr class="dropdown-divider">
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-            </ul>
-        </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-success dropdown-toggle px-5" data-bs-toggle="dropdown"
+                aria-expanded="false">
+            Menu
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit profile</a></li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" href="{% url 'shop:purchase_list' %}">Purchases</a></li>
+            <li>
+                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Orders
+                    <span class="badge text-bg-secondary">{{ request.rented_thing_count }}</span>
+                </button>
+            </li>
+            <hr class="dropdown-divider">
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+        </ul>
     </div>
 </li>
