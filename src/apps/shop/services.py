@@ -55,6 +55,21 @@ def create_purchase(request: WSGIRequest, product_id: int) -> tuple[Purchase | N
         return None, form.errors
 
 
+def get_product_list_by_filter(request: WSGIRequest) -> list[Product]:
+    """Receive product list by filter(request.GET)"""
+
+    products = Product.objects.all()
+    filter_query_dict = request.GET
+    if filter_query_dict:
+        name = filter_query_dict.get("name")
+        product_type = filter_query_dict.get("product_type")
+        if name:
+            products = products.filter(name__icontains=name)
+        if product_type:
+            products = products.filter(product_type=product_type)
+    return products
+
+
 def get_purchase_list_by_filter(request: WSGIRequest) -> list[Purchase]:
     """Receive purchase list by filter(request.GET)"""
 

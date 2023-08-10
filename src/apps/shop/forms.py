@@ -1,9 +1,16 @@
 from django import forms
 
+from src.apps.shop.models import PRODUCT_TYPES
+
 ORDER_BY = (
     ("asc", "Ascending"),
     ("desc", "Descending"),
 )
+
+
+class ProductFilterForm(forms.Form):
+    name = forms.CharField(required=False, max_length=150)
+    product_type = forms.ChoiceField(required=False, choices=PRODUCT_TYPES)
 
 
 class PurchaseForm(forms.Form):

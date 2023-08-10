@@ -1,20 +1,22 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
-from src.apps.shop.models import Product, Purchase
+from src.apps.shop.models import Product
 from src.apps.shop.forms import PurchaseForm
-from src.apps.shop.services import create_purchase, get_purchase_list_by_filter
-from src.apps.shop.forms import PurchaseFilterForm
+from src.apps.shop.services import create_purchase, get_purchase_list_by_filter, get_product_list_by_filter
+from src.apps.shop.forms import ProductFilterForm, PurchaseFilterForm
 
 
 def product_list(request: WSGIRequest, contex: dict = None):
     if contex is None:
         contex = {}
-    products = Product.objects.all()
+    products = get_product_list_by_filter(request)
     form = PurchaseForm()
+    filter_form = ProductFilterForm(request.GET)
     contex["products"] = products
     contex["form"] = form
+    contex["filter_form"] = filter_form
     status = contex.get("status")
     return render(request, "product/product_list.html", contex, status=status)
 
