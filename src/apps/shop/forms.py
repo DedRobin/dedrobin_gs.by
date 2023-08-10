@@ -10,7 +10,7 @@ ORDER_BY = (
 
 class ProductFilterForm(forms.Form):
     name = forms.CharField(required=False, max_length=150)
-    product_type = forms.ChoiceField(required=False, choices=PRODUCT_TYPES)
+    product_type = forms.ChoiceField(required=False, choices=PRODUCT_TYPES, widget=forms.RadioSelect)
 
 
 class PurchaseForm(forms.Form):
