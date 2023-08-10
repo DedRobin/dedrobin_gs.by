@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
-from datetime import datetime
 from django.core.exceptions import ValidationError
+from datetime import datetime
 
 from src.apps.user.models import CustomUser
 

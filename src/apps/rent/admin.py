@@ -1,6 +1,7 @@
 from django.contrib import admin
-
 from src.apps.rent.models import RoomRent, ConsoleRent, ClubRent, Club, Console, Room, ClubAddress
+
+from src.apps.rent.forms import ConsoleRentAdminForm, ClubRentAdminForm, RoomRentAdminForm
 
 
 @admin.register(ClubAddress)
@@ -33,6 +34,8 @@ class ConsoleOrderAdmin(admin.ModelAdmin):
     fields = ("console", "days", "comment", "user", "created_at", "is_completed", "completed_date")
     readonly_fields = ("created_at", "completed_date")
 
+    form = ConsoleRentAdminForm
+
 
 @admin.register(RoomRent)
 class RoomOrderAdmin(admin.ModelAdmin):
@@ -40,9 +43,13 @@ class RoomOrderAdmin(admin.ModelAdmin):
     fields = ("room", "comment", "hours", "people", "user", "created_at", "is_completed", "completed_date")
     readonly_fields = ("created_at", "completed_date")
 
+    form = RoomRentAdminForm
+
 
 @admin.register(ClubRent)
 class ClubOrderAdmin(admin.ModelAdmin):
     list_display = ("club", "comment", "user", "created_at", "is_completed", "completed_date")
     fields = ("club", "comment", "user", "created_at", "is_completed", "completed_date")
     readonly_fields = ("created_at", "completed_date")
+
+    form = ClubRentAdminForm

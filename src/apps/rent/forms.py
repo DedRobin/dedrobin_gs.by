@@ -1,5 +1,7 @@
 from django import forms
 
+from src.apps.rent.models import ConsoleRent, ClubRent, RoomRent
+
 SORT_BY = (
     ("asc", "Ascending"),
     ("desc", "Descending"),
@@ -35,3 +37,30 @@ class RentFilterForm(forms.Form):
     order_by_creation_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
     order_by_completed_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
     is_completed = forms.ChoiceField(choices=IS_COMPLETED, widget=forms.RadioSelect, required=False)
+
+
+class ConsoleRentAdminForm(forms.ModelForm):
+    class Meta:
+        model = ConsoleRent
+        widgets = {
+            "is_completed": forms.CheckboxInput
+        }
+        fields = "__all__"
+
+
+class ClubRentAdminForm(forms.ModelForm):
+    class Meta:
+        model = ClubRent
+        widgets = {
+            "is_completed": forms.CheckboxInput
+        }
+        fields = "__all__"
+
+
+class RoomRentAdminForm(forms.ModelForm):
+    class Meta:
+        model = RoomRent
+        widgets = {
+            "is_completed": forms.CheckboxInput
+        }
+        fields = "__all__"
