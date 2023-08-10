@@ -4,12 +4,13 @@
 {% load crispy_forms_filters %}
 
 {% block styles %}
-    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">
+    <link rel="stylesheet" href="{% static 'rent/static/rent/css/rent.css' %}">
 {% endblock %}
 
-{% block title %}Rent-Orders{% endblock %}
+{% block title %}Room orders{% endblock %}
 
 {% block leftsidebar %}
+    {% include 'rent/orders/rooms/filter.html' %}
 {% endblock %}
 
 {% block content %}

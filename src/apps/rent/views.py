@@ -81,28 +81,28 @@ def rent_club(request: WSGIRequest):
 @login_required(redirect_field_name="", login_url="login")
 def console_order_list(request: WSGIRequest):
     contex = {}
-    console_filter_form = RentFilterForm(request.GET)
+    filter_form = RentFilterForm(request.GET)
     console_orders = get_order_list(request=request, model=ConsoleRent)
     contex["console_orders"] = console_orders
-    contex["filter_form"] = console_filter_form
+    contex["filter_form"] = filter_form
     return render(request, "rent/orders/consoles/console_order_list.html", contex)
 
 
 @login_required(redirect_field_name="", login_url="login")
 def club_order_list(request: WSGIRequest):
     contex = {}
-    console_filter_form = RentFilterForm(request.GET)
+    filter_form = RentFilterForm(request.GET)
     club_orders = get_order_list(request=request, model=ClubRent)
     contex["club_orders"] = club_orders
-    contex["filter_form"] = console_filter_form
+    contex["filter_form"] = filter_form
     return render(request, "rent/orders/clubs/club_order_list.html", contex)
 
 
 @login_required(redirect_field_name="", login_url="login")
 def room_order_list(request: WSGIRequest):
     contex = {}
-    console_filter_form = RentFilterForm(request.GET)
+    filter_form = RentFilterForm(request.GET)
     room_orders = get_order_list(request=request, model=RoomRent)
     contex["room_orders"] = room_orders
-    contex["filter_form"] = console_filter_form
+    contex["filter_form"] = filter_form
     return render(request, "rent/orders/rooms/room_order_list.html", contex)
