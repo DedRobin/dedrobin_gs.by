@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
-from src.apps.rent.services import create_console_order, create_room_order, create_club_order, get_order_list, \
+from src.apps.rent.services import create_console_order, create_room_order, create_club_order, get_order_list_by_filter, \
     get_club_order_list, get_room_order_list
 from src.apps.rent.models import Console, Club, Room, ConsoleRent, ClubRent, RoomRent
 from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm, RentFilterForm
@@ -82,7 +82,7 @@ def rent_club(request: WSGIRequest):
 def console_order_list(request: WSGIRequest):
     contex = {}
     filter_form = RentFilterForm(request.GET)
-    console_orders = get_order_list(request=request, model=ConsoleRent)
+    console_orders = get_order_list_by_filter(request=request, model=ConsoleRent)
     contex["console_orders"] = console_orders
     contex["filter_form"] = filter_form
     return render(request, "rent/orders/consoles/console_order_list.html", contex)
@@ -92,7 +92,7 @@ def console_order_list(request: WSGIRequest):
 def club_order_list(request: WSGIRequest):
     contex = {}
     filter_form = RentFilterForm(request.GET)
-    club_orders = get_order_list(request=request, model=ClubRent)
+    club_orders = get_order_list_by_filter(request=request, model=ClubRent)
     contex["club_orders"] = club_orders
     contex["filter_form"] = filter_form
     return render(request, "rent/orders/clubs/club_order_list.html", contex)
@@ -102,7 +102,7 @@ def club_order_list(request: WSGIRequest):
 def room_order_list(request: WSGIRequest):
     contex = {}
     filter_form = RentFilterForm(request.GET)
-    room_orders = get_order_list(request=request, model=RoomRent)
+    room_orders = get_order_list_by_filter(request=request, model=RoomRent)
     contex["room_orders"] = room_orders
     contex["filter_form"] = filter_form
     return render(request, "rent/orders/rooms/room_order_list.html", contex)

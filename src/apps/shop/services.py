@@ -26,7 +26,6 @@ def run_parser(clear):
 
         await Product.objects.aupdate_or_create(image=item["image"], defaults=item)
 
-    #
     dispatcher.connect(crawler_results, signal=signals.item_scraped)
     settings = get_project_settings()
     process = CrawlerProcess(settings=settings)
@@ -54,3 +53,20 @@ def create_purchase(request: WSGIRequest, product_id: int) -> tuple[Purchase | N
         return purchase, None
     else:
         return None, form.errors
+
+
+def get_purchase_list_by_filter(request: WSGIRequest) -> list[Purchase]:
+    """Receive purchase list by filter(request.GET)"""
+
+    purchases = Purchase.objects.select_related("product", "user").filter(user=request.user)
+    filter_query_dict = request.GET
+    if filter_query_dict:
+        name = filter_query_dict.get("name")
+        order_by_date = filter_query_dict.get("order_by_date")
+        if name:
+            purchases = purchases.filter(product__name__icontains=name)
+        if order_by_date == "asc":
+            purchases = purchases.order_by("created_at")
+        elif order_by_date == "desc":
+            purchases = purchases.order_by("-created_at")
+    return purchases

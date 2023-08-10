@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 
 from src.apps.shop.models import Product, Purchase
 from src.apps.shop.forms import PurchaseForm
-from src.apps.shop.services import create_purchase
+from src.apps.shop.services import create_purchase, get_purchase_list_by_filter
+from src.apps.shop.forms import PurchaseFilterForm
 
 
 def product_list(request: WSGIRequest, contex: dict = None):
@@ -15,7 +16,7 @@ def product_list(request: WSGIRequest, contex: dict = None):
     contex["products"] = products
     contex["form"] = form
     status = contex.get("status")
-    return render(request, "product_list.html", contex, status=status)
+    return render(request, "product/product_list.html", contex, status=status)
 
 
 def about_product(request: WSGIRequest, product_id: int):
@@ -24,7 +25,7 @@ def about_product(request: WSGIRequest, product_id: int):
     form = PurchaseForm()
     contex["product"] = product
     contex["form"] = form
-    return render(request, "about_product.html", contex)
+    return render(request, "product/about_product.html", contex)
 
 
 @login_required(redirect_field_name="", login_url="login")
@@ -45,6 +46,8 @@ def make_purchase(request: WSGIRequest, product_id: int):
 @login_required(redirect_field_name="", login_url="login")
 def purchase_list(request: WSGIRequest):
     contex = {}
-    purchases = Purchase.objects.filter(user=request.user).select_related("product", "user")
+    filter_form = PurchaseFilterForm(request.GET)
+    purchases = get_purchase_list_by_filter(request)
     contex["purchases"] = purchases
-    return render(request, "purchase_list.html", contex)
+    contex["filter_form"] = filter_form
+    return render(request, "purchase/purchase_list.html", contex)

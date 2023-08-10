@@ -22,3 +22,5 @@ class PurchaseAdmin(admin.ModelAdmin):
 
     list_display = ("quantity", "comment", "user", "product", "created_at")
     fields = ("quantity", "comment", "user", "product", "created_at")
+    readonly_fields = ("created_at",)
+

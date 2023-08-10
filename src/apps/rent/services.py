@@ -76,7 +76,7 @@ def create_club_order(request: WSGIRequest) -> tuple[ClubRent | None, dict | Non
         return None, form.errors
 
 
-def get_order_list(
+def get_order_list_by_filter(
         request: WSGIRequest, model: Type[ConsoleRent] | Type[ClubRent] | Type[RoomRent] = None
 ) -> list[ConsoleRent]:
     """Receive console orders"""

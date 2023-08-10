@@ -10,13 +10,14 @@
 {% block title %}Shop{% endblock %}
 
 {% block leftsidebar %}
+    {% include 'purchase/purchase_filter.html' %}
 {% endblock %}
 
 {% block content %}
     <h1>Purchases</h1>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
         {% for purchase in purchases %}
-            {% include 'purchase.html' %}
+            {% include 'purchase/purchase.html' %}
         {% endfor %}
     </div>
 {% endblock %}
