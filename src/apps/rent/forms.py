@@ -3,8 +3,10 @@ from django import forms
 from src.apps.rent.models import ConsoleRent, ClubRent, RoomRent
 
 SORT_BY = (
-    ("asc", "Ascending"),
-    ("desc", "Descending"),
+    ("asc_by_creation_date", "Ascending by the creation date"),
+    ("desc_by_creation_date", "Descending by the creation date"),
+    ("asc_by_completed_date", "Ascending by the completed date"),
+    ("desc_by_completed_date", "Descending by the completed date"),
 )
 IS_COMPLETED = (
     ("yes", "Yes"),
@@ -34,8 +36,12 @@ class RentClubForm(forms.Form):
 
 
 class RentFilterForm(forms.Form):
-    order_by_creation_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
-    order_by_completed_date = forms.ChoiceField(choices=SORT_BY, widget=forms.RadioSelect, required=False)
+    order_by = forms.ChoiceField(
+        label="Sort by creation or completed date",
+        choices=SORT_BY,
+        widget=forms.RadioSelect,
+        required=False
+    )
     is_completed = forms.ChoiceField(choices=IS_COMPLETED, widget=forms.RadioSelect, required=False)
 
 

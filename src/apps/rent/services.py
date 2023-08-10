@@ -11,18 +11,21 @@ from src.apps.rent.models import Console, ConsoleRent, Club, ClubRent, Room, Roo
 
 
 def _add_filter(queryset: QuerySet, filter_query_dict: QueryDict) -> QuerySet:
-    if filter_query_dict.get("is_completed") == "yes":
+    is_completed = filter_query_dict.get("is_completed")
+    order_by = filter_query_dict.get("order_by")
+
+    if is_completed == "yes":
         queryset = queryset.filter(is_completed=True)
-    elif filter_query_dict.get("is_completed") == "no":
+    elif is_completed == "no":
         queryset = queryset.filter(is_completed=False)
-    if filter_query_dict.get("order_by_creation_date") == "asc":
+    if order_by == "asc_by_creation_date":
         queryset = queryset.order_by("created_at")
-    elif filter_query_dict.get("order_by_creation_date") == "desc":
+    elif order_by == "desc_by_creation_date":
         queryset = queryset.order_by("-created_at")
-    if filter_query_dict.get("order_by_completed_date") == "asc":
+    if order_by == "asc_by_completed_date":
         queryset = queryset.order_by("completed_date")
-    elif filter_query_dict.get("order_by_completed_date") == "desc":
-        queryset = queryset.order_by("-completed_date")
+    elif order_by == "desc_by_completed_date":
+        queryset = queryset.order_by("-is_completed", "-completed_date")
     return queryset
 
 
