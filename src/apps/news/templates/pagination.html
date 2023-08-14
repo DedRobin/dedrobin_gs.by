@@ -38,8 +38,8 @@
             {% endif %}
         </ul>
     </div>
-    <div class="col text-center">Page {{ news.number }} of {{ news.paginator.num_pages }} ({{ news.object_list.count }}
-        {% if news.object_list.count == 1 %}
+    <div class="col text-center">Page {{ news.number }} of {{ news.paginator.num_pages }} ({{ news_count }}
+        {% if news_count == 1 %}
             item
         {% else %}
             items

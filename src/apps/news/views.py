@@ -30,6 +30,7 @@ def news_list(request: WSGIRequest):
 
     # Output data
     contex["news"] = page
+    contex["news_count"] = len(page.object_list)
     contex["displayed_pages"] = displayed_pages
     contex["filter_form"] = filter_form
 
