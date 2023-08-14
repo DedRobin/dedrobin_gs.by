@@ -20,6 +20,7 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=150, blank=True, null=True, validators=[check_phone_number])
     age = models.IntegerField(blank=True, null=True)
     birthday = models.DateField(blank=True, null=True)
+    photo = models.ImageField(upload_to="profile/media/", blank=True, null=True)
 
     # Foreign key
     user = models.ForeignKey(CustomUser, related_name="profile", on_delete=models.CASCADE)
