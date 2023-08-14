@@ -3,7 +3,6 @@
         <img src="{{ purchase.product.image }}" class="card-img-top bg-white" alt="{{ purchase.product.name }}"
              style="height: 250px; object-fit: contain">
         <div class="card-header">
-            {{ purchase.product.price }} BYN
         </div>
         <div class="card-body">
             <h5 class="card-title">
@@ -11,6 +10,7 @@
             </h5>
             <p class="card-text">{{ purchase.product.description }}</p>
             <hr>
+            <p class="card-text text-danger ">Price: {{ purchase.product.price }} BYN</p>
             <p class="card-text">Comment: {{ purchase.comment }}</p>
             <p class="card-text text-success">Completed</p>
         </div>

@@ -2,8 +2,7 @@ from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
-from src.apps.rent.services import create_console_order, create_room_order, create_club_order, get_order_list_by_filter, \
-    get_club_order_list, get_room_order_list
+from src.apps.rent.services import create_console_order, create_room_order, create_club_order, get_order_list_by_filter
 from src.apps.rent.models import Console, Club, Room, ConsoleRent, ClubRent, RoomRent
 from src.apps.rent.forms import RentConsoleForm, RentRoomForm, RentClubForm, RentFilterForm
 

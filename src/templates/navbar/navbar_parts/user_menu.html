@@ -1,21 +1,33 @@
-<li class="nav-item dropdown w-25">
-    <div class="btn-group" role="group">
-        <button type="button" class="btn btn-success dropdown-toggle px-5" data-bs-toggle="dropdown"
-                aria-expanded="false">
-            Menu
-        </button>
-        <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit profile</a></li>
-            <hr class="dropdown-divider">
-            <li><a class="dropdown-item" href="{% url 'shop:purchase_list' %}">Purchases</a></li>
-            <li>
-                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Orders
-                    <span class="badge text-bg-secondary">{{ request.sum_count }}</span>
+<ul class="navbar-nav mb-2 mb-lg-0">
+    {% if not request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'registration' %}">Registration</a>
+        </li>
+    {% else %}
+        <li class="nav-item dropdown w-25">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-success dropdown-toggle px-5" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Menu
                 </button>
-            </li>
-            <hr class="dropdown-divider">
-            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-        </ul>
-    </div>
-</li>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit profile</a></li>
+                    <hr class="dropdown-divider">
+                    <li><a class="dropdown-item" href="{% url 'shop:purchase_list' %}">Purchases</a></li>
+                    <li>
+                        <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            Orders
+                            <span class="badge text-bg-secondary">{{ request.sum_count }}</span>
+                        </button>
+                    </li>
+                    <hr class="dropdown-divider">
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                </ul>
+            </div>
+        </li>
+    {% endif %}
+</ul>
