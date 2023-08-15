@@ -39,6 +39,7 @@ def edit_profile(request: WSGIRequest):
     user_updated_data = convert_to_dict(model=user)
     user_form = UserForm(data=user_updated_data)
     profile_form = ProfileForm(data=profile_updated_data)
+    contex["profile"] = profile
     contex["user_form"] = user_form
     contex["profile_form"] = profile_form
     return render(request, "edit_profile.html", contex)

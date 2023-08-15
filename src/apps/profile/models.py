@@ -23,7 +23,7 @@ class Profile(models.Model):
     photo = models.ImageField(upload_to="profile/media/", blank=True, null=True)
 
     # Foreign key
-    user = models.ForeignKey(CustomUser, related_name="profile", on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name="profile", on_delete=models.CASCADE, db_index=True)
 
     def __str__(self):
         return f"Profile for user '{self.user.username}' ({self.user.email}))"
