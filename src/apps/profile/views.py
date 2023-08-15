@@ -4,7 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 from src.apps.profile.queries import select_profile_for_user, update_profile
-from src.apps.profile.services import convert_to_dict
+from src.apps.profile.services import convert_to_dict, uploaded_photo
 from src.apps.profile.forms import ProfileForm
 from src.apps.user.queries import update_user, delete_user
 from src.apps.user.forms import UserForm
@@ -24,6 +24,14 @@ def edit_profile(request: WSGIRequest):
         if profile_form.is_valid() and user_form.is_valid():
             profile_updated_data = profile_form.cleaned_data
             user_updated_data = user_form.cleaned_data
+            if request.FILES.get("photo"):
+                if profile.photo.name:
+                    photo_path = uploaded_photo(photo=request.FILES["photo"], path=profile.photo.url)
+                else:
+                    photo_name = request.FILES["photo"].name
+                    photo_path = uploaded_photo(photo=request.FILES["photo"], path=f"profile/media/{photo_name}")
+                if photo_path:
+                    profile_updated_data["photo"] = photo_path
             profile = update_profile(profile=profile, data=profile_updated_data)
             try:
                 user = update_user(user=user, data=user_updated_data)
@@ -35,8 +43,8 @@ def edit_profile(request: WSGIRequest):
                 contex["message"] = "Your data has been updated"
         else:
             contex["error"] = user_form.errors or profile_form.errors
-    profile_updated_data = convert_to_dict(model=profile)
-    user_updated_data = convert_to_dict(model=user)
+    profile_updated_data = convert_to_dict(model_object=profile)
+    user_updated_data = convert_to_dict(model_object=user)
     user_form = UserForm(data=user_updated_data)
     profile_form = ProfileForm(data=profile_updated_data)
     contex["profile"] = profile
