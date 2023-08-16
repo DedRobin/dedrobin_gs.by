@@ -1,19 +1,6 @@
 import os
 from django.db.models.fields.files import ImageFieldFile
 
-from src.apps.user.models import CustomUser
-from src.apps.profile.models import Profile
-
-
-def convert_to_dict(model_object: CustomUser | Profile) -> dict:
-    data = {}
-    if isinstance(model_object, CustomUser):
-        data["email"] = model_object.email
-        data["username"] = model_object.username
-        return data
-    data = model_object.__dict__
-    return data
-
 
 def uploaded_photo(photo: ImageFieldFile, path: str) -> str:
     parts = path.split(".")

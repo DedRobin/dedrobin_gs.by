@@ -1,6 +1,19 @@
 from django.db.models import Q, Count
 
 from src.apps.user.models import CustomUser
+from src.apps.profile.models import Profile
+
+
+class ProfileMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.user.is_authenticated:
+            profile = Profile.objects.get_or_create(user=request.user)[0]
+            request.user_profile = profile
+        response = self.get_response(request)
+        return response
 
 
 class OrderCountMiddleware:

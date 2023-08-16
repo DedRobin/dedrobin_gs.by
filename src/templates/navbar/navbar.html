@@ -12,6 +12,13 @@
             {#                <button class="btn btn-outline-success" type="submit">Search</button>#}
             {#            </form>#}
             {% include 'navbar/navbar_parts/user_menu.html' %}
+            <ul class="navbar-nav mb-2 mb-lg-0 ms-2">
+                <li class="nav-item">
+                    <img class="rounded border border-3 border-success" src="{{ request.user_profile.photo.url }}"
+                         alt="user_profile"
+                         style="width: 80px; height: 80px">
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

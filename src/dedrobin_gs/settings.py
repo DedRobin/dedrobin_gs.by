@@ -70,6 +70,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
 
     # Custom
+    "src.dedrobin_gs.middlewares.ProfileMiddleware",
     "src.dedrobin_gs.middlewares.OrderCountMiddleware",
 ]
 

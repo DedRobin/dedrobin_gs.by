@@ -16,7 +16,8 @@ def edit_profile(request: WSGIRequest):
 
     contex = {}
     user = request.user
-    profile = select_profile_for_user(user=request.user)
+    # profile = select_profile_for_user(user=request.user)
+    profile = request.user_profile
 
     if request.method == "POST":
         profile_form = ProfileForm(data=request.POST)
@@ -43,10 +44,9 @@ def edit_profile(request: WSGIRequest):
                 contex["message"] = "Your data has been updated"
         else:
             contex["error"] = user_form.errors or profile_form.errors
-    profile_updated_data = convert_to_dict(model_object=profile)
-    user_updated_data = convert_to_dict(model_object=user)
-    user_form = UserForm(data=user_updated_data)
-    profile_form = ProfileForm(data=profile_updated_data)
+
+    user_form = UserForm(data={"username": user.username, "email": user.email})
+    profile_form = ProfileForm(data=profile.__dict__)
     contex["profile"] = profile
     contex["user_form"] = user_form
     contex["profile_form"] = profile_form
