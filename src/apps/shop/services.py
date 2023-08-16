@@ -72,7 +72,7 @@ def get_product_list_by_filter(request: WSGIRequest) -> QuerySet:
     return products
 
 
-def get_purchase_list_by_filter(request: WSGIRequest) -> list[Purchase]:
+def get_purchase_list_by_filter(request: WSGIRequest) -> QuerySet:
     """Receive purchase list by filter(request.GET)"""
 
     purchases = Purchase.objects.select_related("product", "user").filter(user=request.user)

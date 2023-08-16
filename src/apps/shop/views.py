@@ -18,7 +18,9 @@ def product_list(request: WSGIRequest, contex: dict = None):
     # Pagination
     page = get_page_from_request(request=request, queryset=products, obj_per_page=10)
     displayed_pages = get_displayed_pages(page=page, show_pages=5)
+
     filter_form = ProductFilterForm(request.GET)
+
     contex["page"] = page
     contex["form"] = form
     contex["displayed_pages"] = displayed_pages
@@ -57,6 +59,13 @@ def purchase_list(request: WSGIRequest):
     contex = {}
     filter_form = PurchaseFilterForm(request.GET)
     purchases = get_purchase_list_by_filter(request)
-    contex["purchases"] = purchases
+
+    # Pagination
+    page = get_page_from_request(request=request, queryset=purchases, obj_per_page=10)
+    displayed_pages = get_displayed_pages(page=page, show_pages=5)
+
+    contex["page"] = purchases
+    contex["displayed_pages"] = displayed_pages
+    contex["count"] = len(page.object_list)
     contex["filter_form"] = filter_form
     return render(request, "purchase/purchase_list.html", contex)

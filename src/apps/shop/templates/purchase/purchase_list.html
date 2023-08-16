@@ -15,11 +15,14 @@
 
 {% block content %}
     <h1>Completed purchases</h1>
+    {% include 'purchase/pagination.html' %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-        {% for purchase in purchases %}
+        {% for purchase in page %}
             {% include 'purchase/purchase.html' %}
         {% endfor %}
     </div>
+    {% include 'purchase/pagination.html' %}
+
 {% endblock %}
 
 {% block rightsidebar %}
