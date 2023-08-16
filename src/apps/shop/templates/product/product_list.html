@@ -17,12 +17,15 @@
 {% block breadcrumb %}
     <li class="breadcrumb-item active" aria-current="page">Shop</li>
 {% endblock %}
+
 {% block content %}
+    {% include 'product/pagination.html' %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-        {% for product in products %}
+        {% for product in page %}
             {% include 'product/product.html' %}
         {% endfor %}
     </div>
+    {% include 'product/pagination.html' %}
 {% endblock %}
 
 {% block rightsidebar %}

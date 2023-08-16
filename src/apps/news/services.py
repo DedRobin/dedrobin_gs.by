@@ -3,7 +3,6 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.signalmanager import dispatcher
 from scrapy.utils.project import get_project_settings
 from django.db.models.query import QuerySet
-from django.http.request import QueryDict
 from src.apps.news.spiders import CapcomSpider, BungieSpider
 
 from django.core.paginator import Paginator, Page

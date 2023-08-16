@@ -29,8 +29,8 @@ def news_list(request: WSGIRequest):
     displayed_pages = get_displayed_pages(page=page, show_pages=5)
 
     # Output data
-    contex["news"] = page
-    contex["news_count"] = len(page.object_list)
+    contex["page"] = page
+    contex["count"] = len(page.object_list)
     contex["displayed_pages"] = displayed_pages
     contex["filter_form"] = filter_form
 

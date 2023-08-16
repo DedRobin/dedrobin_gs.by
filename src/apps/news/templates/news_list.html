@@ -18,7 +18,7 @@
     <div class="container p-2">
         {% include "pagination.html" %}
         <div class="row row-cols-1 justify-content-center pb-2">
-            {% for article in news %}
+            {% for article in page %}
                 {% if article.is_published %}
                     <div class="col-8">
                         {% include 'article.html' %}

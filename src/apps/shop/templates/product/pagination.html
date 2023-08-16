@@ -3,7 +3,7 @@
 <nav aria-label="Page news navigation" class="row row-cols-1 row-cols-xl-3 row-cols-md-2 justify-content-between">
     <div class="col">
         <ul class="pagination">
-            {% if  page.has_previous %}
+            {% if page.has_previous %}
                 <li class="page-item">
                     <a class="page-link" href="{% url_replace page=1 %}">&#171;</a>
                 </li>
@@ -38,8 +38,8 @@
             {% endif %}
         </ul>
     </div>
-    <div class="col text-center">Page {{ page.number }} of {{ page.paginator.num_pages }} ({{ count }}
-        {% if count == 1 %}
+    <div class="col text-center">Page {{ page.number }} of {{ page.paginator.num_pages }} ({{ quantity }}
+        {% if product_count == 1 %}
             item
         {% else %}
             items
