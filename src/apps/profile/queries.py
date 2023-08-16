@@ -1,12 +1,4 @@
-from django.contrib.auth.models import User
-
 from src.apps.profile.models import Profile
-from src.apps.user.models import CustomUser
-
-
-def select_profile_for_user(user: CustomUser | User) -> Profile:
-    profile = Profile.objects.get_or_create(user=user)[0]
-    return profile
 
 
 def update_profile(profile: Profile, data: dict) -> Profile:
