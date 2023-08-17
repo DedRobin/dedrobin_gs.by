@@ -1,6 +1,6 @@
 from django.urls import path
 
-from src.apps.shop.views import product_list, make_purchase, about_product, purchase_list
+from src.apps.shop.views import product_list, make_purchase, about_product, purchase_list, basket
 
 app_name = "shop"
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path("products/<int:product_id>/", about_product, name="about_product"),
     path("products/<int:product_id>/buy/", make_purchase, name="make_purchase"),
     path("purchases/", purchase_list, name="purchase_list"),
+    path("basket/", basket, name="basket"),
 ]

@@ -1,0 +1,22 @@
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-4 text-center"
+             style="background-color: white; max-width: 300px; height: 300px; border-radius: 5px 0 0 0; ">
+            <img src="{{ product.image }}" class="img-fluid" alt="{{ product.name }}">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                {#                <p class="card-text"><small class="text-body-secondary">{{ product.updated_at }}</small></p>#}
+            </div>
+        </div>
+        <div class="card-footer p-0">
+            <div class="d-flex btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-warning" style="border-radius: 0 0 0 5px;">Order</button>
+                <button type="button" class="btn btn-outline-danger" style="border-radius: 0 0 5px 0;">Remove</button>
+            </div>
+        </div>
+    </div>
+</div>
+

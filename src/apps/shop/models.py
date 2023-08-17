@@ -36,3 +36,14 @@ class Purchase(models.Model):
 
     def __str__(self):
         return f"Purchase '{self.product.name}' for {self.user.username}'"
+
+
+class Basket(models.Model):
+    products = models.ManyToManyField(Product, related_name="products")
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="basket")
+
+    def product_quantity(self):
+        return self.products.count()
+
+    def __str__(self):
+        return f"Basket №{self.id} - Owner '{self.user.username}'"

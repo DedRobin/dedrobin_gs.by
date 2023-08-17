@@ -5,11 +5,12 @@ from django.contrib.auth.decorators import login_required
 from src.apps.shop.models import Product
 from src.apps.shop.forms import PurchaseForm
 from src.apps.shop.services import create_purchase, get_purchase_list_by_filter, get_product_list_by_filter, \
-    get_page_from_request, get_displayed_pages
+    get_page_from_request, get_displayed_pages, get_products_from_user_basket
 from src.apps.shop.forms import ProductFilterForm, PurchaseFilterForm
 
 
 def product_list(request: WSGIRequest, contex: dict = None):
+    """Receive a product list for a specific user"""
     if contex is None:
         contex = {}
     products = get_product_list_by_filter(request)
@@ -31,6 +32,8 @@ def product_list(request: WSGIRequest, contex: dict = None):
 
 
 def about_product(request: WSGIRequest, product_id: int):
+    """Follow to a product description"""
+
     contex = {}
     product = Product.objects.get(id=product_id)
     form = PurchaseForm()
@@ -41,6 +44,8 @@ def about_product(request: WSGIRequest, product_id: int):
 
 @login_required(redirect_field_name="", login_url="login")
 def make_purchase(request: WSGIRequest, product_id: int):
+    """Create a purchase for specific user"""
+
     contex = {}
     if request.method == "POST":
         purchase, errors = create_purchase(request, product_id)
@@ -56,6 +61,8 @@ def make_purchase(request: WSGIRequest, product_id: int):
 
 @login_required(redirect_field_name="", login_url="login")
 def purchase_list(request: WSGIRequest):
+    """Receive a purchase list for a specific user"""
+
     contex = {}
     filter_form = PurchaseFilterForm(request.GET)
     purchases = get_purchase_list_by_filter(request)
@@ -69,3 +76,12 @@ def purchase_list(request: WSGIRequest):
     contex["count"] = len(page.object_list)
     contex["filter_form"] = filter_form
     return render(request, "purchase/purchase_list.html", contex)
+
+
+def basket(request: WSGIRequest):
+    """Receive a product list added to a basket"""
+
+    contex = {}
+    products = get_products_from_user_basket(request)
+    contex["page"] = products
+    return render(request, "basket/basket.html", contex)

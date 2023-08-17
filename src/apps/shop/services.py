@@ -8,7 +8,7 @@ from scrapy.utils.project import get_project_settings
 
 from src.apps.shop.forms import PurchaseForm
 from src.apps.shop.spiders import MouseSpider, KeyboardSpider, HeadphoneSpider
-from src.apps.shop.models import Product, Purchase
+from src.apps.shop.models import Product, Purchase, Basket
 
 
 #
@@ -118,3 +118,9 @@ def get_displayed_pages(page: Page, show_pages: int) -> range:
                 end += 1
         displayed_pages = page_range[start:end]
     return displayed_pages
+
+
+def get_products_from_user_basket(request: WSGIRequest):
+    basket = Basket.objects.get(user=request.user)
+    products = basket.products.all()
+    return products

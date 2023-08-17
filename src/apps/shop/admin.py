@@ -1,5 +1,5 @@
 from django.contrib import admin
-from src.apps.shop.models import Product, Purchase
+from src.apps.shop.models import Product, Purchase, Basket
 
 
 @admin.register(Product)
@@ -23,4 +23,14 @@ class PurchaseAdmin(admin.ModelAdmin):
     list_display = ("quantity", "comment", "user", "product", "created_at")
     fields = ("quantity", "comment", "user", "product", "created_at")
     readonly_fields = ("created_at",)
+
+
+@admin.register(Basket)
+class BasketAdmin(admin.ModelAdmin):
+    class Meta:
+        verbose_name = "Basket"
+        verbose_name_plural = "Baskets"
+
+    list_display = ("user", "product_quantity")
+    fields = ("user", "products")
 
