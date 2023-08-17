@@ -83,21 +83,22 @@ def get_order_list_by_filter(
 
     if request.GET:
         if model is ConsoleRent:
-            console_rent_qs = ConsoleRent.objects.select_related("console")
+            queryset = ConsoleRent.objects.select_related("console")
             prefetch_attr = "rented_consoles"
         elif model is ClubRent:
-            console_rent_qs = ClubRent.objects.select_related("club")
+            queryset = ClubRent.objects.select_related("club")
             prefetch_attr = "rented_clubs"
         elif model is RoomRent:
-            console_rent_qs = RoomRent.objects.select_related("room")
+            queryset = RoomRent.objects.select_related("room")
             prefetch_attr = "rented_rooms"
         else:
             raise Exception("You forgot to add 'model'")
-        console_rent_qs = _add_filter(queryset=console_rent_qs, filter_query_dict=request.GET)
+
+        queryset = _add_filter(queryset=queryset, filter_query_dict=request.GET)
 
         user = CustomUser.objects.prefetch_related(
             Prefetch(
-                prefetch_attr, queryset=console_rent_qs, to_attr="orders"
+                prefetch_attr, queryset=queryset, to_attr="orders"
             )
         ).filter(pk=request.user.id)[0]
         return user.orders

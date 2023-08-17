@@ -46,6 +46,7 @@ class ClubRentFactory(DjangoModelFactory):
     comment = factory.Faker("text")
     club = factory.SubFactory(ClubFactory)
     user = factory.SubFactory(UserFactory)
+    is_completed = factory.Faker("pybool")
 
 
 class RoomRentFactory(DjangoModelFactory):
@@ -55,6 +56,8 @@ class RoomRentFactory(DjangoModelFactory):
     comment = factory.Faker("text")
     hours = factory.Faker("pyint", min_value=1, max_value=24)
     people = factory.Faker("pyint", min_value=1, max_value=10)
+    is_completed = factory.Faker("pybool")
+
     room = factory.SubFactory(RoomFactory)
     user = factory.SubFactory(UserFactory)
 
@@ -65,5 +68,7 @@ class ConsoleRentFactory(DjangoModelFactory):
 
     comment = factory.Faker("text")
     days = factory.Faker("pyint", min_value=1, max_value=31)
+    is_completed = factory.Faker("pybool")
+
     console = factory.SubFactory(ConsoleFactory)
     user = factory.SubFactory(UserFactory)

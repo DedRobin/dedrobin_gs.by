@@ -14,6 +14,12 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <h5 class="card-title">{{ room_order.room.club.name }}</h5>
+                    {% if room_order.is_completed %}
+                        <h5 class="card-title text-success">Completed on {{ room_order.completed_date }}</h5>
+                    {% endif %}
+                </div>
                 <h5 class="card-title">{{ room_order.room.name }}</h5>
                 <p class="card-text">Comment: {{ room_order.comment }}</p>
                 <p class="card-text">Hours: {{ room_order.hours }}</p>

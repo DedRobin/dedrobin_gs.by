@@ -12,7 +12,9 @@
                        class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Console
-                                <span class="badge text-bg-secondary">{{ request.rented_console_count }}</span>
+                                {% if request.rented_console_count %}
+                                    <span class="badge text-bg-secondary">{{ request.rented_console_count }}</span>
+                                {% endif %}
                             </div>
                             {#                            Content for list item#}
                         </div>
@@ -22,7 +24,9 @@
                        class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Room
-                                <span class="badge text-bg-secondary">{{ request.rented_room_count }}</span>
+                                {% if request.rented_room_count %}
+                                    <span class="badge text-bg-secondary">{{ request.rented_room_count }}</span>
+                                {% endif %}
                             </div>
                             {#                            Content for list item#}
                         </div>
@@ -32,7 +36,9 @@
                        class="list-group-item d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">Club
-                                <span class="badge text-bg-secondary">{{ request.rented_club_count }}</span>
+                                {% if request.rented_club_count %}
+                                    <span class="badge text-bg-secondary">{{ request.rented_club_count }}</span>
+                                {% endif %}
                             </div>
                             {#                            Content for list item#}
                         </div>

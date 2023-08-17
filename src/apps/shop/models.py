@@ -31,7 +31,7 @@ class Purchase(models.Model):
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
-    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name="purchases")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="purchases")
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="purchases")
 
     def __str__(self):

@@ -21,7 +21,7 @@ class Command(BaseCommand):
         if clear:
             Purchase.objects.all().delete()
         count = 0
-        users = CustomUser.objects.all().exclude(is_superuser=True)
+        users = CustomUser.objects.all()
         while count < 5:
             if users:
                 PurchaseFactory(user=random.choice(users))
