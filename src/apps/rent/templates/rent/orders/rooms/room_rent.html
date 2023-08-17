@@ -7,7 +7,9 @@
                 <img src="{{ room_order.room.image.url }}" class="img-fluid rounded-start"
                      alt="{{ room_order.room.name }}">
             {% else %}
-                <img src="{% static 'static/images/no-image.png' %}" class="img-fluid rounded-start" alt="No image">
+                <img src="https://source.unsplash.com/random/350x350?sig={{ room_order.room.id }}" class="card-img-top"
+                     alt="{{ room_order.room.name }}">
+                {#                <img src="{% static 'static/images/no-image.png' %}" class="img-fluid rounded-start" alt="No image">#}
             {% endif %}
         </div>
         <div class="col-md-8">

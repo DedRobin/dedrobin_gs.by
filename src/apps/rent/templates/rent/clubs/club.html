@@ -5,7 +5,9 @@
         {% if club.image %}
             <img src="{{ club.image.url }}" class="card-img-top" alt="{{ club.name }}">
         {% else %}
-            <img src="{% static 'static/images/no-image.png' %}" class="card-img-top" alt="{{ club.name }}">
+            <img src="https://source.unsplash.com/random/350x350?sig={{ club.id }}" class="card-img-top"
+                 alt="{{ club.name }}">
+            {#            <img src="{% static 'static/images/no-image.png' %}" class="card-img-top" alt="{{ club.name }}">#}
         {% endif %}
     </div>
     <div class="card-body text-center">

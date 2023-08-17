@@ -2,7 +2,7 @@ import factory.fuzzy
 from factory.django import DjangoModelFactory
 
 from src.apps.rent.models import Club, ClubAddress, Console, Room, ClubRent, RoomRent, ConsoleRent
-from src.apps.user.models import CustomUser
+from src.apps.user.factories import UserFactory
 
 
 class ConsoleFactory(DjangoModelFactory):
@@ -45,7 +45,7 @@ class ClubRentFactory(DjangoModelFactory):
 
     comment = factory.Faker("text")
     club = factory.SubFactory(ClubFactory)
-    user = factory.SubFactory(CustomUser)
+    user = factory.SubFactory(UserFactory)
 
 
 class RoomRentFactory(DjangoModelFactory):
@@ -56,7 +56,7 @@ class RoomRentFactory(DjangoModelFactory):
     hours = factory.Faker("pyint", min_value=1, max_value=24)
     people = factory.Faker("pyint", min_value=1, max_value=10)
     room = factory.SubFactory(RoomFactory)
-    user = factory.SubFactory(CustomUser)
+    user = factory.SubFactory(UserFactory)
 
 
 class ConsoleRentFactory(DjangoModelFactory):
@@ -66,4 +66,4 @@ class ConsoleRentFactory(DjangoModelFactory):
     comment = factory.Faker("text")
     days = factory.Faker("pyint", min_value=1, max_value=31)
     console = factory.SubFactory(ConsoleFactory)
-    user = factory.SubFactory(CustomUser)
+    user = factory.SubFactory(UserFactory)
