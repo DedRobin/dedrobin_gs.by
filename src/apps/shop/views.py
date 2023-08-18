@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from src.apps.shop.models import Product
 from src.apps.shop.forms import PurchaseForm
 from src.apps.shop.services import create_purchase, get_purchase_list_by_filter, get_product_list_by_filter, \
-    get_page_from_request, get_displayed_pages, get_products_from_user_basket
+    get_page_from_request, get_displayed_pages, get_products_from_user_basket, remove_product_from_basket
 from src.apps.shop.forms import ProductFilterForm, PurchaseFilterForm
 
 
@@ -82,6 +82,10 @@ def basket(request: WSGIRequest):
     """Receive a product list added to a basket"""
 
     contex = {}
+    if request.method == "POST":
+        # Remove product from basket
+        product_id = int(request.POST["remove_product"])
+        remove_product_from_basket(request, product_id)
     products = get_products_from_user_basket(request)
     contex["page"] = products
     return render(request, "basket/basket.html", contex)

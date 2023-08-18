@@ -124,3 +124,8 @@ def get_products_from_user_basket(request: WSGIRequest):
     basket = Basket.objects.get(user=request.user)
     products = basket.products.all()
     return products
+
+
+def remove_product_from_basket(request: WSGIRequest, product_id: int):
+    basket = Basket.objects.get(user=request.user)
+    basket.products.remove(product_id)

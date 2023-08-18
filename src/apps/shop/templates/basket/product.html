@@ -6,15 +6,18 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title">{{ product.name }}</h5>
+                <h5 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
                 <p class="card-text">{{ product.description }}</p>
                 {#                <p class="card-text"><small class="text-body-secondary">{{ product.updated_at }}</small></p>#}
             </div>
         </div>
         <div class="card-footer p-0">
             <div class="d-flex btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-outline-warning" style="border-radius: 0 0 0 5px;">Order</button>
-                <button type="button" class="btn btn-outline-danger" style="border-radius: 0 0 5px 0;">Remove</button>
+                <a class="btn btn-outline-warning" href="#" style="border-radius: 0 0 0 5px;">Order
+                </a>
+                <button type="button" class="btn btn-outline-danger" style="border-radius: 0 0 5px 0;"
+                        data-bs-toggle="modal" data-bs-target="#removeProduct-{{ product.id }}">Remove</button>
+                {% include 'basket/remove_modal.html' %}
             </div>
         </div>
     </div>
