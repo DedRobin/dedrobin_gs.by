@@ -5,12 +5,18 @@ from django.contrib.auth.decorators import login_required
 from src.apps.shop.models import Product
 from src.apps.shop.forms import PurchaseForm
 from src.apps.shop.services import create_purchase, get_purchase_list_by_filter, get_product_list_by_filter, \
-    get_page_from_request, get_displayed_pages, get_products_from_user_basket, remove_product_from_basket
+    get_page_from_request, get_displayed_pages, get_products_from_user_basket, remove_product_from_basket, \
+    add_product_to_basket
 from src.apps.shop.forms import ProductFilterForm, PurchaseFilterForm
 
 
 def product_list(request: WSGIRequest, contex: dict = None):
     """Receive a product list for a specific user"""
+
+    if request.method == "POST":
+        # Add product to basket
+        add_product_to_basket(request)
+
     if contex is None:
         contex = {}
     products = get_product_list_by_filter(request)
@@ -79,13 +85,23 @@ def purchase_list(request: WSGIRequest):
 
 
 def basket(request: WSGIRequest):
-    """Receive a product list added to a basket"""
+    """Receive a product list added to a basket or remove it"""
 
     contex = {}
-    if request.method == "POST":
-        # Remove product from basket
-        product_id = int(request.POST["remove_product"])
-        remove_product_from_basket(request, product_id)
-    products = get_products_from_user_basket(request)
+
+    if not request.user.is_authenticated:
+        if request.session.get("basket"):
+            product_ids = request.session["basket"].get("products")
+            if not product_ids:
+                request.session["basket"] = {"products": []}
+            else:
+                products = Product.objects.filter(pk__in=product_ids)
+        else:
+            products = Product.objects.none()
+    else:
+        if request.method == "POST":
+            # Remove product from basket
+            remove_product_from_basket(request)
+        products = get_products_from_user_basket(request)
     contex["page"] = products
     return render(request, "basket/basket.html", contex)

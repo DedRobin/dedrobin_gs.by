@@ -12,7 +12,11 @@
                 <a href="{% url 'shop:about_product' product_id=product.id %}" class="btn btn-warning">About</a>
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#product-{{ product.id }}">Buy
                 </button>
-                <a href="#" class="btn btn-secondary">Add to the basket</a>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="add_product_to_basket" value="{{ product.id }}">
+                    <button type="submit" class="btn btn-secondary">Add to the basket</button>
+                </form>
                 {% include "product/product_modal.html" %}
             </div>
         </div>
