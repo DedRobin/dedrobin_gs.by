@@ -75,7 +75,7 @@ def get_product_list_by_filter(request: WSGIRequest) -> QuerySet:
 def get_purchase_list_by_filter(request: WSGIRequest) -> QuerySet:
     """Receive purchase list by filter(request.GET)"""
 
-    purchases = Purchase.objects.select_related("product", "user").filter(user=request.user)
+    purchases = Purchase.objects.select_related("product", "user").filter(user=request.user).order_by("created_at")
     filter_query_dict = request.GET
     if filter_query_dict:
         name = filter_query_dict.get("name")
@@ -130,12 +130,26 @@ def get_products_from_user_basket(request: WSGIRequest):
 
 
 def add_product_to_basket(request: WSGIRequest):
-    product_id = request.POST["add_product_to_basket"]
-    basket = Basket.objects.get(user=request.user)
-    basket.products.add(product_id)
+    product_id = int(request.POST["add_product_to_basket"])
+    if request.user.is_authenticated:
+        basket = Basket.objects.get(user=request.user)
+        basket.products.add(product_id)
+    else:
+        products_in_basket = request.session.get("products_in_basket")
+        if products_in_basket:
+            if product_id not in products_in_basket:
+                products_in_basket.append(product_id)
+                request.session["products_in_basket"] = products_in_basket
+        else:
+            request.session["products_in_basket"] = [product_id]
 
 
 def remove_product_from_basket(request: WSGIRequest):
     product_id = int(request.POST["remove_product"])
-    basket = Basket.objects.get(user=request.user)
-    basket.products.remove(product_id)
+    if request.user.is_authenticated:
+        basket = Basket.objects.get(user=request.user)
+        basket.products.remove(product_id)
+    else:
+        products_in_basket: list = request.session["products_in_basket"]
+        products_in_basket.remove(product_id)
+        request.session["products_in_basket"] = products_in_basket

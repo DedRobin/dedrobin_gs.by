@@ -13,12 +13,13 @@ from src.apps.shop.forms import ProductFilterForm, PurchaseFilterForm
 def product_list(request: WSGIRequest, contex: dict = None):
     """Receive a product list for a specific user"""
 
+    if contex is None:
+        contex = {}
+
     if request.method == "POST":
         # Add product to basket
         add_product_to_basket(request)
 
-    if contex is None:
-        contex = {}
     products = get_product_list_by_filter(request)
     form = PurchaseForm()
 
@@ -84,24 +85,31 @@ def purchase_list(request: WSGIRequest):
     return render(request, "purchase/purchase_list.html", contex)
 
 
-def basket(request: WSGIRequest):
-    """Receive a product list added to a basket or remove it"""
+def basket_list(request: WSGIRequest):
+    """
+    GET method:
+    Receive a product list added to a basket
+
+    PORT method:
+    Remove a specific product from a basket
+    """
 
     contex = {}
 
+    if request.method == "POST":
+        # Remove product from basket
+        remove_product_from_basket(request)
     if not request.user.is_authenticated:
-        if request.session.get("basket"):
-            product_ids = request.session["basket"].get("products")
+        if request.session.get("products_in_basket"):
+            product_ids = request.session.get("products_in_basket")
             if not product_ids:
-                request.session["basket"] = {"products": []}
+                request.session["products_in_basket"] = []
+                products = Product.objects.none()
             else:
                 products = Product.objects.filter(pk__in=product_ids)
         else:
             products = Product.objects.none()
     else:
-        if request.method == "POST":
-            # Remove product from basket
-            remove_product_from_basket(request)
         products = get_products_from_user_basket(request)
     contex["page"] = products
     return render(request, "basket/basket.html", contex)
