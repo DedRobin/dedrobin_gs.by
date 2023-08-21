@@ -45,3 +45,13 @@ class OrderCountMiddleware(BaseMiddleware):
 
         response = self.get_response(request)
         return response
+
+
+class BasketQuantityMiddleware(BaseMiddleware):
+
+    def __call__(self, request):
+        products = request.session.get("products_in_basket")
+        if products:
+            request.basket_quantity = len(products)
+        response = self.get_response(request)
+        return response

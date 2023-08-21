@@ -72,6 +72,7 @@ MIDDLEWARE = [
     # Custom
     "src.dedrobin_gs.middlewares.ProfileMiddleware",
     "src.dedrobin_gs.middlewares.OrderCountMiddleware",
+    "src.dedrobin_gs.middlewares.BasketQuantityMiddleware",
 ]
 
 ROOT_URLCONF = "src.dedrobin_gs.urls"
