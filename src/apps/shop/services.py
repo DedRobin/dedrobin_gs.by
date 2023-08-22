@@ -137,7 +137,10 @@ def add_product_to_basket(request: WSGIRequest):
     product_id = int(request.POST["add_product_to_basket"])
     if request.user.is_authenticated:
         basket = Basket.objects.get(user=request.user)
-        basket.products.add(product_id)
+        if basket.products.filter(pk=product_id).exists():
+            basket.products.remove(product_id)
+        else:
+            basket.products.add(product_id)
     else:
         products_in_basket = request.session.get("products_in_basket")
         if products_in_basket:
