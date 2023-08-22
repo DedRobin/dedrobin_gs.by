@@ -23,6 +23,10 @@ def product_list(request: WSGIRequest, contex: dict = None):
     products = get_product_list_by_filter(request)
     form = PurchaseForm()
 
+    # Basket
+    products_in_basket = get_products_from_user_basket(request)
+    request.basket_quantity = len(products_in_basket)
+
     # Pagination
     page = get_page_from_request(request=request, queryset=products, obj_per_page=10)
     displayed_pages = get_displayed_pages(page=page, show_pages=5)
@@ -33,6 +37,7 @@ def product_list(request: WSGIRequest, contex: dict = None):
     contex["form"] = form
     contex["displayed_pages"] = displayed_pages
     contex["quantity"] = len(page.object_list)
+    contex["products_in_basket"] = products_in_basket
     contex["filter_form"] = filter_form
     status = contex.get("status")
     return render(request, "product/product_list.html", contex, status=status)
@@ -111,5 +116,6 @@ def basket_list(request: WSGIRequest):
             products = Product.objects.none()
     else:
         products = get_products_from_user_basket(request)
+    request.basket_quantity = len(products)
     contex["page"] = products
     return render(request, "basket/basket.html", contex)

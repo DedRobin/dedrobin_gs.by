@@ -125,7 +125,11 @@ def get_products_from_user_basket(request: WSGIRequest):
         basket = Basket.objects.get(user=request.user)
         products = basket.products.all()
     else:
-        products = Basket.objects.none()
+        products_in_basket = request.session.get("products_in_basket")
+        if products_in_basket:
+            products = Product.objects.filter(pk__in=products_in_basket)
+        else:
+            products = Product.objects.none()
     return products
 
 
