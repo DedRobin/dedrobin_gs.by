@@ -3,6 +3,7 @@ from django.db.models import Q, Count
 
 from src.apps.user.models import CustomUser
 from src.apps.profile.models import Profile
+from src.apps.shop.models import Basket
 
 
 class BaseMiddleware(ABC):
@@ -50,8 +51,12 @@ class OrderCountMiddleware(BaseMiddleware):
 class BasketQuantityMiddleware(BaseMiddleware):
 
     def __call__(self, request):
-        products = request.session.get("products_in_basket")
-        if products:
-            request.basket_quantity = len(products)
+        if request.user.is_authenticated:
+            products = Basket.objects.get(user=request.user).products.all()
+            quantity = products.count()
+        else:
+            products = request.session.get("products_in_basket", [])
+            quantity = len(products)
+        request.basket_quantity = quantity
         response = self.get_response(request)
         return response

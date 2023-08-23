@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.decorators import login_required
 
+from src.apps.address.services import create_address
 from src.apps.shop.models import Product
-from src.apps.shop.forms import PurchaseForm
+from src.apps.shop.forms import PurchaseForm, OrderForm
 from src.apps.shop.services import create_purchase, get_purchase_list_by_filter, get_product_list_by_filter, \
     get_page_from_request, get_displayed_pages, get_products_from_user_basket, remove_product_from_basket, \
     add_product_to_basket
@@ -69,6 +70,25 @@ def make_purchase(request: WSGIRequest, product_id: int):
             contex["status"] = 201
     render_obj = product_list(request, contex)
     return render_obj
+
+
+def order_page(request: WSGIRequest, product_id: int):
+    contex = dict()
+
+    if request.method == "POST":
+        data = request.POST
+        form = OrderForm(data)
+        if form.is_valid():
+            create_address(request=request, data=form.cleaned_data)
+
+        # data["user"] = request.user.id
+        # if form.is_valid():
+
+    order_form = OrderForm()
+    product = Product.objects.get(pk=product_id)
+    contex["order_form"] = order_form
+    contex["product"] = product
+    return render(request, "product/order_form.html", contex)
 
 
 @login_required(redirect_field_name="", login_url="login")

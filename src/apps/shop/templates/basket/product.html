@@ -13,10 +13,12 @@
         </div>
         <div class="card-footer p-0">
             <div class="d-flex btn-group" role="group" aria-label="Basic example">
-                <a class="btn btn-outline-warning" href="#" style="border-radius: 0 0 0 5px;">Order
+                <a class="btn btn-outline-warning" href="{% url 'shop:order_page' product_id=product.id %}"
+                   style="border-radius: 0 0 0 5px;">Order
                 </a>
                 <button type="button" class="btn btn-outline-danger" style="border-radius: 0 0 5px 0;"
-                        data-bs-toggle="modal" data-bs-target="#removeProduct-{{ product.id }}">Remove</button>
+                        data-bs-toggle="modal" data-bs-target="#removeProduct-{{ product.id }}">Remove
+                </button>
                 {% include 'basket/remove_modal.html' %}
             </div>
         </div>

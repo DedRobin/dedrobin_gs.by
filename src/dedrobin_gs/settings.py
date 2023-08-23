@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # Apps
     "src.apps.user.apps.UsersConfig",
     "src.apps.profile.apps.ProfileConfig",
+    "src.apps.address.apps.AddressConfig",
     "src.apps.news.apps.NewsConfig",
     "src.apps.rent.apps.RentConfig",
     "src.apps.shop.apps.ShopConfig",

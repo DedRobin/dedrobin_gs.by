@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block styles %}
+    {#    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">#}
+{% endblock %}
+
+
+{% block title %}Order form{% endblock %}
+
+{% block leftsidebar %}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Order form</li>
+{% endblock %}
+
+{% block content %}
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4 text-center"
+                 style="background-color: white; max-width: 300px; height: 300px; border-radius: 5px 0 0 0; ">
+                <img src="{{ product.image }}" class="img-fluid" alt="{{ product.name }}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h5>
+                    <p class="card-text">{{ product.description }}</p>
+                    {#                <p class="card-text"><small class="text-body-secondary">{{ product.updated_at }}</small></p>#}
+                </div>
+            </div>
+            <div class="card-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ order_form|crispy }}
+                    <button class="btn btn-warning">Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block rightsidebar %}
+{% endblock %}
