@@ -34,7 +34,9 @@
             <div class="card-footer">
                 <form method="post">
                     {% csrf_token %}
-                    {{ order_form|crispy }}
+                    {{ address_form|crispy }}
+                    <a href="#" class="btn btn-outline-primary mb-3">Add new address</a>
+                    {{ profile_form|crispy }}
                     <button class="btn btn-warning">Order</button>
                 </form>
             </div>

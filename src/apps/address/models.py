@@ -15,4 +15,17 @@ class Address(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="addresses", null=True)
 
     def __str__(self):
+        sentence = [
+            f"{self.city} city",
+            f"{self.street} street",
+            f"{self.building} building",
+            f"{self.flet} flet",
+        ]
+        if self.floor:
+            sentence.append(f"{self.floor} floor")
+        if self.entrance:
+            sentence.append(f"{self.entrance} entrance")
+        return ", ".join(sentence)
+
+    def __repr__(self):
         return f"Address (ID={self.id}) '{self.city}. {self.street}, {self.building} ...'"

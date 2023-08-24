@@ -2,6 +2,8 @@ from django import forms
 
 from src.apps.shop.models import PRODUCT_TYPES
 from src.apps.address.models import Address
+from src.apps.profile.models import Profile
+from src.apps.profile.validators import check_phone_number
 
 ORDER_BY = (
     ("asc", "Ascending"),
@@ -26,22 +28,25 @@ TEST_CHOICE = (
 )
 
 
-class OrderForm(forms.ModelForm):
+class OrderAddressAnonymousForm(forms.ModelForm):
     class Meta:
         model = Address
-        # fields = "__all__"
         exclude = ("user",)
 
-# class OrderForm(forms.Form):
-# address_from_exist = forms.ChoiceField(choices=TEST_CHOICE, required=False)
-# city = forms.CharField()
-# street = forms.ChoiceField()
-# building = forms.CharField()
-# flet = forms.IntegerField()
-# floor = forms.IntegerField(required=False)
-# entrance = forms.IntegerField(required=False)
-# preferred_time = forms.TimeField(required=False)
-# comment = forms.CharField(required=False)
+
+class OrderAddressForm(forms.Form):
+    class Meta:
+        fields = ("address",)
+
+    def __init__(self, queryset, *args, **kwargs):
+        super(OrderAddressForm, self).__init__(*args, **kwargs)
+        self.fields["address"] = forms.ModelChoiceField(queryset=queryset, required=True)
+
+
+class OrderProfileForm(forms.Form):
+    first_name = forms.CharField(max_length=150)
+    last_name = forms.CharField(max_length=150)
+    phone_number = forms.CharField(max_length=150, validators=[check_phone_number])
 
 
 class PurchaseFilterForm(forms.Form):

@@ -20,8 +20,12 @@ class PurchaseAdmin(admin.ModelAdmin):
         verbose_name = "Purchase"
         verbose_name_plural = "Purchases"
 
-    list_display = ("quantity", "comment", "user", "product", "created_at")
-    fields = ("quantity", "comment", "user", "product", "created_at")
+    list_display = (
+        "product", "quantity", "comment", "user", "profile", "address", "is_completed", "created_at", "finished_at"
+    )
+    fields = (
+        "product", "quantity", "comment", "user", "profile", "address", "is_completed", "created_at", "finished_at"
+    )
     readonly_fields = ("created_at",)
 
 
@@ -33,4 +37,3 @@ class BasketAdmin(admin.ModelAdmin):
 
     list_display = ("user", "product_quantity")
     fields = ("user", "products")
-

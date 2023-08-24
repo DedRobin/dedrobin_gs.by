@@ -24,6 +24,7 @@ class PurchaseFactory(DjangoModelFactory):
 
     quantity = factory.Faker("pyint", min_value=1, max_value=10)
     comment = factory.Faker("text")
+    is_completed = factory.Faker("pybool")
 
     user = factory.SubFactory(UserFactory)
     product = factory.SubFactory(ProductFactory)

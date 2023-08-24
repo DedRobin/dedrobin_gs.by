@@ -1,8 +1,12 @@
+from datetime import datetime
+
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.shortcuts import reverse
 
 from src.apps.user.models import CustomUser
+from src.apps.address.models import Address
+from src.apps.profile.models import Profile
 
 PRODUCT_TYPES = (
     ("mouse", "Mouse"),
@@ -29,10 +33,19 @@ class Product(models.Model):
 class Purchase(models.Model):
     quantity = models.IntegerField(validators=[MinValueValidator(limit_value=1)])
     comment = models.TextField(blank=True, null=True)
+    is_completed = models.BooleanField(default=False, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    finished_at = models.DateTimeField(blank=True, null=True)
 
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="purchases")
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="purchases", null=True)
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="purchases")
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, related_name="profiles", null=True)
+    address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name="purchases", null=True)
+
+    def save(self, **kwargs):
+        if self.is_completed:
+            self.finished_at = datetime.now()
+        super().save(**kwargs)
 
     def __str__(self):
         return f"Purchase '{self.product.name}' for {self.user.username}'"

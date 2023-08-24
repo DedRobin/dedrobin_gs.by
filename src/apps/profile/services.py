@@ -1,5 +1,8 @@
 import os
 from django.db.models.fields.files import ImageFieldFile
+from django.core.handlers.wsgi import WSGIRequest, QueryDict
+
+from src.apps.profile.models import Profile
 
 
 def uploaded_photo(photo: ImageFieldFile, path: str) -> str:
@@ -14,3 +17,11 @@ def uploaded_photo(photo: ImageFieldFile, path: str) -> str:
         for chunk in photo.chunks():
             destination.write(chunk)
     return path
+
+
+def get_or_create_profile(request: WSGIRequest, data: QueryDict) -> Profile:
+    if request.user.is_authenticated:
+        profile = Profile.objects.get_or_create(pk=request.user_profile.id, defaults=data, user=request.user)
+    else:
+        profile = Profile.objects.get_or_create(pk=request.user_profile.id, defaults=data)
+    return profile
