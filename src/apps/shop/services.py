@@ -63,7 +63,7 @@ def create_purchase(request: WSGIRequest, product_id: int, address_id: int, prof
 def get_product_list_by_filter(request: WSGIRequest) -> QuerySet:
     """Receive product list by filter(request.GET)"""
 
-    products = Product.objects.all()
+    products = Product.objects.order_by("updated_at")
     filter_query_dict = request.GET
     if filter_query_dict:
         name = filter_query_dict.get("name")
@@ -78,7 +78,7 @@ def get_product_list_by_filter(request: WSGIRequest) -> QuerySet:
 def get_purchase_list_by_filter(request: WSGIRequest) -> QuerySet:
     """Receive purchase list by filter(request.GET)"""
 
-    purchases = Purchase.objects.select_related("product", "user").filter(user=request.user).order_by("created_at")
+    purchases = Purchase.objects.select_related("product", "user").filter(user=request.user).order_by("is_completed")
     filter_query_dict = request.GET
     if filter_query_dict:
         name = filter_query_dict.get("name")
@@ -154,8 +154,9 @@ def add_product_to_basket(request: WSGIRequest):
             request.session["products_in_basket"] = [product_id]
 
 
-def remove_product_from_basket(request: WSGIRequest):
-    product_id = int(request.POST["remove_product"])
+def remove_product_from_basket(request: WSGIRequest, product_id: int = None):
+    if product_id is None:
+        product_id = int(request.POST["remove_product"])
     if request.user.is_authenticated:
         basket = Basket.objects.get(user=request.user)
         basket.products.remove(product_id)

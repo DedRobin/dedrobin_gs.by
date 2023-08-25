@@ -33,7 +33,7 @@ def product_list(request: WSGIRequest, contex: dict = None):
     request.basket_quantity = len(products_in_basket)
 
     # Pagination
-    page = get_page_from_request(request=request, queryset=products, obj_per_page=10)
+    page = get_page_from_request(request=request, queryset=products, obj_per_page=20)
     displayed_pages = get_displayed_pages(page=page, show_pages=5)
 
     filter_form = ProductFilterForm(request.GET)
@@ -61,19 +61,29 @@ def about_product(request: WSGIRequest, product_id: int):
 
 
 def order_page(request: WSGIRequest, product_id: int):
+    """
+    GET:
+    Display order page where you can enter your delivery data
+
+    POST:
+    Make order for specific product then remove it from basket
+    """
+
     contex = dict()
 
     if request.method == "POST":
         address = get_or_create_address(request=request)
         profile = get_or_create_profile(request=request)
         create_purchase(request=request, product_id=product_id, address_id=address.id, profile_id=profile.id)
+        remove_product_from_basket(request=request, product_id=product_id)
+        request.basket_quantity -= 1  # updated basket quantity
     if request.user.is_authenticated:
-        address_qs = Address.objects.filter(user=request.user)
-        address_form = OrderAddressForm(queryset=address_qs)
+        address_form = OrderAddressForm(queryset=Address.objects.filter(user=request.user))
         profile_form = OrderProfileForm(request.user_profile.__dict__)
     else:
         address_form = OrderAddressAnonymousForm()
         profile_form = OrderProfileForm()
+
     product = Product.objects.get(pk=product_id)
     purchase_form = PurchaseForm()
     contex["purchase_form"] = purchase_form
