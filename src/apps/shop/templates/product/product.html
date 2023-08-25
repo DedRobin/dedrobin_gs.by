@@ -1,51 +1,22 @@
 <div class="col">
     <div class="card text-bg-dark">
-        <form method="post" class="card-img-overlay">
-            {% csrf_token %}
-            <input type="hidden" name="add_product_to_basket" value="{{ product.id }}">
-            {% if product in products_in_basket %}
-                <button type="submit" class="btn btn-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-basket" width="24"
-                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                         stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M10 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
-                        <path d="M5.001 8h13.999a2 2 0 0 1 1.977 2.304l-1.255 7.152a3 3 0 0 1 -2.966 2.544h-9.512a3 3 0 0 1 -2.965 -2.544l-1.255 -7.152a2 2 0 0 1 1.977 -2.304z"></path>
-                        <path d="M17 10l-2 -6"></path>
-                        <path d="M7 10l2 -6"></path>
-                    </svg>
-                </button>
-            {% else %}
-                <button type="submit" class="btn btn-outline-danger">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-basket" width="24"
-                         height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                         stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                        <path d="M10 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
-                        <path d="M5.001 8h13.999a2 2 0 0 1 1.977 2.304l-1.255 7.152a3 3 0 0 1 -2.966 2.544h-9.512a3 3 0 0 1 -2.965 -2.544l-1.255 -7.152a2 2 0 0 1 1.977 -2.304z"></path>
-                        <path d="M17 10l-2 -6"></path>
-                        <path d="M7 10l2 -6"></path>
-                    </svg>
-                </button>
-
-            {% endif %}
-        </form>
         <img src="{{ product.image }}" class="card-img-top bg-white" alt="{{ product.name }}"
              style="height: 250px; object-fit: contain">
+
         <div class="card-header">
-            {{ product.price }} BYN
+            <div class="d-flex justify-content-between align-items-center">
+                <div>{{ product.price }} BYN</div>
+                <div>{% include 'product/product_parts/basket_button.html' %}</div>
+            </div>
         </div>
 
         <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
+            <h5 class="card-title"><a href="{% url 'shop:about_product' product_id=product.id %}">{{ product.name }}</a>
+            </h5>
             <p class="card-text">{{ product.description }}</p>
             <div class="d-grid gap-2 mx-auto">
-                <a href="{% url 'shop:about_product' product_id=product.id %}" class="btn btn-warning">About</a>
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#product-{{ product.id }}">
-                    Buy
-                </button>
+                <a href="{% url 'shop:order_page' product_id=product.id %}" class="btn btn-warning">Order</a>
             </div>
-            {% include "product/product_modal.html" %}
         </div>
     </div>
 </div>

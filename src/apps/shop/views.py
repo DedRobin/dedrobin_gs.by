@@ -59,23 +59,6 @@ def about_product(request: WSGIRequest, product_id: int):
     return render(request, "product/about_product.html", contex)
 
 
-@login_required(redirect_field_name="", login_url="login")
-def make_purchase(request: WSGIRequest, product_id: int):
-    """Create a purchase for specific user"""
-
-    contex = {}
-    if request.method == "POST":
-        purchase, errors = create_purchase(request, product_id)
-        if errors:
-            contex = dict(errors=errors)
-        else:
-            notification = "The Purchase for '{0}' is made out".format(purchase.product.name)
-            contex = dict(notification=notification)
-            contex["status"] = 201
-    render_obj = product_list(request, contex)
-    return render_obj
-
-
 def order_page(request: WSGIRequest, product_id: int):
     contex = dict()
 
