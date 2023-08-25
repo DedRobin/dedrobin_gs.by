@@ -2,14 +2,12 @@
     <div class="card text-bg-dark">
         <img src="{{ product.image }}" class="card-img-top bg-white" alt="{{ product.name }}"
              style="height: 250px; object-fit: contain">
-
         <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <div>{{ product.price }} BYN</div>
-                <div>{% include 'product/product_parts/basket_button.html' %}</div>
+                <div>{% include 'product/product_list_parts/product_parts/basket_button.html' %}</div>
             </div>
         </div>
-
         <div class="card-body">
             <h5 class="card-title"><a href="{% url 'shop:about_product' product_id=product.id %}">{{ product.name }}</a>
             </h5>

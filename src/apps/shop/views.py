@@ -56,7 +56,8 @@ def about_product(request: WSGIRequest, product_id: int):
     form = PurchaseForm()
     contex["product"] = product
     contex["form"] = form
-    return render(request, "product/about_product.html", contex)
+    return render(request,
+                  "product/product_list_parts/about_product.html", contex)
 
 
 def order_page(request: WSGIRequest, product_id: int):

@@ -21,7 +21,7 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>{{ product.price }} BYN</div>
-                    <div>{% include 'product/product_parts/basket_button.html' %}</div>
+                    <div>{% include 'product/product_list_parts/product_parts/basket_button.html' %}</div>
                 </div>
             </div>
             <div class="card-body">
@@ -33,13 +33,6 @@
             </div>
         </div>
     </div>
-
-
-    {#    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">#}
-    {#        {% for product in products %}#}
-    {#            {% include 'product.html' %}#}
-    {#        {% endfor %}#}
-    {#    </div>#}
 {% endblock %}
 
 {% block rightsidebar %}

@@ -11,7 +11,7 @@
 {% block title %}Shop{% endblock %}
 
 {% block leftsidebar %}
-    {% include 'product/product_filter.html' %}
+    {% include 'product/product_list_parts/product_filter.html' %}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -19,13 +19,13 @@
 {% endblock %}
 
 {% block content %}
-    {% include 'product/pagination.html' %}
+    {% include 'product/product_list_parts/pagination.html' %}
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
         {% for product in page %}
-            {% include 'product/product.html' %}
+            {% include 'product/product_list_parts/product.html' %}
         {% endfor %}
     </div>
-    {% include 'product/pagination.html' %}
+    {% include 'product/product_list_parts/pagination.html' %}
 {% endblock %}
 
 {% block rightsidebar %}
