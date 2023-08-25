@@ -41,20 +41,23 @@ def run_parser(clear):
     process.start()
 
 
-def create_purchase(request: WSGIRequest, product_id: int) -> tuple[Purchase | None, dict | None]:
+def create_purchase(request: WSGIRequest, product_id: int, address_id: int, profile_id: int = None) -> None:
     """Create a purchase"""
 
     form = PurchaseForm(request.POST)
     if form.is_valid():
-        purchase = Purchase.objects.create(
-            quantity=form.cleaned_data["quantity"],
-            comment=form.cleaned_data["comment"],
-            user=request.user,
-            product_id=product_id
-        )
-        return purchase, None
+        data = {
+            "quantity": form.cleaned_data["quantity"],
+            "comment": form.cleaned_data["comment"],
+            "product_id": product_id,
+            "address_id": address_id,
+            "profile_id": profile_id,
+        }
+        if request.user.is_authenticated:
+            data["user"] = request.user
+        Purchase.objects.create(**data)
     else:
-        return None, form.errors
+        print(form.errors)
 
 
 def get_product_list_by_filter(request: WSGIRequest) -> QuerySet:

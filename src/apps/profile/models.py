@@ -26,4 +26,8 @@ class Profile(models.Model):
     user = models.ForeignKey(CustomUser, related_name="profile", on_delete=models.CASCADE, db_index=True, null=True)
 
     def __str__(self):
-        return f"Profile for user '{self.user.username}' ({self.user.email}))"
+        if self.user:
+            message = f"{self.first_name} {self.last_name}"
+        else:
+            message = f"{self.first_name} {self.last_name} (Not registered)"
+        return message

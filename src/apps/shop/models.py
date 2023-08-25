@@ -37,9 +37,9 @@ class Purchase(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     finished_at = models.DateTimeField(blank=True, null=True)
 
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="purchases", null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="purchases", null=True, default=None)
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="purchases")
-    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, related_name="profiles", null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, related_name="profiles", null=True, default=None)
     address = models.ForeignKey(Address, on_delete=models.PROTECT, related_name="purchases", null=True)
 
     def save(self, **kwargs):

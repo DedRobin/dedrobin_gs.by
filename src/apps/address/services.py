@@ -1,11 +1,19 @@
 from django.core.handlers.wsgi import WSGIRequest
 
 from src.apps.address.models import Address
+from src.apps.address.forms import OrderAddressForm, OrderAddressAnonymousForm
 
 
-def get_or_create_address(request: WSGIRequest, data: dict) -> Address:
+def get_or_create_address(request: WSGIRequest) -> Address:
     if request.user.is_authenticated:
-        address = Address.objects.get_or_create(pk=data["address"], defaults=data, user=request.user)
+        form = OrderAddressForm(data=request.POST)
     else:
-        address = Address.objects.get_or_create(pk=data["address"], defaults=data)
-    return address
+        form = OrderAddressAnonymousForm(request.POST)
+    if form.is_valid():
+        address = Address.objects.get_or_create(
+            pk=form.cleaned_data.get("address"),
+            defaults=form.cleaned_data,
+            user=request.user.id)
+        return address[0]
+    else:
+        print(form.errors)

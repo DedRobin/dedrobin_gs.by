@@ -6,7 +6,9 @@ from src.apps.address.services import get_or_create_address
 from src.apps.profile.services import get_or_create_profile
 from src.apps.shop.models import Product
 from src.apps.address.models import Address
-from src.apps.shop.forms import PurchaseForm, OrderAddressAnonymousForm, OrderAddressForm, OrderProfileForm
+from src.apps.shop.forms import PurchaseForm
+from src.apps.profile.forms import OrderProfileForm
+from src.apps.address.forms import OrderAddressAnonymousForm, OrderAddressForm
 from src.apps.shop.services import create_purchase, get_purchase_list_by_filter, get_product_list_by_filter, \
     get_page_from_request, get_displayed_pages, get_products_from_user_basket, remove_product_from_basket, \
     add_product_to_basket
@@ -78,9 +80,9 @@ def order_page(request: WSGIRequest, product_id: int):
     contex = dict()
 
     if request.method == "POST":
-        address = get_or_create_address(request=request, data=request.POST)
-        profile = get_or_create_profile(request=request, data=request.POST)
-        print()
+        address = get_or_create_address(request=request)
+        profile = get_or_create_profile(request=request)
+        create_purchase(request=request, product_id=product_id, address_id=address.id, profile_id=profile.id)
     if request.user.is_authenticated:
         address_qs = Address.objects.filter(user=request.user)
         address_form = OrderAddressForm(queryset=address_qs)
@@ -89,6 +91,8 @@ def order_page(request: WSGIRequest, product_id: int):
         address_form = OrderAddressAnonymousForm()
         profile_form = OrderProfileForm()
     product = Product.objects.get(pk=product_id)
+    purchase_form = PurchaseForm()
+    contex["purchase_form"] = purchase_form
     contex["address_form"] = address_form
     contex["profile_form"] = profile_form
     contex["product"] = product

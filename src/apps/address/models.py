@@ -4,6 +4,10 @@ from src.apps.user.models import CustomUser
 
 
 class Address(models.Model):
+    class Meta:
+        verbose_name = "Address"
+        verbose_name_plural = "Addresses"
+
     city = models.CharField(max_length=50)
     street = models.CharField(max_length=50)
     building = models.CharField(max_length=50)

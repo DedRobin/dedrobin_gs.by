@@ -1,8 +1,9 @@
 import os
 from django.db.models.fields.files import ImageFieldFile
-from django.core.handlers.wsgi import WSGIRequest, QueryDict
+from django.core.handlers.wsgi import WSGIRequest
 
 from src.apps.profile.models import Profile
+from src.apps.profile.forms import OrderProfileForm
 
 
 def uploaded_photo(photo: ImageFieldFile, path: str) -> str:
@@ -19,9 +20,14 @@ def uploaded_photo(photo: ImageFieldFile, path: str) -> str:
     return path
 
 
-def get_or_create_profile(request: WSGIRequest, data: QueryDict) -> Profile:
-    if request.user.is_authenticated:
-        profile = Profile.objects.get_or_create(pk=request.user_profile.id, defaults=data, user=request.user)
+def get_or_create_profile(request: WSGIRequest) -> Profile:
+    form = OrderProfileForm(request.POST)
+    if form.is_valid():
+        if request.user.is_authenticated:
+            pk = request.user_profile.id
+        else:
+            pk = None
+        profile = Profile.objects.get_or_create(pk=pk, defaults=form.cleaned_data, user=request.user.id)
+        return profile[0]
     else:
-        profile = Profile.objects.get_or_create(pk=request.user_profile.id, defaults=data)
-    return profile
+        print(form.errors)
