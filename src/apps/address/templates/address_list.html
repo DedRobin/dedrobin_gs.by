@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load crispy_forms_filters %}
+
+{% block styles %}
+    {#    <link rel="stylesheet" href="{% static 'rent/static/css/rent/rent.css' %}">#}
+{% endblock %}
+
+
+{% block title %}Shop{% endblock %}
+
+{% block leftsidebar %}
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active" aria-current="page">Address</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row g-4">
+        {% for address in addresses %}
+            {% include 'address.html' %}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block rightsidebar %}
+{% endblock %}

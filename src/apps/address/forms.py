@@ -3,7 +3,7 @@ from django import forms
 from src.apps.address.models import Address
 
 
-class OrderAddressAnonymousForm(forms.ModelForm):
+class AddressForm(forms.ModelForm):
     class Meta:
         model = Address
         exclude = ("user",)

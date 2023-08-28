@@ -26,6 +26,7 @@ urlpatterns = [
     path("profile/", include("src.apps.profile.urls")),
     path("rent/", include("src.apps.rent.urls")),
     path("shop/", include("src.apps.shop.urls")),
+    path("address/", include("src.apps.address.urls")),
 ]
 
 if settings.DEBUG:

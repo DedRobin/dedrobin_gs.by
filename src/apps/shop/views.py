@@ -8,7 +8,7 @@ from src.apps.shop.models import Product
 from src.apps.address.models import Address
 from src.apps.shop.forms import PurchaseForm
 from src.apps.profile.forms import OrderProfileForm
-from src.apps.address.forms import OrderAddressAnonymousForm, OrderAddressForm
+from src.apps.address.forms import AddressForm, OrderAddressForm
 from src.apps.shop.services import create_purchase, get_purchase_list_by_filter, get_product_list_by_filter, \
     get_page_from_request, get_displayed_pages, get_products_from_user_basket, remove_product_from_basket, \
     add_product_to_basket
@@ -81,7 +81,7 @@ def order_page(request: WSGIRequest, product_id: int):
         address_form = OrderAddressForm(queryset=Address.objects.filter(user=request.user))
         profile_form = OrderProfileForm(request.user_profile.__dict__)
     else:
-        address_form = OrderAddressAnonymousForm()
+        address_form = AddressForm()
         profile_form = OrderProfileForm()
 
     product = Product.objects.get(pk=product_id)

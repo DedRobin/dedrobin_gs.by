@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+            <div class="d-flex justify-content-between">
+                <div>
+                    {{ forloop.counter }}) {{ address }}
+                </div>
+                <div>
+                    <a href="{% url 'address:edit_address' address_id=address.id%}" class="btn btn-primary">Edit</a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#deleteAddressModal-{{ address.id }}">Delete
+                    </button>
+                    {% include "delete_address_modal.html" %}
+                </div>
+            </div>
+        </h5>
+        {#        <p class="card-text">{{ address }}</p>#}
+    </div>
+</div>
